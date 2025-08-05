@@ -6,39 +6,51 @@
 
 body {
   background: #000;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Courier New', monospace;
   overflow: hidden;
+  padding: 20px;
 }
 
 .container {
   text-align: center;
 }
 
-.flicker {
-  animation: flickerEffect 3s infinite;
+img.logo-img {
+  width: 180px;
+  height: auto;
 }
 
 .year {
   color: white;
   font-size: 2.5rem;
-  margin-top: 10px;
+  margin-top: 20px;
   letter-spacing: 4px;
+  animation: flickerEffect 3s infinite;
 }
 
 @keyframes flickerEffect {
   0%, 18%, 22%, 25%, 53%, 57%, 100% {
     opacity: 1;
   }
-
   20%, 24%, 55% {
     opacity: 0;
   }
-
   60%, 61%, 62%, 70% {
     opacity: 0.5;
+  }
+}
+
+@media (max-width: 480px) {
+  img.logo-img {
+    width: 120px;
+  }
+
+  .year {
+    font-size: 2rem;
+    letter-spacing: 2px;
   }
 }
