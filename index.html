@@ -1,19 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arcanian - Blog dos anos 90 com pop-ups</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="container">
-    <img src="img/paranoia.png" alt="Logo" class="logo-img">
-    <div class="year flicker">2026</div>
+  <header>
+    <h1>Jornal de Bayrule</h1>
+    <p>Blog oficial da metrópole que mais cresce — Burmoth</p>
+  </header>
+
+  <main>
+    <article>
+      <h2>Junte-se a nossa comunidade no chan.</h2>
+      <p>Seu principal website de notícias de Bayrule.</p>
+      <p>Quer fazer parte da comunidade? <a href="https://discord.gg/JkQQWz4Q" target="_blank" rel="noopener">Clique aqui</a>.</p>
+    </article>
+
+    <hr />
+
+    <section id="posts">
+      <h3>Últimas postagens</h3>
+      <ul>
+        <li><strong>10/08/1999:</strong> Lançamento da Brick per Brick OS IV! Escrito por Ezequiel Bill.</li>
+        <li><strong>10/08/1999:</strong> Conheça Bayrule, a maior metrópole do mundo. Escrito por Hank Bill.</li>
+        <li><strong>09/08/1999:</strong> Primeiro contato com os Fragmentos. Escrito por Hank Bill.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 1999 Barney's Company - Todos os direitos reservados.</p>
+  </footer>
+
+  <div class="popup" id="fake-virus-popup" role="alert" aria-live="assertive" aria-atomic="true" aria-label="Alerta de vírus falso" hidden>
+    <div class="popup-titlebar">
+      <span>Atualize!</span>
+      <button class="close-btn" aria-label="Fechar alerta" title="Fechar">×</button>
+    </div>
+    <div class="popup-content">
+      <p><strong>ADQUIRA UMA CHAVE DE BRICK PER BRICK</strong></p>
+      <p>Adquira já o melhor e mais atualizado sistema do mercado!</p>
+      <p>Execute cálculos como um verdadeiro mestre.</p>
+      <button class="ok-btn">OK</button>
+    </div>
   </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
-
-
