@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+}
+
+.flicker {
+  animation: flickerEffect 3s infinite;
+}
+
+.year {
+  color: white;
+  font-size: 2.5rem;
+  margin-top: 10px;
+  letter-spacing: 4px;
+}
+
+@keyframes flickerEffect {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+  }
+
+  20%, 24%, 55% {
+    opacity: 0;
+  }
+
+  60%, 61%, 62%, 70% {
+    opacity: 0.5;
+  }
+}
