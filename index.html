@@ -1,54 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jornal de Bayrule</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two Eyes on You</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="img/favicon.ico" />
 </head>
 <body>
 
-  <header>
-    <h1>Jornal de Bayrule</h1>
-    <p>Blog oficial da metrópole que mais cresce — Burmoth</p>
-  </header>
-
-  <main>
-    <article>
-      <h2>Junte-se a nossa comunidade no chan.</h2>
-      <p>Seu principal website de notícias de Bayrule.</p>
-      <p>Quer fazer parte da comunidade? <a href="https://discord.gg/JkQQWz4Q" target="_blank" rel="noopener">Clique aqui</a>.</p>
-    </article>
-
-    <hr />
-
-    <section id="posts">
-      <h3>Últimas postagens</h3>
-      <ul>
-        <li><strong>10/08/1999:</strong> Lançamento da Brick per Brick OS IV! Escrito por Ezequiel Bill.</li>
-        <li><strong>10/08/1999:</strong> Conheça Bayrule, a maior metrópole do mundo. Escrito por Hank Bill.</li>
-        <li><strong>09/08/1999:</strong> Primeiro contato com os Fragmentos. Escrito por Hank Bill.</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 1999 Barney's Company - Todos os direitos reservados.</p>
-  </footer>
-
-  <div class="popup" id="fake-virus-popup" role="alert" aria-live="assertive" aria-atomic="true" aria-label="Alerta de vírus falso" hidden>
-    <div class="popup-titlebar">
-      <span>Atualize!</span>
-      <button class="close-btn" aria-label="Fechar alerta" title="Fechar">×</button>
-    </div>
-    <div class="popup-content">
-      <p><strong>ADQUIRA UMA CHAVE DE BRICK PER BRICK</strong></p>
-      <p>Adquira já o melhor e mais atualizado sistema do mercado!</p>
-      <p>Execute cálculos como um verdadeiro mestre.</p>
-      <button class="ok-btn">OK</button>
+  <div class="main">
+<section class="banner">
+  <img src="img/banner.png" alt="Banner Arcanian Paranoia" class="banner-img">
+  <div class="banner-content">
+    <h1>Arcanian: Paranoia</h1>
+    <p>O medo é apenas o primeiro passo para a verdade.</p>
+    <div class="banner-buttons">
+      <a href="#" class="btn primary">Em breve</a>
+      <a href="#" class="btn secondary">Ler História (Indisponível)</a>
     </div>
   </div>
+</section>
 
-  <script src="script.js"></script>
+    <div class="cards">
+      <div class="card">
+        <H1>Em breve</H1>
+        <img src="img/personagens.png" alt="">
+        <h3 data-i18n="cardPersonagensTitle">Personagens</h3>
+        <p data-i18n="cardPersonagensText">Conheça as lendas e seres do universo Arcanian.</p>
+      </div>
+      <div class="card">
+                <H1>Em breve</H1>
+        <img src="img/reinos.png" alt="">
+        <h3 data-i18n="cardReinosTitle">Reinos</h3>
+        <p data-i18n="cardReinosText">Explore os 12 reinos e descubra a história por trás dos Guardiões.</p>
+      </div>
+      <div class="card">
+                <H1>Em breve</H1>
+        <img src="img/historia.png" alt="">
+        <h3 data-i18n="cardHistoriaTitle">História</h3>
+        <p data-i18n="cardHistoriaText">Reviva os eventos que moldaram o destino de Ikarius.</p>
+      </div>
+      <div class="card">
+                <H1>Em breve</H1>
+
+        <img src="img/gameplay.png" alt="">
+        <h3 data-i18n="cardGameplayTitle">Gameplay</h3>
+        <p data-i18n="cardGameplayText">Dentre combates rápidos e uma jogatina tranquila, escolha seu modo de jogo.</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Two Eyes On You. Todos os direitos reservados.</p>
+      <p><a href="https://x.com/twoeyeson_you">X</a> | <a href="https://discord.gg/wUPsTntR">Discord</a> | <a href="https://www.youtube.com/@twoeyesonyou">YouTube</a></p>
+    </footer>
+  </div>
+
+  <script src="js/script.js"></script>
 </body>
 </html>
