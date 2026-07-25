@@ -2070,515 +2070,178 @@ body::after {
   }
 }
 
-
 /* =========================================================
-   ARCANIAN — OVERRIDE HQ / INDIE PARA NOTÍCIAS
-   Mantém o HTML e as classes existentes.
+   PADRÃO GLOBAL DE SELOS — SEMPRE ACIMA DOS TÍTULOS
+   Atualização aplicada à página de notícias.
 ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
-
-:root {
-  --hq-bg: #07090a;
-  --hq-panel: #111516;
-  --hq-panel-warm: #1a1312;
-  --hq-paper: #d3;
-  --hq-ink: #080a0b;
-  --hq-muted: #a7a397;
-  --hq-red: #e63b32;
-  --hq-red-dark: #7f1e1b;
-  --hq-yellow: #f2b92d;
-  --hq-blue: #4fa0ad;
-  --hq-border: #e8e0c8;
-  --hq-shadow: #020303;
-  --hq-ease: cubic-bezier(.18,.8,.2,1);
-}
-
-/* Fundo impresso */
-body {
-  background:
-    radial-gradient(circle at 82% 8%, rgba(230,59,50,.09), transparent 26%),
-    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
-    var(--hq-bg);
-  background-size: auto, 44px 44px, 44px 44px, auto;
-  font-family: 'Space Mono', monospace;
-}
-
-body::before {
-  opacity: .24;
-  background-image:
-    repeating-radial-gradient(circle at center, rgba(255,255,255,.13) 0 1px, transparent 1px 5px);
-  background-size: 8px 8px;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,.5), transparent 82%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.5), transparent 82%);
-}
-
-body::after {
-  opacity: .08;
-}
-
-/* Cabeçalho: sólido, sem liquid glass */
-.main-header {
-  background:
-    repeating-linear-gradient(
-      135deg,
-      rgba(255,255,255,.018) 0 2px,
-      transparent 2px 9px
-    ),
-    #0b0e0f;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
-.logo img {
-  filter: contrast(1.15);
-}
-
-.nav-link {
-  color: #d3cbb7;
-  font-family: 'Space Mono', monospace;
-  font-size: .71rem;
-  letter-spacing: .075em;
-}
-
-.nav-link::after {
-  height: 4px;
-  bottom: 0;
-  background: var(--hq-yellow);
-  box-shadow: 3px 2px 0 var(--hq-red);
-}
-
-.btn-preorder,
-.mobile-preorder {
-  min-height: 42px;
-  border: 3px solid var(--hq-paper);
-  border-radius: 0;
-  background: var(--hq-red);
-  color: #fff;
-  box-shadow: 5px 5px 0 var(--hq-paper);
-  clip-path: polygon(0 0, 91% 0, 100% 25%, 100% 100%, 8% 100%, 0 78%);
-  font-family: 'Space Mono', monospace;
-}
-
-.btn-preorder:hover,
-.mobile-preorder:hover {
-  background: var(--hq-yellow);
-  color: var(--hq-ink);
-  box-shadow: 8px 8px 0 var(--hq-red);
-  transform: translate(-2px,-2px);
-}
-
-/* Hero como capa de HQ */
-.news-hero {
-  background: #050606;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
-.news-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    repeating-radial-gradient(circle at 76% 40%, rgba(241,234,215,.13) 0 1px, transparent 1px 7px);
-  background-size: 10px 10px;
-  opacity: .18;
-  mix-blend-mode: screen;
-}
-
-.news-hero::after {
-  display: none;
-}
-
-.news-hero .hero-bg {
-  opacity: .7;
-  filter: grayscale(.15) saturate(.72) contrast(1.25);
-}
-
-.news-hero .hero-shadow {
-  background:
-    linear-gradient(to right, rgba(0,0,0,.97) 0 35%, rgba(0,0,0,.54) 67%, rgba(0,0,0,.12)),
-    linear-gradient(to top, #050606 0, rgba(5,6,6,.68) 34%, transparent 75%),
-    radial-gradient(circle at 72% 34%, rgba(127,30,27,.32), transparent 38%);
-}
-
-.news-hero .hero-content {
-  position: relative;
-}
-
-.news-hero .hero-content::before {
-  content: "";
-  position: absolute;
-  left: -34px;
-  top: -14px;
-  bottom: -18px;
-  width: 8px;
-  background: var(--hq-red);
-  box-shadow:
-    -13px 0 0 var(--hq-yellow),
-    9px 0 0 #ff5148;
-}
-
+/*
+  Todos os elementos .eyebrow passam a participar normalmente
+  do fluxo do documento. Isso impede que o selo seja deslocado
+  para a lateral do título por regras visuais anteriores.
+*/
 .eyebrow {
-  position: relative;
-  padding: 8px 14px;
-  background: var(--hq-yellow);
-  color: var(--hq-ink);
-  border: 3px solid var(--hq-ink);
-  box-shadow: 5px 5px 0 var(--hq-red);
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  letter-spacing: .14em;
-  transform: rotate(-1deg);
-}
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
 
-.eyebrow::before {
-  display: none;
-}
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
 
-.news-hero h1 {
-  font-family: 'Anton', Impact, sans-serif;
-  font-weight: 400;
-  color: var(--hq-paper);
-  font-size: clamp(3.4rem, 8vw, 7.9rem);
-  line-height: .9;
-  letter-spacing: -.025em;
+  width: fit-content;
+  max-width: 100%;
+
+  margin: 0 0 24px !important;
+  padding: 10px 16px;
+
+  transform: none !important;
+
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-left: 3px solid #d52c2c;
+
+  color: #f4ead6 !important;
+
+  font-family: "Inter", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-align: center;
   text-transform: uppercase;
-  text-shadow:
-    4px 4px 0 #0a0c0d,
-    7px 7px 0 var(--hq-red-dark);
-  max-width: 1000px;
+  text-shadow: none !important;
+
+  box-shadow:
+    5px 5px 0 rgba(180, 25, 25, 0.72),
+    0 14px 30px rgba(0, 0, 0, 0.28);
+
+  z-index: 2;
 }
 
-.news-hero p {
-  color: #ded8c8;
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(.94rem, 1.35vw, 1.08rem);
-  line-height: 1.8;
-  text-shadow: 2px 2px 0 #000;
+/* Remove as linhas decorativas antigas do selo. */
+.eyebrow::before,
+.eyebrow::after {
+  display: none !important;
 }
 
-/* Botões como etiquetas recortadas */
-.btn,
-.cta-btn,
-.cta-video .cta-btn {
-  border-radius: 0;
-  border: 3px solid var(--hq-paper);
-  clip-path: polygon(0 0, 92% 0, 100% 24%, 100% 100%, 8% 100%, 0 78%);
-  box-shadow: 5px 5px 0 rgba(0,0,0,.85);
-  font-family: 'Space Mono', monospace;
-  transition:
-    transform 180ms var(--hq-ease),
-    box-shadow 180ms var(--hq-ease),
-    background 180ms ease,
-    color 180ms ease;
+/* Organiza os blocos que possuem selo + título. */
+.news-hero .hero-content,
+.section-header,
+.showcase-content,
+.statement,
+.newsletter,
+.cta-content {
+  display: flex;
+  flex-direction: column;
 }
 
-.btn.primary,
-.cta-btn,
-.cta-video .cta-btn {
-  background: var(--hq-yellow);
-  color: var(--hq-ink);
+/* Mantém o selo diretamente acima do título. */
+.eyebrow + h1,
+.eyebrow + h2,
+.eyebrow + h3 {
+  margin-top: 0 !important;
 }
 
-.btn.secondary {
-  background: var(--hq-panel);
-  color: var(--hq-paper);
-  border-color: var(--hq-paper);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+/* Blocos editoriais continuam alinhados à esquerda. */
+.news-hero .hero-content .eyebrow,
+.section-header .eyebrow,
+.showcase-content .eyebrow,
+.cta-content .eyebrow {
+  align-self: flex-start;
 }
 
-.btn:hover,
-.cta-btn:hover,
-.cta-video .cta-btn:hover {
-  transform: translate(-3px,-3px);
-  box-shadow: 9px 9px 0 var(--hq-red);
+/* Blocos que já usam composição central continuam centralizados. */
+.statement,
+.newsletter {
+  align-items: center;
 }
 
-.reading-progress {
-  height: 4px;
-  background:
-    linear-gradient(90deg, var(--hq-red), var(--hq-yellow), var(--hq-blue));
-  box-shadow: none;
+.statement .eyebrow,
+.newsletter .eyebrow {
+  align-self: center;
 }
 
-/* Corpo como página editorial */
-.news-article,
-.article {
-  max-width: 860px;
-}
-
-.article::before {
-  width: 100%;
-  height: 8px;
-  background:
-    linear-gradient(
-      90deg,
-      var(--hq-red) 0 24%,
-      var(--hq-yellow) 24% 48%,
-      var(--hq-blue) 48% 68%,
-      transparent 68%
-    );
-}
-
-.lead {
-  position: relative;
-  padding: 28px 30px;
-  background: var(--hq-paper);
-  color: var(--hq-ink);
-  border: 4px solid var(--hq-ink);
-  box-shadow: 9px 9px 0 var(--hq-red-dark);
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
-  line-height: 1.5;
-  transform: rotate(-.35deg);
-}
-
-.article p,
-.article li {
-  color: #bcb7aa;
-}
-
-.article h2,
-.article h3,
-.cta h2,
-.cta-video h2 {
-  font-family: 'Anton', Impact, sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--hq-paper);
-  letter-spacing: -.015em;
-}
-
-.article h2 {
-  position: relative;
-  padding-left: 20px;
-  text-shadow: 3px 3px 0 var(--hq-red-dark);
-}
-
-.article h2::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: .08em;
-  bottom: .08em;
-  width: 7px;
-  background: var(--hq-yellow);
-  box-shadow: 7px 0 0 var(--hq-red);
-}
-
-.article h3 {
-  padding-bottom: 8px;
-  border-bottom: 4px solid var(--hq-yellow);
-}
-
-/* Quadros editoriais */
-.highlight-box,
-.cta,
-.cta-video,
-.image-text,
-.warning {
-  border-radius: 0;
-  border: 4px solid var(--hq-border);
-  background:
-    radial-gradient(circle at 88% 6%, rgba(230,59,50,.15), transparent 30%),
-    linear-gradient(145deg, #17191a, #0e1112);
-  box-shadow: 9px 9px 0 #020303;
-  clip-path: polygon(0 0, 96% 0, 100% 6%, 100% 100%, 3% 100%, 0 94%);
-}
-
-.highlight-box::before,
-.cta::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    repeating-radial-gradient(circle at center, rgba(255,255,255,.1) 0 1px, transparent 1px 6px);
-  background-size: 9px 9px;
-  opacity: .11;
-}
-
-.highlight-box::after,
-.cta::after {
-  display: none;
-}
-
-.highlight-box span,
+/* O kicker do CTA de vídeo recebe a mesma linguagem visual. */
 .cta-kicker {
-  display: inline-block;
-  padding: 7px 10px;
-  background: var(--hq-yellow);
-  color: var(--hq-ink);
-  border: 3px solid var(--hq-ink);
-  box-shadow: 4px 4px 0 var(--hq-red);
-}
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
 
-.highlight-box span::before,
-.cta-kicker::before {
-  display: none;
-}
+  width: fit-content;
+  max-width: 100%;
 
-.warning {
-  border-color: var(--hq-red);
-  background:
-    repeating-linear-gradient(
-      135deg,
-      rgba(230,59,50,.12) 0 8px,
-      transparent 8px 16px
-    ),
-    #160b0b;
-  color: #f0c9c4;
-  font-weight: 700;
-}
+  margin: 0 0 24px;
+  padding: 10px 16px;
 
-.image-block img {
-  border: 4px solid var(--hq-paper);
-  border-radius: 0;
-  box-shadow: 8px 8px 0 var(--hq-red-dark);
-  filter: saturate(.7) contrast(1.18);
-}
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-left: 3px solid #d52c2c;
 
-.image-block img:hover {
-  transform: translate(-3px,-3px) rotate(-.25deg);
-  box-shadow: 12px 12px 0 var(--hq-red);
-}
+  color: #f4ead6;
 
-/* CTA de vídeo */
-.cta-video {
-  border-color: var(--hq-paper);
-}
-
-.cta-bg-video {
-  filter: grayscale(.15) saturate(.7) contrast(1.2);
-}
-
-.cta-overlay {
-  background:
-    linear-gradient(to right, rgba(0,0,0,.94), rgba(0,0,0,.42)),
-    linear-gradient(to top, rgba(0,0,0,.95), transparent 70%);
-}
-
-/* Social */
-.social-btn {
-  border: 3px solid rgba(241,234,215,.34);
-  border-radius: 50%;
-  background: #0c0f10;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
-.social-btn:hover {
-  border-color: var(--hq-paper);
-  background: var(--hq-yellow);
-  box-shadow: 4px 4px 0 var(--hq-red);
-}
-
-/* Rodapé editorial */
-.footer {
-  background:
-    repeating-linear-gradient(
-      135deg,
-      rgba(255,255,255,.018) 0 2px,
-      transparent 2px 10px
-    ),
-    #090b0c;
-  border-top: 6px solid var(--hq-paper);
-  box-shadow: inset 0 5px 0 var(--hq-red);
-}
-
-.footer-column h4 {
-  font-family: 'Anton', Impact, sans-serif;
+  font-family: "Inter", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  letter-spacing: .03em;
+
+  box-shadow:
+    5px 5px 0 rgba(180, 25, 25, 0.72),
+    0 14px 30px rgba(0, 0, 0, 0.28);
+
+  z-index: 2;
 }
 
-/* Menu mobile HQ */
-.menu-toggle {
-  border: 3px solid var(--hq-paper);
-  border-radius: 0;
-  background: var(--hq-red);
-  box-shadow: 4px 4px 0 var(--hq-paper);
+.cta-kicker::before,
+.cta-kicker::after {
+  display: none !important;
 }
 
-@media (max-width: 1000px) {
-  .nav-menu {
-    background:
-      repeating-radial-gradient(circle at center, rgba(255,255,255,.07) 0 1px, transparent 1px 7px),
-      #0a0d0e;
-    background-size: 10px 10px;
-    border-left: 5px solid var(--hq-red);
-    box-shadow: -9px 0 0 var(--hq-paper);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .nav-menu .nav-link {
-    font-family: 'Anton', Impact, sans-serif;
-    font-size: clamp(2rem, 9vw, 3.1rem);
-    color: #aba79b;
-    text-transform: uppercase;
-    letter-spacing: .01em;
-  }
-
-  .nav-menu .nav-link.active,
-  .nav-menu .nav-link:hover {
-    color: var(--hq-paper);
-    text-shadow: 3px 3px 0 var(--hq-red-dark);
-  }
-
-  .nav-menu .nav-link.active::before {
-    width: 11px;
-    height: 11px;
-    border-radius: 0;
-    background: var(--hq-yellow);
-    box-shadow: 4px 4px 0 var(--hq-red);
-  }
+.cta-kicker + h2 {
+  margin-top: 0 !important;
 }
 
-@media (max-width: 768px) {
-  .news-hero .hero-content::before {
-    left: -14px;
-  }
+/* Marcadores internos das caixas permanecem discretos,
+   para não competir com os títulos principais. */
+.highlight-box > span {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 22px;
+  padding: 7px 11px;
 
-  .news-hero h1 {
-    font-size: clamp(3rem, 15vw, 5.3rem);
-  }
+  background: rgba(255, 255, 255, 0.045);
+  border-left: 2px solid #d52c2c;
 
-  .lead {
-    margin-left: -4px;
-    margin-right: -4px;
-    padding: 24px;
-  }
+  color: #d4cec1;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+}
 
-  .highlight-box,
-  .cta,
-  .warning,
-  .cta-video {
-    box-shadow: 6px 6px 0 #020303;
-  }
+.highlight-box > span::before,
+.highlight-box > span::after {
+  display: none !important;
+}
 
-  .article h2 {
-    padding-left: 14px;
+@media (max-width: 700px) {
+  .eyebrow,
+  .cta-kicker {
+    margin-bottom: 20px !important;
+    padding: 9px 13px;
+
+    font-size: 0.59rem;
+    letter-spacing: 0.14em;
+
+    box-shadow:
+      4px 4px 0 rgba(180, 25, 25, 0.72),
+      0 10px 24px rgba(0, 0, 0, 0.25);
   }
 }
 
-@media (max-width: 480px) {
-  .news-hero .hero-content::before {
-    display: none;
-  }
-
-  .eyebrow {
-    transform: none;
-  }
-
-  .news-hero h1 {
-    font-size: clamp(2.8rem, 16vw, 4.6rem);
-  }
-}
