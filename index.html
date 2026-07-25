@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Two Eyes On You™ — Estúdio brasileiro independente responsável por Arcanian™.">
-  <meta name="keywords" content="Two Eyes On You, Arcanian, estúdio brasileiro, jogos, livros, narrativa">
+
+  <meta
+    name="description"
+    content="Two Eyes On You™ — Estúdio brasileiro independente dedicado à criação de jogos, livros e universos narrativos autorais."
+  >
+  <meta
+    name="keywords"
+    content="Two Eyes On You, estúdio indie, Arcanian, jogos, livros, narrativa, universos autorais"
+  >
   <meta name="author" content="Matheus Dantas">
 
   <title>Two Eyes On You™</title>
 
-  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="img/favicon.ico">
   <link rel="stylesheet" href="style/notice.css">
-
   <link rel="canonical" href="https://twoeyesonyou.com/">
 
   <script type="application/ld+json">
@@ -24,7 +30,7 @@
         "name": "Two Eyes On You",
         "alternateName": "Two Eyes On You™",
         "url": "https://twoeyesonyou.com/",
-        "description": "Estúdio brasileiro independente dedicado ao desenvolvimento de jogos, livros e universos narrativos autorais.",
+        "description": "Estúdio brasileiro independente dedicado à criação de jogos, livros e universos narrativos autorais.",
         "founder": {
           "@type": "Person",
           "@id": "https://twoeyesonyou.com/#matheus-dantas",
@@ -32,12 +38,7 @@
         },
         "logo": {
           "@type": "ImageObject",
-          "@id": "https://twoeyesonyou.com/#logo",
-          "url": "https://twoeyesonyou.com/img/logo.png",
-          "contentUrl": "https://twoeyesonyou.com/img/logo.png"
-        },
-        "image": {
-          "@id": "https://twoeyesonyou.com/#logo"
+          "url": "https://twoeyesonyou.com/img/logo.png"
         },
         "sameAs": [
           "https://instagram.com/twoeyesonyou",
@@ -52,74 +53,23 @@
         "@id": "https://twoeyesonyou.com/#website",
         "url": "https://twoeyesonyou.com/",
         "name": "Two Eyes On You",
-        "alternateName": "Two Eyes On You™",
-        "description": "Site oficial do estúdio brasileiro independente Two Eyes On You.",
-        "inLanguage": "pt-BR",
         "publisher": {
           "@id": "https://twoeyesonyou.com/#organization"
-        }
+        },
+        "inLanguage": "pt-BR"
       },
       {
         "@type": "WebPage",
         "@id": "https://twoeyesonyou.com/#webpage",
         "url": "https://twoeyesonyou.com/",
         "name": "Two Eyes On You™",
-        "description": "Two Eyes On You™ — Estúdio brasileiro independente responsável por Arcanian™.",
-        "inLanguage": "pt-BR",
         "isPartOf": {
           "@id": "https://twoeyesonyou.com/#website"
         },
         "about": {
           "@id": "https://twoeyesonyou.com/#organization"
         },
-        "primaryImageOfPage": {
-          "@id": "https://twoeyesonyou.com/#logo"
-        },
-        "mentions": {
-          "@id": "https://twoeyesonyou.com/arcanian/#creativework"
-        }
-      },
-      {
-        "@type": "CreativeWorkSeries",
-        "@id": "https://twoeyesonyou.com/arcanian/#creativework",
-        "name": "Arcanian",
-        "alternateName": "Arcanian™",
-        "url": "https://twoeyesonyou.com/arcanian/",
-        "description": "Universo narrativo de fantasia, ficção científica, mistério e suspense criado pela Two Eyes On You.",
-        "creator": {
-          "@id": "https://twoeyesonyou.com/#matheus-dantas"
-        },
-        "publisher": {
-          "@id": "https://twoeyesonyou.com/#organization"
-        },
-        "inLanguage": "pt-BR",
-        "hasPart": {
-          "@type": "Book",
-          "@id": "https://twoeyesonyou.com/arcanian/devaneios/#book",
-          "name": "Arcanian: Devaneios",
-          "alternateName": "Arcanian™: Devaneios",
-          "url": "https://arcanian.com.br/devaneios",
-          "description": "Uma investigação sobre desaparecimentos impossíveis, conspirações antigas e realidades em colapso.",
-          "author": {
-            "@id": "https://twoeyesonyou.com/#matheus-dantas"
-          },
-          "publisher": {
-            "@id": "https://twoeyesonyou.com/#organization"
-          },
-          "inLanguage": "pt-BR",
-          "genre": [
-            "Fantasia",
-            "Ficção científica",
-            "Mistério",
-            "Suspense"
-          ]
-        }
-      },
-      {
-        "@type": "Person",
-        "@id": "https://twoeyesonyou.com/#matheus-dantas",
-        "name": "Matheus Dantas",
-        "url": "https://twoeyesonyou.com/about/"
+        "inLanguage": "pt-BR"
       }
     ]
   }
@@ -128,31 +78,41 @@
 
 <body>
 
-<div class="reading-progress"></div>
+<div class="reading-progress" aria-hidden="true"></div>
 
 <header class="main-header">
   <div class="nav-container">
 
     <a href="/" class="logo" aria-label="Página inicial">
-      <img src="/img/logo.png" alt="Two Eyes On You">
+      <img src="img/logo.png" alt="Two Eyes On You">
     </a>
 
     <nav class="nav-menu" id="mobile-menu" aria-label="Navegação principal">
-      <a href="/" class="nav-link">Home</a>
+      <a href="/" class="nav-link active">Home</a>
       <a href="/arcanian/" class="nav-link">Arcanian</a>
       <a href="/news/" class="nav-link">Notícias</a>
       <a href="/documentation/" class="nav-link">Documentação</a>
       <a href="/about/" class="nav-link">Quem somos?</a>
       <a href="/contact/" class="nav-link">Contato</a>
 
-      <a href="/purchase/" class="mobile-preorder">
-        ESCOLHER EDIÇÃO
+      <a
+        href="https://arcanian.com.br/devaneios"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mobile-preorder"
+      >
+        DEVANEIOS
       </a>
     </nav>
 
     <div class="header-actions">
-      <a href="/purchase/" class="btn-preorder">
-        ESCOLHER EDIÇÃO
+      <a
+        href="https://arcanian.com.br/devaneios"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-preorder"
+      >
+        DEVANEIOS
       </a>
     </div>
 
@@ -174,24 +134,24 @@
 </header>
 
 <div class="social-sidebar">
-  <a href="https://instagram.com/twoeyesonyou" target="_blank" class="social-btn" aria-label="Instagram">
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+  <a href="https://instagram.com/twoeyesonyou" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="">
   </a>
 
-  <a href="https://x.com/twoeyeson_you" target="_blank" class="social-btn" aria-label="X">
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+  <a href="https://x.com/twoeyeson_you" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="X">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="">
   </a>
 
-  <a href="https://www.tiktok.com/@twoeyesonyou" target="_blank" class="social-btn" aria-label="TikTok">
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
+  <a href="https://www.tiktok.com/@twoeyesonyou" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="TikTok">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="">
   </a>
 
-  <a href="https://discord.gg/Ftu5mcXhcX" target="_blank" class="social-btn" aria-label="Discord">
-  <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
-</a>
+  <a href="https://discord.gg/Ftu5mcXhcX" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Discord">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="">
+  </a>
 </div>
 
-<button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<button class="back-to-top" type="button" aria-label="Voltar ao topo">↑</button>
 
 <main>
 
@@ -200,211 +160,249 @@
     <div class="noise-layer"></div>
 
     <div class="about-hero-content reveal">
-      <span class="eyebrow">TWO EYES ON YOU™</span>
+      <span class="eyebrow">TWO EYES ON YOU™ · ESTÚDIO INDEPENDENTE</span>
 
-      <h1>Criamos universos para serem lembrados.</h1>
+      <h1>
+        Criamos universos.<br>
+        Não produtos.
+      </h1>
 
       <p>
-        Estúdio brasileiro independente dedicado a jogos, livros e experiências narrativas.
-        A mídia muda. A intenção não: criar mundos com atmosfera, consequência e identidade.
+        Jogos, livros e experiências narrativas desenvolvidos para continuar existindo
+        depois do último capítulo, da última cena e da última escolha.
       </p>
 
       <div class="hero-actions">
-        <a href="/arcanian/" class="btn primary">Conhecer Arcanian™</a>
-        <a href="/about/" class="btn secondary">Nossa visão</a>
+        <a href="#explorar" class="btn primary">Começar a explorar</a>
+        <a href="/about/" class="btn secondary">Conhecer o estúdio</a>
       </div>
     </div>
-
   </section>
 
-  <section id="manifesto" class="statement reveal">
-    <span class="eyebrow">MANIFESTO</span>
+  <section id="explorar" class="statement reveal">
+    <span class="eyebrow">UMA PERGUNTA</span>
 
-    <h2>Histórias não existem apenas para serem consumidas.</h2>
+    <h2>
+      Por que algumas histórias desaparecem enquanto outras continuam vivas?
+    </h2>
 
     <p>
-      Elas precisam permanecer. Cada personagem, cidade, símbolo e conflito nasce para
-      provocar sensação, memória e curiosidade. A Two Eyes On You™ não quer apenas lançar
-      projetos. Quer construir universos com presença.
+      Para nós, uma obra não termina quando a página acaba ou quando a tela escurece.
+      Ela permanece quando deixa memória, dúvida, conexão e consequência.
     </p>
   </section>
 
-<section class="section reveal">
-  <div class="section-header">
-    <span class="eyebrow">NOSSO PROCESSO</span>
-    <h2>Não começamos por gênero. Começamos por sensação.</h2>
-  </div>
+  <section class="section reveal">
+    <div class="section-header">
+      <span class="eyebrow">NOSSA CONVICÇÃO</span>
+      <h2>Um universo é maior do que uma história.</h2>
+    </div>
 
-  <div class="creative-editorial">
+    <div class="creative-editorial">
 
-<article class="creative-panel creative-feature">
-  <span>01</span>
-<h3>
-  "A sensação<br>
-  vem antes<br>
-  da forma."
-</h3>  <p>
-    Toda obra começa com uma pergunta: <strong>o que queremos que alguém sinta?</strong>
-    Antes de decidir se uma ideia será um jogo, um livro ou qualquer outro formato,
-    definimos primeiro a emoção que queremos despertar. A mídia existe para servir
-    à experiência, nunca o contrário.
-  </p>
-</article>
+      <article class="creative-panel creative-feature">
+        <span>01</span>
 
-<article class="creative-panel">
-  <span>02</span>
-  <h3>Todo detalhe importa.</h3>
-  <p>
-    Mundos convincentes não são construídos apenas por grandes acontecimentos.
-    Personagens, cidades, organizações, símbolos e pequenas escolhas trabalham
-    juntos para criar universos que parecem continuar existindo mesmo quando a
-    história termina.
-  </p>
-</article>
+        <h3>
+          "Primeiro,<br>
+          a sensação."
+        </h3>
 
-<article class="creative-panel">
-  <span>03</span>
-  <h3>Criamos, não seguimos.</h3>
-  <p>
-    Tendências passam. Boas histórias permanecem.
-    Preferimos construir ideias autorais com identidade própria do que adaptar
-    nossos projetos para acompanhar o que está em alta no momento.
-  </p>
-</article>
+        <p>
+          Antes de escolher a mídia, definimos aquilo que precisa permanecer com o público.
+          Medo, curiosidade, perda, beleza, estranheza ou esperança. O formato vem depois.
+        </p>
+      </article>
 
-<article class="creative-panel creative-wide">
-  <span>04</span>
-  <h3>Primeiro, você.</h3>
-  <p>
-    O nome <strong>Two Eyes On You™</strong> representa a filosofia do estúdio:
-    antes de qualquer decisão criativa, olhamos para quem vai viver aquela
-    experiência. Cada escolha de design, narrativa ou direção artística existe
-    para tornar a jornada do jogador ou leitor mais significativa.
-  </p>
-</article>
-</div>
-</section>
+      <article class="creative-panel">
+        <span>02</span>
+        <h3>Obras se conectam.</h3>
+
+        <p>
+          Livros, jogos e outras experiências não existem como ilhas. Cada projeto pode
+          ampliar, contradizer ou transformar aquilo que veio antes.
+        </p>
+      </article>
+
+      <article class="creative-panel">
+        <span>03</span>
+        <h3>O público participa.</h3>
+
+        <p>
+          Não entregamos tudo pronto. Criamos espaço para observação, interpretação,
+          escolhas e descobertas que pertencem a quem vive a experiência.
+        </p>
+      </article>
+
+      <article class="creative-panel creative-wide">
+        <span>04</span>
+        <h3>O mundo continua sem você.</h3>
+
+        <p>
+          Cidades, personagens e conflitos são pensados para parecerem maiores do que
+          a cena mostrada. O universo precisa dar a sensação de que continuaria existindo
+          mesmo sem estar sendo observado.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="section-header">
+      <span class="eyebrow">MESA DE CRIAÇÃO</span>
+      <h2>Escolha por onde entrar.</h2>
+    </div>
+
+    <div class="archive-wall studio-desk">
+
+      <a class="archive-main" href="/arcanian/">
+        <span>UNIVERSO ATIVO</span>
+        <h3>Arcanian™</h3>
+        <p>
+          Mistério, fantasia, ficção científica, investigação e escolhas que atravessam
+          diferentes obras.
+        </p>
+      </a>
+
+      <a class="archive-note" href="/about/">
+        <strong>Filosofia</strong>
+        <p>Como a Two Eyes On You pensa, cria e conecta suas histórias.</p>
+      </a>
+
+      <a class="archive-note" href="/news/">
+        <strong>Diário do estúdio</strong>
+        <p>Atualizações, anúncios, bastidores e registros de desenvolvimento.</p>
+      </a>
+
+      <a class="archive-note" href="/documentation/">
+        <strong>Documentação</strong>
+        <p>Políticas, marcas, licenças e informações oficiais do estúdio.</p>
+      </a>
+
+      <a class="archive-note" href="/contact/">
+        <strong>Contato</strong>
+        <p>Parcerias, imprensa, suporte e comunicação direta.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="universos" class="section reveal">
+    <div class="section-header">
+      <span class="eyebrow">UNIVERSOS EM OBSERVAÇÃO</span>
+      <h2>Nem tudo está pronto para ser revelado.</h2>
+    </div>
+
+    <div class="universe-grid">
+
+      <article class="universe-card large">
+        <h3>Arcanian: Devaneios</h3>
+        <p>
+          O primeiro universo da Two Eyes On You. Uma narrativa construída entre livros,
+          jogos e experiências conectadas.
+        </p>
+
+        <div class="documentation-actions">
+          <a href="/arcanian/" class="btn primary">Explorar universo</a>
+          <a href="/purchase/" class="btn secondary">Conhecer Devaneios</a>
+        </div>
+      </article>
+
+      <article class="universe-card">
+        <span>ANÚNCIO EM 04 DE AGOSTO</span>
+        <h3>Projeto desconhecido</h3>
+        <p>Existem sinais, mas nenhuma informação pública foi autorizada.</p>
+      </article>
+
+    </div>
+  </section>
 
   <section id="arcanian" class="showcase reveal">
     <div class="showcase-video">
-      <video autoplay muted loop playsinline>
+      <video autoplay muted loop playsinline preload="metadata">
         <source src="img/arcanian.webm" type="video/webm">
       </video>
     </div>
 
     <div class="showcase-content">
-      <span class="eyebrow">PROJETO PRINCIPAL</span>
+      <span class="eyebrow">PRIMEIRO UNIVERSO</span>
 
-      <h2>Arcanian™: Devaneios</h2>
+      <h2>Arcanian™</h2>
 
       <p>
-        Uma investigação sobre desaparecimentos impossíveis, conspirações antigas
-        e realidades em colapso. O primeiro universo da Two Eyes On You™ começa
-        em Devaneios.
+        Um universo sobre investigação, memória, poder e consequências. Sua primeira porta
+        de entrada é <strong>Arcanian: Devaneios</strong>.
       </p>
 
       <div class="showcase-actions">
-        <a href="https://arcanian.com.br/devaneios" class="btn primary">Reservar Devaneios</a>
+        <a href="/arcanian/" class="btn primary">Entrar em Arcanian</a>
+        <a href="/purchase/" class="btn secondary">Ver Devaneios</a>
       </div>
     </div>
   </section>
 
-  <section id="noticias" class="section reveal">
-    <div class="section-header">
-      <span class="eyebrow">NOTÍCIAS</span>
-      <h2>Atualizações oficiais.</h2>
-    </div>
-
-    <div class="news-grid">
-      <a href="/news/prevenda-devaneios/" class="news-card">
-        <img src="img/welcomeback.png" alt="Arcanian: Devaneios">
-
-        <div>
-          <span>PRÉ-VENDA</span>
-          <h3>A pré-venda de Arcanian: Devaneios está acontecendo.</h3>
-
-          <p>
-            O primeiro projeto narrativo da Two Eyes On You™, escrito por Matheus Dantas,
-            está oficialmente em pré-venda digital na Amazon.
-          </p>
-
-          <strong class="news-link">Ler notícia →</strong>
-        </div>
-      </a>
-
-  </section>
-
   <section class="about-final reveal">
-    <span class="eyebrow">O COMEÇO</span>
+    <span class="eyebrow">TWO EYES ON YOU™</span>
 
-    <h2>Arcanian é o primeiro passo. Não o destino final.</h2>
+    <h2>
+      Você não está apenas assistindo.<br>
+      Você está entrando.
+    </h2>
 
     <p>
-      A Two Eyes On You™ começa com Devaneios, mas a ambição é maior:
-      criar um catálogo de mundos, personagens e experiências autorais com continuidade real.
+      Acompanhe o estúdio, descubra nossos universos e participe das próximas etapas.
     </p>
 
     <div class="hero-actions">
-      <a href="/arcanian/" class="btn primary">Conhecer Arcanian™</a>
-      <a href="#inicio" class="btn secondary">Voltar ao início</a>
+      <a href="https://discord.gg/Ftu5mcXhcX" target="_blank" rel="noopener noreferrer" class="btn primary">
+        Entrar na comunidade
+      </a>
+
+      <a href="/contact/" class="btn secondary">
+        Falar com o estúdio
+      </a>
     </div>
   </section>
 
 </main>
 
 <footer class="footer">
+  <div class="footer-container">
 
-    <div class="footer-container">
+    <div class="footer-brand">
+      <img src="img/logo.png" alt="Two Eyes On You">
 
-        <div class="footer-brand">
-
-            <img src="img/logo.png" alt="Two Eyes On You">
-
-            <p>
-                Two Eyes On You™ é um estúdio brasileiro independente dedicado ao
-                desenvolvimento de jogos, livros e universos narrativos autorais.
-            </p>
-
-        </div>
-
-        <div class="footer-column">
-
-            <h4>Estúdio</h4>
-
-            <a href="/about/">Sobre</a>
-            <a href="/news/">Notícias</a>
-            <a href="/documentation/">Documentação</a>
-            <a href="/contact/">Contato</a>
-
-        </div>
-
-        <div class="footer-column">
-
-            <h4>Redes sociais</h4>
-
-            <a href="https://instagram.com/twoeyesonyou" target="_blank">
-                Instagram
-            </a>
-
-            <a href="https://x.com/twoeyeson_you" target="_blank">
-                X (Twitter)
-            </a>
-
-            <a href="https://www.tiktok.com/@twoeyesonyou" target="_blank">
-                TikTok
-            </a>
-
-            <a href="https://youtube.com/@twoeyesonyou" target="_blank">
-                YouTube
-            </a>
-
-            <a href="https://discord.gg/Ftu5mcXhcX" target="_blank">
-                Discord
-            </a>
-
-        </div>
-
+      <p>
+        Estúdio brasileiro independente dedicado à criação de jogos, livros
+        e universos narrativos autorais.
+      </p>
     </div>
+
+    <div class="footer-column">
+      <h4>Estúdio</h4>
+      <a href="/about/">Sobre</a>
+      <a href="/news/">Notícias</a>
+      <a href="/documentation/">Documentação</a>
+      <a href="/contact/">Contato</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>Universos</h4>
+      <a href="/arcanian/">Arcanian™</a>
+      <a href="https://arcanian.com.br/devaneios">Devaneios</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>Redes sociais</h4>
+      <a href="https://instagram.com/twoeyesonyou" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://x.com/twoeyeson_you" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://www.tiktok.com/@twoeyesonyou" target="_blank" rel="noopener noreferrer">TikTok</a>
+      <a href="https://youtube.com/@twoeyesonyou" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://discord.gg/Ftu5mcXhcX" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+
+  </div>
 
   <div class="footer-bottom">
     <div class="footer-links">
@@ -416,165 +414,107 @@
       <a href="/documentation/arcanian-brand/">Marca Arcanian™</a>
     </div>
 
-
-        <p>
-            © 2026 Two Eyes On You™. Todos os direitos reservados.
-        </p>
-
-    </div>
-
+    <p>© 2026 Two Eyes On You™. Todos os direitos reservados.</p>
+  </div>
 </footer>
 
 <script>
   const menuToggle = document.querySelector('.menu-toggle');
-const mobileMenu = document.querySelector('.nav-menu');
-const menuOverlay = document.querySelector('.menu-overlay');
-const mobileMenuLinks = document.querySelectorAll('.nav-menu a');
+  const mobileMenu = document.querySelector('.nav-menu');
+  const menuOverlay = document.querySelector('.menu-overlay');
+  const mobileMenuLinks = document.querySelectorAll('.nav-menu a');
 
-function openMobileMenu() {
-  mobileMenu.classList.add('active');
-  menuToggle.classList.add('active');
-  menuOverlay.classList.add('active');
-  document.body.classList.add('menu-open');
+  function openMobileMenu() {
+    mobileMenu.classList.add('active');
+    menuToggle.classList.add('active');
+    menuOverlay.classList.add('active');
+    document.body.classList.add('menu-open');
 
-  menuToggle.setAttribute('aria-expanded', 'true');
-  menuToggle.setAttribute('aria-label', 'Fechar menu');
-}
-
-function closeMobileMenu() {
-  mobileMenu.classList.remove('active');
-  menuToggle.classList.remove('active');
-  menuOverlay.classList.remove('active');
-  document.body.classList.remove('menu-open');
-
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.setAttribute('aria-label', 'Abrir menu');
-}
-
-menuToggle.addEventListener('click', () => {
-  const menuIsOpen = mobileMenu.classList.contains('active');
-
-  if (menuIsOpen) {
-    closeMobileMenu();
-  } else {
-    openMobileMenu();
+    menuToggle.setAttribute('aria-expanded', 'true');
+    menuToggle.setAttribute('aria-label', 'Fechar menu');
   }
-});
 
-menuOverlay.addEventListener('click', closeMobileMenu);
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('active');
+    menuToggle.classList.remove('active');
+    menuOverlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
 
-mobileMenuLinks.forEach(link => {
-  link.addEventListener('click', closeMobileMenu);
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
-    closeMobileMenu();
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Abrir menu');
   }
-});
 
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 1000) {
-    closeMobileMenu();
-  }
-});
+  menuToggle?.addEventListener('click', () => {
+    mobileMenu.classList.contains('active')
+      ? closeMobileMenu()
+      : openMobileMenu();
+  });
+
+  menuOverlay?.addEventListener('click', closeMobileMenu);
+
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      closeMobileMenu();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1000) {
+      closeMobileMenu();
+    }
+  });
+
   const reveals = document.querySelectorAll('.reveal');
 
-  const observer = new IntersectionObserver(entries => {
+  const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, {
+    threshold: 0.1
+  });
 
-  reveals.forEach(item => observer.observe(item));
+  reveals.forEach(item => revealObserver.observe(item));
 
   const progress = document.querySelector('.reading-progress');
   const backToTop = document.querySelector('.back-to-top');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('section[id]');
 
-  window.addEventListener('scroll', () => {
+  function updateScrollInterface() {
     const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progressWidth = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    const scrollableHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
 
-    progress.style.width = `${progressWidth}%`;
+    const progressWidth =
+      scrollableHeight > 0
+        ? (scrollTop / scrollableHeight) * 100
+        : 0;
 
-    backToTop.classList.toggle('visible', scrollTop > 600);
+    if (progress) {
+      progress.style.width = `${progressWidth}%`;
+    }
 
-    let currentSection = '';
+    backToTop?.classList.toggle('visible', scrollTop > 600);
+  }
 
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 160;
-
-      if (scrollTop >= sectionTop) {
-        currentSection = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-
-      if (link.getAttribute('href') === `#${currentSection}`) {
-        link.classList.add('active');
-      }
-    });
+  window.addEventListener('scroll', updateScrollInterface, {
+    passive: true
   });
 
-  backToTop.addEventListener('click', () => {
+  updateScrollInterface();
+
+  backToTop?.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   });
-
-  const counters = document.querySelectorAll('[data-count]');
-
-  const counterObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-
-      const counter = entry.target;
-      const target = Number(counter.dataset.count);
-      let current = 0;
-      const increment = Math.max(1, Math.floor(target / 70));
-
-      const updateCounter = () => {
-        current += increment;
-
-        if (current >= target) {
-          counter.textContent = target;
-          return;
-        }
-
-        counter.textContent = current;
-        requestAnimationFrame(updateCounter);
-      };
-
-      updateCounter();
-      counterObserver.unobserve(counter);
-    });
-  }, { threshold: 0.5 });
-
-  counters.forEach(counter => counterObserver.observe(counter));
-
-  const caseTabs = document.querySelectorAll('.case-tab');
-  const caseFiles = document.querySelectorAll('.case-file');
-
-  caseTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.case;
-
-      caseTabs.forEach(item => item.classList.remove('active'));
-      caseFiles.forEach(file => file.classList.remove('active'));
-
-      tab.classList.add('active');
-      document.getElementById(target).classList.add('active');
-    });
-  });
-  
 </script>
 
 </body>
