@@ -5283,3 +5283,42 @@ body::after {
 .studio-desk .archive-note:hover p {
   color: #d4cec0 !important;
 }
+.synopsis-extra {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.45s ease,
+    opacity 0.3s ease,
+    margin-top 0.3s ease;
+}
+
+.synopsis-extra.active {
+  max-height: 700px;
+  opacity: 1;
+  margin-top: 18px;
+}
+
+.synopsis-toggle {
+  margin-top: 12px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #f2b92d;
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.synopsis-toggle:hover {
+  color: #fff;
+}
+
+.synopsis-toggle::after {
+  content: " ↓";
+}
+
+.synopsis-toggle[aria-expanded="true"]::after {
+  content: " ↑";
+}
