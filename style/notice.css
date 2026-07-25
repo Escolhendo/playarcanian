@@ -5336,10 +5336,10 @@ body::after {
   --arc-ink: #f4efe4;
   --arc-muted: #aaa397;
   --arc-faint: #777167;
-  --arc-red: #e43f4f;
+  --arc-red: #ad000067;
   --arc-red-bright: #ff5362;
   --arc-paper: #e8dec9;
-  --arc-yellow: #d8a93c;
+  --arc-yellow: #e43f4f;
   --arc-line: rgba(244, 239, 228, .16);
   --arc-line-strong: rgba(244, 239, 228, .34);
   --arc-shadow: 0 28px 80px rgba(0, 0, 0, .42);
@@ -5506,7 +5506,7 @@ body::after {
 .archive-main h3,
 .creative-panel h3 {
   font-family: "Bricolage Grotesque", sans-serif;
-  font-weight: 754;
+  font-weight: 755;
   letter-spacing: -.055em;
   text-wrap: balance;
 }
@@ -6235,4 +6235,693 @@ body::after {
       4px 4px 0 rgba(180, 25, 25, 0.72),
       0 10px 24px rgba(0, 0, 0, 0.25);
   }
+}
+
+/* =========================================================
+   CORREÇÕES DE LAYOUT — CARDS, TÍTULOS E RESPONSIVIDADE
+   Deve permanecer no final do arquivo.
+========================================================= */
+
+/* Impede que conteúdos de grid forcem colunas além da largura disponível. */
+.creative-editorial,
+.archive-wall,
+.universe-grid,
+.world-grid,
+.identity-grid,
+.character-grid,
+.news-grid,
+.showcase {
+  min-width: 0;
+}
+
+.creative-panel,
+.archive-main,
+.archive-note,
+.universe-card,
+.world-card,
+.identity-card,
+.character-card,
+.news-card,
+.showcase-content {
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------
+   MESA DE CRIAÇÃO
+--------------------------------------------------------- */
+
+.archive-wall.studio-desk {
+  grid-template-columns:
+    minmax(330px, 1.08fr)
+    minmax(230px, 0.96fr)
+    minmax(230px, 0.96fr);
+  align-items: stretch;
+}
+
+.studio-desk .archive-main {
+  overflow: hidden;
+}
+
+.studio-desk .archive-main h3 {
+  max-width: 100%;
+  font-size: clamp(3.1rem, 5.5vw, 5.35rem);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.studio-desk .archive-note {
+  min-width: 0;
+  min-height: 198px;
+  overflow: hidden;
+}
+
+.studio-desk .archive-note strong {
+  max-width: 100%;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  line-height: 1.08;
+  overflow-wrap: break-word;
+}
+
+/* ---------------------------------------------------------
+   NOSSA CONVICÇÃO / PAINÉIS CRIATIVOS
+--------------------------------------------------------- */
+
+.creative-editorial {
+  grid-template-columns:
+    minmax(350px, 1.02fr)
+    minmax(0, 0.99fr)
+    minmax(0, 0.99fr);
+}
+
+.creative-panel {
+  min-width: 0;
+  padding: clamp(28px, 3vw, 40px);
+}
+
+.creative-panel h3,
+.creative-feature h3,
+.creative-wide h3 {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.creative-feature h3 {
+  font-size: clamp(3rem, 4.3vw, 4.35rem) !important;
+  line-height: 0.91;
+  letter-spacing: -0.055em;
+}
+
+.creative-panel:not(.creative-feature):not(.creative-wide) h3 {
+  font-size: clamp(2rem, 2.7vw, 3rem);
+  line-height: 0.96;
+}
+
+.creative-wide h3 {
+  font-size: clamp(2.65rem, 4vw, 4.2rem);
+  line-height: 0.93;
+}
+
+/* Aspas não devem ficar isoladas em linhas por falta de espaço. */
+.creative-feature h3 {
+  text-wrap: balance;
+}
+
+/* ---------------------------------------------------------
+   TÍTULOS GERAIS
+--------------------------------------------------------- */
+
+.section-header,
+.about-hero-content,
+.showcase-content,
+.statement,
+.about-final {
+  min-width: 0;
+}
+
+.section-header h2,
+.statement h2,
+.about-final h2,
+.showcase-content h2,
+.about-hero h1 {
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: balance;
+}
+
+/* Evita que barras e pseudo-elementos ultrapassem o viewport. */
+.section-header::before,
+.section-header::after,
+.hero h1::after,
+.about-hero h1::after {
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------
+   TABLET
+--------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .archive-wall.studio-desk {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .studio-desk .archive-main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    min-height: 360px;
+  }
+
+  .studio-desk .archive-main h3 {
+    font-size: clamp(3.5rem, 9vw, 5.6rem);
+  }
+
+  .creative-editorial {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "feature feature"
+      "card2 card3"
+      "wide wide";
+  }
+
+  .creative-feature {
+    min-height: 430px;
+  }
+
+  .creative-feature h3 {
+    max-width: 760px;
+    font-size: clamp(3.4rem, 8vw, 5.2rem) !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   CELULAR
+--------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  .section,
+  .statement,
+  .showcase,
+  .about-final,
+  .identity,
+  .universe,
+  .documentation,
+  .timeline-section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .section-header {
+    padding-left: 14px;
+    margin-bottom: 34px;
+  }
+
+  .section-header h2,
+  .statement h2,
+  .about-final h2,
+  .showcase-content h2 {
+    font-size: clamp(2.35rem, 12vw, 3.75rem);
+    line-height: 0.91;
+    letter-spacing: -0.05em;
+  }
+
+  .archive-wall.studio-desk {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .studio-desk .archive-main,
+  .studio-desk .archive-note {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: auto;
+    padding: 24px 22px;
+    transform: none !important;
+  }
+
+  .studio-desk .archive-main {
+    min-height: 340px;
+    justify-content: flex-end;
+  }
+
+  .studio-desk .archive-main h3 {
+    font-size: clamp(3rem, 16vw, 4.65rem);
+    line-height: 0.88;
+  }
+
+  .studio-desk .archive-note strong {
+    font-size: clamp(1.35rem, 7vw, 1.8rem);
+  }
+
+  .creative-editorial {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "feature"
+      "card2"
+      "card3"
+      "wide";
+    gap: 16px;
+  }
+
+  .creative-panel,
+  .creative-feature,
+  .creative-wide {
+    min-height: auto;
+    padding: 26px 22px;
+  }
+
+  .creative-panel span {
+    margin-bottom: 28px;
+  }
+
+  .creative-feature h3,
+  .creative-panel:not(.creative-feature):not(.creative-wide) h3,
+  .creative-wide h3 {
+    font-size: clamp(2.45rem, 12.5vw, 3.75rem) !important;
+    line-height: 0.91;
+    letter-spacing: -0.05em;
+  }
+
+  .creative-feature h3 br {
+    display: none;
+  }
+
+  .creative-panel p,
+  .creative-wide p {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .showcase {
+    gap: 30px;
+  }
+
+  .showcase-video,
+  .showcase-video video,
+  .showcase-image,
+  .showcase-image img {
+    min-height: 300px;
+    height: 52vw;
+    max-height: 430px;
+  }
+
+  .hero-actions,
+  .showcase-actions,
+  .documentation-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .hero-actions .btn,
+  .showcase-actions .btn,
+  .documentation-actions .btn {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .about-hero h1 {
+    font-size: clamp(3rem, 15vw, 5rem);
+    line-height: 0.88;
+  }
+
+  .about-hero p {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .eyebrow {
+    max-width: min(100%, 290px);
+    white-space: normal;
+    line-height: 1.25;
+  }
+}
+
+/* ---------------------------------------------------------
+   CELULARES ESTREITOS
+--------------------------------------------------------- */
+
+@media (max-width: 420px) {
+  .section,
+  .statement,
+  .showcase,
+  .about-final {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .creative-panel,
+  .creative-feature,
+  .creative-wide,
+  .studio-desk .archive-main,
+  .studio-desk .archive-note {
+    padding: 22px 18px;
+  }
+
+  .creative-feature h3,
+  .creative-panel:not(.creative-feature):not(.creative-wide) h3,
+  .creative-wide h3 {
+    font-size: clamp(2.2rem, 12vw, 3.2rem) !important;
+  }
+
+  .studio-desk .archive-main h3 {
+    font-size: clamp(2.75rem, 15vw, 4rem);
+  }
+
+  .eyebrow {
+    font-size: 0.55rem;
+    letter-spacing: 0.11em;
+  }
+}
+
+/* =========================================================
+   CORREÇÃO DEFINITIVA — GRIDS SEM CORTE OU OVERFLOW
+   Esta camada substitui as larguras rígidas adicionadas antes.
+========================================================= */
+
+/* A largura total das seções nunca pode superar o viewport. */
+.section,
+.statement,
+.showcase,
+.about-final,
+.identity,
+.universe,
+.documentation,
+.timeline-section {
+  width: min(100%, 1280px);
+  max-width: 1280px;
+}
+
+/* Todos os filhos de grid podem encolher corretamente. */
+.archive-wall > *,
+.creative-editorial > *,
+.universe-grid > *,
+.world-grid > *,
+.identity-grid > *,
+.character-grid > *,
+.news-grid > *,
+.showcase > * {
+  min-width: 0 !important;
+  max-width: 100%;
+}
+
+/* =========================================================
+   MESA DE CRIAÇÃO
+========================================================= */
+
+.archive-wall.studio-desk {
+  width: 100%;
+  max-width: 100%;
+  grid-template-columns:
+    minmax(0, 1.08fr)
+    minmax(0, 0.92fr)
+    minmax(0, 0.92fr) !important;
+  overflow: visible;
+}
+
+/* O card pode ocultar apenas elementos decorativos, não o texto. */
+.studio-desk .archive-main {
+  min-width: 0;
+  overflow: visible !important;
+}
+
+/* O título precisa caber dentro da primeira coluna. */
+.studio-desk .archive-main h3 {
+  width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  padding-right: 0;
+
+  font-size: clamp(2.7rem, 4.35vw, 4.65rem) !important;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+/* Evita que o símbolo ™ force uma linha ou ultrapasse o card. */
+.studio-desk .archive-main h3 sup {
+  font-size: 0.38em;
+  vertical-align: top;
+}
+
+.studio-desk .archive-main p {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Os cards menores ocupam exatamente sua coluna. */
+.studio-desk .archive-note {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  overflow: visible;
+}
+
+.studio-desk .archive-note strong,
+.studio-desk .archive-note p {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* =========================================================
+   PAINÉIS CRIATIVOS
+========================================================= */
+
+.creative-editorial {
+  width: 100%;
+  max-width: 100%;
+
+  grid-template-columns:
+    minmax(0, 1.04fr)
+    minmax(0, 0.98fr)
+    minmax(0, 0.98fr) !important;
+
+  overflow: visible;
+}
+
+.creative-panel {
+  width: 100%;
+  min-width: 0 !important;
+  max-width: none;
+  overflow: hidden;
+}
+
+/*
+  O HTML contém <br> manuais. Eles provocavam quebras artificiais
+  e deixavam aspas e palavras isoladas.
+*/
+.creative-panel h3 br {
+  display: none !important;
+}
+
+.creative-panel h3,
+.creative-feature h3,
+.creative-wide h3 {
+  display: block;
+  width: 100%;
+  max-width: none !important;
+
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: balance;
+}
+
+.creative-feature h3 {
+  font-size: clamp(2.85rem, 3.65vw, 4rem) !important;
+  line-height: 0.92;
+  letter-spacing: -0.052em;
+}
+
+.creative-panel:not(.creative-feature):not(.creative-wide) h3 {
+  font-size: clamp(1.85rem, 2.35vw, 2.65rem) !important;
+  line-height: 0.96;
+}
+
+.creative-wide h3 {
+  font-size: clamp(2.45rem, 3.45vw, 3.8rem) !important;
+  line-height: 0.93;
+}
+
+/* =========================================================
+   TELAS INTERMEDIÁRIAS
+========================================================= */
+
+@media (max-width: 1180px) {
+  .archive-wall.studio-desk {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+
+  .studio-desk .archive-main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    min-height: 340px;
+  }
+
+  .studio-desk .archive-main h3 {
+    font-size: clamp(3rem, 8vw, 5rem) !important;
+  }
+
+  .creative-editorial {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-template-areas:
+      "feature feature"
+      "card2 card3"
+      "wide wide" !important;
+  }
+
+  .creative-feature {
+    min-height: 400px;
+  }
+
+  .creative-feature h3 {
+    max-width: 760px !important;
+    font-size: clamp(3rem, 7vw, 4.8rem) !important;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+  .section,
+  .statement,
+  .showcase,
+  .about-final,
+  .identity,
+  .universe,
+  .documentation,
+  .timeline-section {
+    width: 100%;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .archive-wall.studio-desk {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100%;
+    padding: 14px;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .studio-desk .archive-main,
+  .studio-desk .archive-note {
+    grid-column: 1;
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    padding: 22px 20px;
+    transform: none !important;
+    overflow: hidden !important;
+  }
+
+  .studio-desk .archive-main {
+    min-height: 310px;
+  }
+
+  .studio-desk .archive-main h3 {
+    font-size: clamp(2.65rem, 14vw, 4rem) !important;
+    line-height: 0.9;
+    word-break: normal;
+  }
+
+  .studio-desk .archive-main p {
+    max-width: 100%;
+  }
+
+  .creative-editorial {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "feature"
+      "card2"
+      "card3"
+      "wide" !important;
+    width: 100%;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .creative-panel,
+  .creative-feature,
+  .creative-wide {
+    grid-column: 1;
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    padding: 24px 20px;
+  }
+
+  .creative-feature h3,
+  .creative-panel:not(.creative-feature):not(.creative-wide) h3,
+  .creative-wide h3 {
+    font-size: clamp(2.2rem, 11vw, 3.35rem) !important;
+    line-height: 0.92;
+  }
+
+  .creative-panel p,
+  .creative-wide p {
+    max-width: 100%;
+  }
+}
+
+/* Celulares realmente estreitos. */
+@media (max-width: 390px) {
+  .section,
+  .statement,
+  .showcase,
+  .about-final {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .archive-wall.studio-desk {
+    padding: 10px;
+  }
+
+  .studio-desk .archive-main,
+  .studio-desk .archive-note,
+  .creative-panel,
+  .creative-feature,
+  .creative-wide {
+    padding: 20px 16px;
+  }
+
+  .studio-desk .archive-main h3 {
+    font-size: clamp(2.35rem, 13vw, 3.35rem) !important;
+  }
+
+  .creative-feature h3,
+  .creative-panel:not(.creative-feature):not(.creative-wide) h3,
+  .creative-wide h3 {
+    font-size: clamp(2rem, 10.5vw, 2.9rem) !important;
+  }
+}
+
+.devaneios-logo {
+    display: block;
+    width: min(100%, 420px);
+    height: auto;
+    margin-bottom: 1.2rem;
 }
