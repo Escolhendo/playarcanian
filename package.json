@@ -1,0 +1,22 @@
+{
+  "name": "two-eyes-on-you-site",
+  "private": true,
+  "version": "12.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "validate": "node scripts/validate.mjs",
+    "build": "npm run validate && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.1.5"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

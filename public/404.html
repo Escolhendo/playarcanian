@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Two Eyes On You</title>
+  <script>
+    (function () {
+      var parts = window.location.pathname.split('/').filter(Boolean);
+      var githubProject = window.location.hostname.endsWith('github.io') && parts.length > 0;
+      var base = githubProject ? '/' + parts.shift() + '/' : '/';
+      var route = '/' + parts.join('/');
+      if (route === '/') route = '/';
+      window.location.replace(base + '#'+ route + window.location.search + window.location.hash);
+    }());
+  </script>
+</head>
+<body></body>
+</html>
