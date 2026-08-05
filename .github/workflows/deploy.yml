@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 permissions:
@@ -24,7 +23,7 @@ jobs:
       - name: Baixar repositório
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Configurar Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -33,13 +32,13 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Gerar site
+      - name: Compilar site
         run: npm run build
 
-      - name: Configurar GitHub Pages
+      - name: Configurar Pages
         uses: actions/configure-pages@v5
 
-      - name: Enviar arquivos do site
+      - name: Enviar pasta compilada
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
@@ -53,6 +52,6 @@ jobs:
     needs: build
 
     steps:
-      - name: Publicar no GitHub Pages
+      - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4
