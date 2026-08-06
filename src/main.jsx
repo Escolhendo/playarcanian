@@ -5,6 +5,8 @@ import { legalDocuments } from './legal.js';
 import { timelineEvents, wikiCategories, wikiEntries } from './wiki.js';
 import { getWikiProfile } from './wikiDetails.js';
 import { wikiSupplement } from './wikiSupplement.js';
+import { finalWikiEntries } from './wikiFinal.js';
+import { getBookGuide } from './bookGuide.js';
 import {
   getDictionary,
   languages,
@@ -13,9 +15,11 @@ import {
   localizedWikiEntry,
   localizedWork
 } from './i18n.js';
+import { timelineTranslations, docsTranslations, wikiInterfaceExtra } from './fullTranslations.js';
+import { localizedLegalDocument } from './legalTranslations.js';
 import './styles.css';
 
-const allWikiEntries = [...wikiEntries, ...wikiSupplement];
+const allWikiEntries = [...wikiEntries, ...wikiSupplement, ...finalWikiEntries];
 
 const SiteContext = createContext(null);
 const useSite = () => useContext(SiteContext);
@@ -137,8 +141,8 @@ function routeName(route, d, lang) {
   const entry = allWikiEntries.find((item) => route === `/wiki/${item.slug}`);
   const legal = legalDocuments.find((item) => route === `/documentation/${item.slug}`);
   if (work) return localizedWork(work, lang).displayTitle;
-  if (entry) return entry.name;
-  if (legal) return legal.title;
+  if (entry) return localizedWikiEntry(entry, lang).name;
+  if (legal) return localizedLegalDocument(legal, lang).title;
   if (route.startsWith('/wiki/')) return d.routes['/wiki'];
   if (route.startsWith('/documentation/')) return d.routes['/documentation'];
   if (route.startsWith('/obra/')) return d.routes['/arcanian'];
@@ -172,7 +176,7 @@ function useReveal(scopeKey) {
     let observer;
     const activate = () => {
       const nodes = [...document.querySelectorAll('[data-reveal]')];
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      if (document.documentElement.dataset.motion === 'reduced' || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
         nodes.forEach((node) => node.classList.add('is-visible'));
         return;
       }
@@ -207,67 +211,163 @@ function RailButton({ item, route }) {
   return <SmartLink href={href} className={`rail-action ${isActive(route, href) ? 'is-active' : ''}`} aria-label={d.nav[key]} data-tip={d.nav[key]}><Icon name={icon}/></SmartLink>;
 }
 
+const settingsUiCopy = {
+  pt: { menu:'Menu', navigation:'Navegação', details:'Ver detalhes', active:'Ativo', quick:'Navegação rápida' },
+  en: { menu:'Menu', navigation:'Navigation', details:'View details', active:'Active', quick:'Quick navigation' },
+  es: { menu:'Menú', navigation:'Navegación', details:'Ver detalles', active:'Activo', quick:'Navegación rápida' },
+  it: { menu:'Menu', navigation:'Navigazione', details:'Vedi dettagli', active:'Attivo', quick:'Navigazione rapida' },
+  ja: { menu:'メニュー', navigation:'ナビゲーション', details:'詳細を見る', active:'選択中', quick:'クイックナビゲーション' }
+};
+
 function SideRail({ route, onSearch, onSettings }) {
-  const { d, lang } = useSite();
+  const { d, lang, theme, setLang } = useSite();
   const currentWork = works.find((work) => route === `/obra/${work.slug}`);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const themeName = d.settings[themes.find((item) => item.id === theme)?.key] || d.settings.theme;
+  const language = languages.find((item) => item.id === lang) || languages[0];
+  const ui = settingsUiCopy[lang] || settingsUiCopy.pt;
+
   useEffect(() => setMobileOpen(false), [route]);
+  useEffect(() => {
+    document.body.classList.toggle('mobile-menu-open', mobileOpen);
+    return () => document.body.classList.remove('mobile-menu-open');
+  }, [mobileOpen]);
+
+  const openSearch = () => { setMobileOpen(false); onSearch(); };
+  const openSettings = () => { setMobileOpen(false); onSettings(); };
+
   return <>
     <aside className="site-rail">
-      <SmartLink href="#/" className="rail-logo" aria-label="Two Eyes On You"><img src="./media/logo.webp" alt=""/></SmartLink>
-      <nav className="rail-group" aria-label="Principal">{navPrimary.map((item) => <RailButton key={item[0]} item={item} route={route}/>)}</nav>
-      <div className="rail-divider"/>
-      <nav className="rail-projects" aria-label={d.nav.projects}>
-        {works.map((work) => { const item = localizedWork(work, lang); return <SmartLink href={`#/obra/${work.slug}`} key={work.slug} className={`rail-project ${route === `/obra/${work.slug}` ? 'is-active' : ''}`} data-tip={item.displayTitle}><img src={work.image} alt=""/></SmartLink>; })}
-      </nav>
-      <div className="rail-divider"/>
-      <nav className="rail-group rail-group--small">{navSecondary.map((item) => <RailButton key={item[0]} item={item} route={route}/>)}</nav>
+      <SmartLink href="#/" className="rail-logo brand-logo-surface" aria-label="Two Eyes On You"><img src="./media/logo.webp" alt=""/></SmartLink>
+      <nav className="rail-group" aria-label={ui.navigation}>{navPrimary.map((item) => <RailButton key={item[0]} item={item} route={route}/>)}</nav>
       <div className="rail-spacer"/>
       <button className="rail-action" type="button" aria-label={d.common.search} data-tip={d.common.search} onClick={onSearch}><Icon name="search"/></button>
-      <button className="rail-action" type="button" aria-label={d.settings.open} data-tip={`${d.settings.open} · ${lang.toUpperCase()}`} onClick={onSettings}><Icon name="settings"/></button>
+      <button className="rail-action rail-theme-action" type="button" aria-label={`${d.settings.language}: ${language.label}. ${d.settings.theme}: ${themeName}`} data-tip={`${language.short} · ${themeName}`} onClick={onSettings}><span className={`theme-dot theme-dot--${theme}`}/><Icon name="settings" size={19}/></button>
       <SmartLink href="#/purchase" className={`rail-buy ${route === '/purchase' ? 'is-active' : ''}`} data-tip={d.nav.buy}><Icon name="book"/></SmartLink>
     </aside>
 
     <header className="mobile-bar">
-      <SmartLink href="#/" className="mobile-logo"><img src="./media/logo.webp" alt=""/></SmartLink>
-      {currentWork ? <ProjectLogo work={currentWork} compact className="project-logo--route"/> : <strong>{routeName(route, d, lang)}</strong>}
-      <div>
-        <button type="button" onClick={onSettings} aria-label={d.settings.open}><Icon name="settings"/></button>
-        <button type="button" onClick={() => setMobileOpen(!mobileOpen)} aria-label={d.nav.home}><Icon name={mobileOpen ? 'close' : 'menu'}/></button>
-      </div>
+      <SmartLink href="#/" className="mobile-logo brand-logo-surface" aria-label="Two Eyes On You"><img src="./media/logo.webp" alt=""/></SmartLink>
+      <div className="mobile-route">{currentWork ? <ProjectLogo work={currentWork} compact className="project-logo--route"/> : <strong>{routeName(route, d, lang)}</strong>}</div>
+      <button type="button" className="mobile-theme-trigger" onClick={onSettings} aria-label={`${d.settings.language}: ${language.label}. ${d.settings.theme}: ${themeName}`}>
+        <span className={`theme-dot theme-dot--${theme}`}/><span>{language.short}</span><Icon name="settings" size={18}/>
+      </button>
     </header>
-    <div className={`mobile-nav ${mobileOpen ? 'is-open' : ''}`}>
-      <div className="mobile-nav__head"><img src="./media/logo.webp" alt=""/><button type="button" onClick={() => setMobileOpen(false)}><Icon name="close"/></button></div>
-      {[...navPrimary, ...navSecondary].map(([key, href, icon]) => <SmartLink key={key} href={href}><Icon name={icon}/><strong>{d.nav[key]}</strong><Icon name="arrow"/></SmartLink>)}
-      <div className="mobile-nav__projects">{works.map((work) => { const item = localizedWork(work, lang); return <SmartLink key={work.slug} href={`#/obra/${work.slug}`}><img src={work.image} alt=""/><ProjectLogo work={work} compact/></SmartLink>; })}</div>
-      <SmartLink href="#/purchase" className="mobile-buy"><Icon name="book"/><strong>{d.nav.buy}</strong></SmartLink>
-    </div>
+
+    <nav className="mobile-dock" aria-label={ui.quick}>
+      {navPrimary.slice(0, 3).map(([key, href, icon]) => <SmartLink key={key} href={href} className={isActive(route, href) ? 'is-active' : ''}><Icon name={icon}/><span>{d.nav[key]}</span></SmartLink>)}
+      <button type="button" onClick={openSearch}><Icon name="search"/><span>{d.common.search}</span></button>
+      <button type="button" className={mobileOpen ? 'is-active' : ''} onClick={() => setMobileOpen((value) => !value)} aria-expanded={mobileOpen} aria-controls="mobile-navigation"><Icon name={mobileOpen ? 'close' : 'menu'}/><span>{ui.menu}</span></button>
+    </nav>
+
+    <button className={`mobile-nav-backdrop ${mobileOpen ? 'is-open' : ''}`} type="button" aria-label={d.common.close} onClick={() => setMobileOpen(false)}/>
+    <aside id="mobile-navigation" className={`mobile-nav ${mobileOpen ? 'is-open' : ''}`} aria-hidden={!mobileOpen}>
+      <div className="mobile-nav__head"><div><span className="brand-logo-surface"><img src="./media/logo.webp" alt=""/></span><span><small>Two Eyes On You</small><strong>{ui.menu}</strong></span></div><button type="button" onClick={() => setMobileOpen(false)} aria-label={d.common.close}><Icon name="close"/></button></div>
+      <button className="mobile-nav__search" type="button" onClick={openSearch}><Icon name="search"/><span>{d.search.placeholder}</span><Icon name="arrow" size={18}/></button>
+
+      <section className="mobile-nav__section">
+        <small>{ui.navigation}</small>
+        <div className="mobile-nav__links">{navPrimary.map(([key, href, icon]) => <SmartLink key={key} href={href} className={isActive(route, href) ? 'is-active' : ''}><Icon name={icon}/><strong>{d.nav[key]}</strong><Icon name="arrow" size={18}/></SmartLink>)}</div>
+      </section>
+
+      <section className="mobile-nav__section mobile-nav__more">
+        <small>{d.common.viewAll}</small>
+        <div>{navSecondary.map(([key, href, icon]) => <SmartLink key={key} href={href} className={isActive(route, href) ? 'is-active' : ''}><Icon name={icon}/><span>{d.nav[key]}</span></SmartLink>)}</div>
+      </section>
+
+      <section className="mobile-nav__section mobile-nav__compact-settings">
+        <label><span><Icon name="globe"/><strong>{d.settings.language}</strong></span><select value={lang} onChange={(event) => setLang(event.target.value)}>{languages.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}</select></label>
+        <button type="button" onClick={openSettings}><span><span className={`theme-dot theme-dot--${theme}`}/><strong>{d.settings.theme}</strong><small>{themeName}</small></span><Icon name="settings"/></button>
+      </section>
+
+      <SmartLink href="#/purchase" className="mobile-buy"><Icon name="book"/><strong>{d.nav.buy}</strong><Icon name="arrow"/></SmartLink>
+    </aside>
   </>;
 }
 
 function TopBar({ route, onSearch, onSettings }) {
   const { d, lang, theme } = useSite();
-  const language = languages.find((item) => item.id === lang);
+  const language = languages.find((item) => item.id === lang) || languages[0];
   const currentWork = works.find((work) => route === `/obra/${work.slug}`);
+  const themeName = d.settings[themes.find((item) => item.id === theme)?.key] || d.settings.theme;
   return <header className="top-bar">
     <div className="top-route"><span>Two Eyes On You</span>{currentWork ? <ProjectLogo work={currentWork} compact className="project-logo--route"/> : <strong>{routeName(route, d, lang)}</strong>}</div>
     <nav className="top-links"><SmartLink href="#/arcanian">{d.nav.projects}</SmartLink><SmartLink href="#/news">{d.nav.news}</SmartLink><SmartLink href="#/about">{d.nav.studio}</SmartLink></nav>
     <div className="top-actions">
       <button type="button" onClick={onSearch}><Icon name="search" size={18}/><span>{d.common.search}</span><kbd>Ctrl K</kbd></button>
-      <button type="button" onClick={onSettings} className="preference-button"><span className={`theme-dot theme-dot--${theme}`}/><strong>{language.short}</strong><Icon name="settings" size={18}/></button>
+      <button type="button" onClick={onSettings} className="preference-button" aria-label={`${d.settings.language}: ${language.label}. ${d.settings.theme}: ${themeName}`}><span className={`theme-dot theme-dot--${theme}`}/><span className="preference-button__copy"><small>{d.settings.language} · {d.settings.theme}</small><strong>{language.short} · {themeName}</strong></span><Icon name="palette" size={18}/></button>
       <SmartLink href="#/purchase" className="top-buy">{d.nav.buy}<Icon name="arrow" size={17}/></SmartLink>
     </div>
   </header>;
 }
 
+const themeDescriptions = {
+  pt: { studio:'Identidade principal do estúdio, com ritmo editorial e formas orgânicas.', night:'Arquivo cinematográfico de alto contraste para leitura em ambientes escuros.', light:'Composição museográfica, neutra e precisa para textos e imagens.', sand:'Códice literário com textura de papel e hierarquia de publicação.', blue:'Terminal técnico para dossiês, sistemas e leitura analítica.' },
+  en: { studio:'The studio’s primary identity, with editorial rhythm and organic forms.', night:'A high-contrast cinematic archive for dark environments.', light:'A neutral, precise gallery composition for text and imagery.', sand:'A literary codex with paper texture and publishing hierarchy.', blue:'A technical terminal for dossiers, systems and analytical reading.' },
+  es: { studio:'La identidad principal del estudio, con ritmo editorial y formas orgánicas.', night:'Archivo cinematográfico de alto contraste para ambientes oscuros.', light:'Composición museográfica, neutra y precisa para texto e imagen.', sand:'Códice literario con textura de papel y jerarquía editorial.', blue:'Terminal técnico para expedientes, sistemas y lectura analítica.' },
+  it: { studio:'L’identità principale dello studio, con ritmo editoriale e forme organiche.', night:'Archivio cinematografico ad alto contrasto per ambienti scuri.', light:'Composizione museale neutra e precisa per testo e immagini.', sand:'Codice letterario con trama cartacea e gerarchia editoriale.', blue:'Terminale tecnico per dossier, sistemi e lettura analitica.' },
+  ja: { studio:'編集的なリズムと有機的な形を持つ、スタジオの中心的な視覚体系。', night:'暗い環境での閲覧に適した高コントラストの映画的アーカイブ。', light:'文章と画像を正確に見せる中立的なギャラリー構成。', sand:'紙の質感と出版物の階層を持つ文学的コーデックス。', blue:'記録、システム、分析的読解のための技術端末。' }
+};
+
+const fontOptions = [
+  { id:'studio', label:{pt:'Grotesca do Estúdio',en:'Studio Grotesk',es:'Grotesca del Estudio',it:'Grottesca dello Studio',ja:'スタジオ・グロテスク'} },
+  { id:'editorial', label:{pt:'Serif Editorial',en:'Editorial Serif',es:'Serif Editorial',it:'Serif Editoriale',ja:'エディトリアル・セリフ'} },
+  { id:'humanist', label:{pt:'Interface Humanista',en:'Humanist Interface',es:'Interfaz Humanista',it:'Interfaccia Umanista',ja:'ヒューマニストUI'} },
+  { id:'accessible', label:{pt:'Alta Legibilidade',en:'High Legibility',es:'Alta Legibilidad',it:'Alta Leggibilità',ja:'高可読性'} }
+];
+
+const textSizeOptions = [
+  {id:'compact',label:{pt:'Compacto',en:'Compact',es:'Compacto',it:'Compatto',ja:'コンパクト'}},
+  {id:'standard',label:{pt:'Padrão',en:'Standard',es:'Estándar',it:'Standard',ja:'標準'}},
+  {id:'large',label:{pt:'Grande',en:'Large',es:'Grande',it:'Grande',ja:'大'}},
+  {id:'xlarge',label:{pt:'Extra grande',en:'Extra large',es:'Extra grande',it:'Molto grande',ja:'特大'}}
+];
+
+const preferenceCopy = {
+  pt:{visual:'Visual',reading:'Leitura',accessibility:'Acessibilidade',font:'Fonte',size:'Tamanho do texto',contrast:'Alto contraste',motion:'Reduzir movimentos',links:'Sublinhar links',focus:'Foco de teclado reforçado',cursor:'Cursor autoral',reset:'Restaurar padrões',resetText:'Redefine fonte, tamanho e recursos de acessibilidade.',on:'Ativado',off:'Desativado'},
+  en:{visual:'Visual',reading:'Reading',accessibility:'Accessibility',font:'Typeface',size:'Text size',contrast:'High contrast',motion:'Reduce motion',links:'Underline links',focus:'Enhanced keyboard focus',cursor:'Authorial cursor',reset:'Restore defaults',resetText:'Resets typeface, text size and accessibility options.',on:'On',off:'Off'},
+  es:{visual:'Visual',reading:'Lectura',accessibility:'Accesibilidad',font:'Tipografía',size:'Tamaño del texto',contrast:'Alto contraste',motion:'Reducir movimiento',links:'Subrayar enlaces',focus:'Foco de teclado reforzado',cursor:'Cursor autoral',reset:'Restaurar valores',resetText:'Restablece tipografía, tamaño y opciones de accesibilidad.',on:'Activado',off:'Desactivado'},
+  it:{visual:'Aspetto',reading:'Lettura',accessibility:'Accessibilità',font:'Carattere',size:'Dimensione testo',contrast:'Contrasto elevato',motion:'Riduci movimento',links:'Sottolinea collegamenti',focus:'Focus da tastiera rinforzato',cursor:'Cursore autoriale',reset:'Ripristina valori',resetText:'Ripristina carattere, dimensione e opzioni di accessibilità.',on:'Attivo',off:'Disattivo'},
+  ja:{visual:'表示',reading:'読みやすさ',accessibility:'アクセシビリティ',font:'書体',size:'文字サイズ',contrast:'高コントラスト',motion:'動きを減らす',links:'リンクに下線',focus:'キーボードフォーカス強調',cursor:'専用カーソル',reset:'初期設定に戻す',resetText:'書体、文字サイズ、アクセシビリティ設定を戻します。',on:'オン',off:'オフ'}
+};
+
+function PreferenceSwitch({ label, checked, onChange, copy }) {
+  return <button type="button" className={`preference-switch ${checked ? 'is-active' : ''}`} onClick={() => onChange(!checked)} aria-pressed={checked}><span><strong>{label}</strong><small>{checked ? copy.on : copy.off}</small></span><i><b/></i></button>;
+}
+
 function SettingsPanel({ open, close }) {
-  const { d, lang, setLang, theme, setTheme } = useSite();
+  const { d, lang, setLang, theme, setTheme, font, setFont, textSize, setTextSize, a11y, setA11y, resetPreferences } = useSite();
+  const [tab, setTab] = useState('visual');
+  const ui = settingsUiCopy[lang] || settingsUiCopy.pt;
+  const c = preferenceCopy[lang] || preferenceCopy.pt;
+  useEffect(() => { if (open) setTab('visual'); }, [open]);
   if (!open) return null;
+  const toggle = (key, value) => setA11y({ ...a11y, [key]:value });
   return <div className="modal-layer" onMouseDown={close}>
-    <aside className="settings-panel" onMouseDown={(event) => event.stopPropagation()}>
+    <aside className="settings-panel settings-panel--advanced" onMouseDown={(event) => event.stopPropagation()}>
       <header><div><small>Two Eyes On You</small><h2>{d.settings.title}</h2><p>{d.settings.description}</p></div><button type="button" onClick={close} aria-label={d.common.close}><Icon name="close"/></button></header>
-      <section><div className="settings-label"><Icon name="palette"/><span>{d.settings.theme}</span></div><div className="theme-grid">{themes.map((item) => <button type="button" key={item.id} onClick={() => setTheme(item.id)} className={theme === item.id ? 'is-active' : ''}><span className={`theme-preview theme-preview--${item.id}`}><i/><b/></span><strong>{d.settings[item.key]}</strong>{theme === item.id && <Icon name="check" size={16}/>}</button>)}</div></section>
-      <section><div className="settings-label"><Icon name="globe"/><span>{d.settings.language}</span></div><div className="language-list">{languages.map((item) => <button type="button" key={item.id} onClick={() => setLang(item.id)} className={lang === item.id ? 'is-active' : ''}><span>{item.short}</span><strong>{item.label}</strong>{lang === item.id && <Icon name="check" size={16}/>}</button>)}</div></section>
+      <nav className="settings-tabs" aria-label={d.settings.title}>{[['visual',c.visual,'palette'],['reading',c.reading,'book'],['accessibility',c.accessibility,'eye']].map(([id,label,icon])=><button type="button" key={id} onClick={()=>setTab(id)} className={tab===id?'is-active':''}><Icon name={icon}/><span>{label}</span></button>)}</nav>
+
+      {tab === 'visual' && <div className="settings-view">
+        <section><div className="settings-label"><Icon name="globe"/><span>{d.settings.language}</span></div><div className="language-list">{languages.map((item) => <button type="button" key={item.id} onClick={() => setLang(item.id)} className={lang === item.id ? 'is-active' : ''}><span>{item.short}</span><strong>{item.label}</strong>{lang === item.id && <Icon name="check" size={16}/>}</button>)}</div></section>
+        <section><div className="settings-label"><Icon name="palette"/><span>{d.settings.theme}</span></div><div className="theme-grid">{themes.map((item) => <button type="button" key={item.id} onClick={() => setTheme(item.id)} className={theme === item.id ? 'is-active' : ''}><span className={`theme-preview theme-preview--${item.id}`}><i/><b/><em/></span><span className="theme-card-copy"><strong>{d.settings[item.key]}</strong><small>{themeDescriptions[lang]?.[item.id] || themeDescriptions.pt[item.id]}</small></span>{theme === item.id && <span className="theme-selected"><Icon name="check" size={16}/> {ui.active}</span>}</button>)}</div></section>
+      </div>}
+
+      {tab === 'reading' && <div className="settings-view settings-reading">
+        <section><div className="settings-label"><Icon name="document"/><span>{c.font}</span></div><div className="font-grid">{fontOptions.map((item)=><button type="button" key={item.id} onClick={()=>setFont(item.id)} className={`font-card font-card--${item.id} ${font===item.id?'is-active':''}`}><span>Aa</span><strong>{item.label[lang] || item.label.pt}</strong>{font===item.id&&<Icon name="check" size={16}/>}</button>)}</div></section>
+        <section><div className="settings-label"><Icon name="book"/><span>{c.size}</span></div><div className="text-size-grid">{textSizeOptions.map((item,index)=><button type="button" key={item.id} onClick={()=>setTextSize(item.id)} className={textSize===item.id?'is-active':''}><span style={{fontSize:`${15+index*3}px`}}>A</span><strong>{item.label[lang] || item.label.pt}</strong></button>)}</div></section>
+      </div>}
+
+      {tab === 'accessibility' && <div className="settings-view settings-accessibility">
+        <section className="preference-switches">
+          <PreferenceSwitch label={c.contrast} checked={a11y.highContrast} onChange={(value)=>toggle('highContrast',value)} copy={c}/>
+          <PreferenceSwitch label={c.motion} checked={a11y.reduceMotion} onChange={(value)=>toggle('reduceMotion',value)} copy={c}/>
+          <PreferenceSwitch label={c.links} checked={a11y.underlineLinks} onChange={(value)=>toggle('underlineLinks',value)} copy={c}/>
+          <PreferenceSwitch label={c.focus} checked={a11y.enhancedFocus} onChange={(value)=>toggle('enhancedFocus',value)} copy={c}/>
+          <PreferenceSwitch label={c.cursor} checked={a11y.customCursor} onChange={(value)=>toggle('customCursor',value)} copy={c}/>
+        </section>
+        <button type="button" className="settings-reset" onClick={resetPreferences}><Icon name="settings"/><span><strong>{c.reset}</strong><small>{c.resetText}</small></span></button>
+      </div>}
     </aside>
   </div>;
 }
@@ -404,15 +504,54 @@ const studioHomeCopy = {
 };
 
 const projectSignatures = {
-  devaneios: ['Fato', 'Inferência', 'Teste'],
-  'menos-um': ['Joel', '×', 'Elisabeth'],
-  'a-ultima-danca': ['Vírus', 'Arnins', 'Última chance'],
-  tormenta: ['Lendas', 'L.A.C.H.R.Y.M.A.', 'Grande Dia'],
-  arcanian: ['História', 'Mundo', 'Jogar']
+  pt: {
+    devaneios: ['Fato', 'Inferência', 'Teste'],
+    'menos-um': ['Joel', '×', 'Elisabeth'],
+    'a-ultima-danca': ['Vírus', 'Arnins', 'Última chance'],
+    tormenta: ['Lendas', 'L.A.C.H.R.Y.M.A.', 'Grande Dia'],
+    arcanian: ['História', 'Mundo', 'Jogar']
+  },
+  en: {
+    devaneios: ['Fact', 'Inference', 'Test'],
+    'menos-um': ['Joel', '×', 'Elisabeth'],
+    'a-ultima-danca': ['Virus', 'Arnins', 'Last chance'],
+    tormenta: ['Legends', 'L.A.C.H.R.Y.M.A.', 'Great Day'],
+    arcanian: ['Story', 'World', 'Play']
+  },
+  es: {
+    devaneios: ['Hecho', 'Inferencia', 'Prueba'],
+    'menos-um': ['Joel', '×', 'Elisabeth'],
+    'a-ultima-danca': ['Virus', 'Arnins', 'Última oportunidad'],
+    tormenta: ['Leyendas', 'L.A.C.H.R.Y.M.A.', 'Gran Día'],
+    arcanian: ['Historia', 'Mundo', 'Jugar']
+  },
+  it: {
+    devaneios: ['Fatto', 'Inferenza', 'Verifica'],
+    'menos-um': ['Joel', '×', 'Elisabeth'],
+    'a-ultima-danca': ['Virus', 'Arnins', 'Ultima possibilità'],
+    tormenta: ['Leggende', 'L.A.C.H.R.Y.M.A.', 'Grande Giorno'],
+    arcanian: ['Storia', 'Mondo', 'Gioca']
+  },
+  ja: {
+    devaneios: ['事実', '推論', '検証'],
+    'menos-um': ['Joel', '×', 'Elisabeth'],
+    'a-ultima-danca': ['ウイルス', 'Arnins', '最後の機会'],
+    tormenta: ['伝説', 'L.A.C.H.R.Y.M.A.', '大いなる日'],
+    arcanian: ['物語', '世界', '遊ぶ']
+  }
+};
+
+const episodeMarkCopy = {
+  pt: 'ARCANIAN · EPISÓDIO I',
+  en: 'ARCANIAN · EPISODE I',
+  es: 'ARCANIAN · EPISODIO I',
+  it: 'ARCANIAN · EPISODIO I',
+  ja: 'ARCANIAN · エピソード I'
 };
 
 function ProjectSignature({ slug }) {
-  const items = projectSignatures[slug] || [];
+  const { lang } = useSite();
+  const items = projectSignatures[lang]?.[slug] || projectSignatures.pt[slug] || [];
   return <div className={`joy-project__signature joy-project__signature--${slug}`} aria-hidden="true">
     {items.map((item, index) => <span key={`${slug}-${item}`}><i>{String(index + 1).padStart(2, '0')}</i>{item}</span>)}
   </div>;
@@ -435,7 +574,6 @@ function HomePage() {
         <h1><span>{copy.heroA}</span><span>{copy.heroB}</span></h1>
         <p>{copy.heroText}</p>
         <div className="hero-actions"><ButtonLink href="#/arcanian">{d.home.primary}</ButtonLink><ButtonLink href="#/about" tone="secondary">{copy.explore}</ButtonLink></div>
-        <div className="joy-badge"><Icon name="eye" size={18}/><span>{copy.badge}</span></div>
       </div>
 
       <div className="joy-hero__stage" data-reveal>
@@ -481,7 +619,7 @@ function HomePage() {
     </section>
 
     <section className="joy-studio">
-      <div className="joy-studio__visual" data-reveal><div><img src="./media/game.webp" alt=""/></div><div><img src="./media/devaneios.webp" alt=""/></div><span>ARCANIAN · EPISÓDIO I</span></div>
+      <div className="joy-studio__visual" data-reveal><div><img src="./media/game.webp" alt=""/></div><div><img src="./media/devaneios.webp" alt=""/></div><span>{episodeMarkCopy[lang] || episodeMarkCopy.pt}</span></div>
       <div className="joy-studio__copy"><header data-reveal><small>{copy.studioLabel}</small><h2>{copy.studioTitle}</h2><p>{copy.studioText}</p></header><ol>{(studioHomeCopy[lang] || studioHomeCopy.pt).steps.map(([number, title, text]) => <li key={number} data-reveal><span>{number}</span><div><h3>{title}</h3><p>{text}</p></div></li>)}</ol></div>
     </section>
 
@@ -542,24 +680,60 @@ function RelatedWiki({ slugs }) {
 }
 
 
+const workIdentityCopy = {
+  pt: {
+    devaneios:{ label:'O método de Ikarius', title:'Primeiro o que aconteceu. Depois, o que isso pode significar.', steps:[['Fato','O que a cena, o corpo, o horário e a matéria permitem afirmar.'],['Inferência','A hipótese permanece separada da evidência até sobreviver ao teste.'],['Teste','Cada resposta precisa produzir uma forma de ser contrariada.']] },
+    'menos-um':{ label:'Antes da ausência', title:'Uma relação construída no cotidiano — e não apenas lembrada depois da tragédia.', text:'Menos Um existe para mostrar o que havia entre os dois antes de o tempo, a culpa e a tentativa de desfazer a perda ocuparem tudo.' },
+    'a-ultima-danca':{ label:'Depois de Devaneios', title:'Uma lembrança íntima e a última oportunidade de impedir um colapso coletivo.', text:'O título une Joel e Elisabeth ao limite político dos Arnins: duas interpretações da mesma dança, ambas marcadas por escolhas que não podem ser repetidas sem consequência.' },
+    tormenta:{ label:'Antes do Grande Dia', title:'As lendas ainda tinham nomes, dúvidas e coisas a perder.', layers:['Lendas de Arcanian','Projeto L.A.C.H.R.Y.M.A.','Experimentos, reinos e alianças'] }
+  },
+  en: {
+    devaneios:{ label:'Ikarius’s method', title:'First, what happened. Then, what it may mean.', steps:[['Fact','What the scene, body, time and material evidence allow him to state.'],['Inference','A hypothesis remains separate from evidence until it survives a test.'],['Test','Every answer must create a way to be disproved.']] },
+    'menos-um':{ label:'Before the absence', title:'A relationship built through daily life — not merely remembered after tragedy.', text:'Menos Um shows what existed between them before time, guilt and the attempt to undo loss occupied everything.' },
+    'a-ultima-danca':{ label:'After Devaneios', title:'An intimate memory and the last opportunity to prevent a collective collapse.', text:'The title connects Joel and Elisabeth to the Arnins’ political limit: two readings of the same dance, both marked by choices that cannot be repeated without consequence.' },
+    tormenta:{ label:'Before the Great Day', title:'The legends still had names, doubts and things to lose.', layers:['Legends of Arcanian','Project L.A.C.H.R.Y.M.A.','Experiments, kingdoms and alliances'] }
+  },
+  es: {
+    devaneios:{ label:'El método de Ikarius', title:'Primero, lo que ocurrió. Después, lo que puede significar.', steps:[['Hecho','Lo que la escena, el cuerpo, la hora y la materia permiten afirmar.'],['Inferencia','La hipótesis permanece separada de la evidencia hasta superar una prueba.'],['Prueba','Cada respuesta debe producir una forma de ser refutada.']] },
+    'menos-um':{ label:'Antes de la ausencia', title:'Una relación construida en lo cotidiano — no solo recordada después de la tragedia.', text:'Menos Um muestra lo que existía entre ambos antes de que el tiempo, la culpa y el intento de deshacer la pérdida lo ocuparan todo.' },
+    'a-ultima-danca':{ label:'Después de Devaneios', title:'Un recuerdo íntimo y la última oportunidad de impedir un colapso colectivo.', text:'El título une a Joel y Elisabeth con el límite político de los Arnins: dos lecturas de la misma danza, marcadas por decisiones que no pueden repetirse sin consecuencias.' },
+    tormenta:{ label:'Antes del Gran Día', title:'Las leyendas todavía tenían nombres, dudas y cosas que perder.', layers:['Leyendas de Arcanian','Proyecto L.A.C.H.R.Y.M.A.','Experimentos, reinos y alianzas'] }
+  },
+  it: {
+    devaneios:{ label:'Il metodo di Ikarius', title:'Prima ciò che è accaduto. Poi, ciò che può significare.', steps:[['Fatto','Ciò che scena, corpo, orario e materia permettono di affermare.'],['Inferenza','L’ipotesi resta separata dalla prova finché non supera una verifica.'],['Verifica','Ogni risposta deve produrre un modo per essere smentita.']] },
+    'menos-um':{ label:'Prima dell’assenza', title:'Una relazione costruita nella vita quotidiana — non soltanto ricordata dopo la tragedia.', text:'Menos Um mostra ciò che esisteva tra loro prima che il tempo, la colpa e il tentativo di annullare la perdita occupassero tutto.' },
+    'a-ultima-danca':{ label:'Dopo Devaneios', title:'Un ricordo intimo e l’ultima opportunità di impedire un collasso collettivo.', text:'Il titolo unisce Joel ed Elisabeth al limite politico degli Arnins: due letture della stessa danza, segnate da scelte che non possono essere ripetute senza conseguenze.' },
+    tormenta:{ label:'Prima del Grande Giorno', title:'Le leggende avevano ancora nomi, dubbi e qualcosa da perdere.', layers:['Leggende di Arcanian','Progetto L.A.C.H.R.Y.M.A.','Esperimenti, regni e alleanze'] }
+  },
+  ja: {
+    devaneios:{ label:'Ikariusの方法', title:'最初に、何が起きたか。その後で、それが何を意味し得るか。', steps:[['事実','現場、遺体、時刻、物質的証拠から断言できること。'],['推論','仮説は検証を通過するまで証拠と分けて扱います。'],['検証','すべての答えには反証できる方法が必要です。']] },
+    'menos-um':{ label:'不在になる前', title:'悲劇の後に思い出されるだけではなく、日常の中で築かれた関係。', text:'Menos Umは、時間、罪悪感、喪失を取り消そうとする試みがすべてを占める前の二人を描きます。' },
+    'a-ultima-danca':{ label:'Devaneiosの後', title:'個人的な記憶と、集団的な崩壊を止める最後の機会。', text:'題名はJoelとElisabeth、そしてArninsの政治的限界を結びます。同じダンスの二つの解釈は、結果なしには繰り返せない選択に刻まれています。' },
+    tormenta:{ label:'「大いなる日」の前', title:'伝説にもまだ名前、疑い、失うものがありました。', layers:['Arcanianの伝説','L.A.C.H.R.Y.M.A.計画','実験、王国、同盟'] }
+  }
+};
+
 function WorkIdentity({ slug }) {
+  const { lang } = useSite();
+  const copy = workIdentityCopy[lang]?.[slug] || workIdentityCopy.pt[slug];
+  if (!copy) return null;
   if (slug === 'devaneios') return <section className="work-identity work-identity--devaneios" data-reveal>
     <div className="work-identity__symbol" aria-hidden="true"><span>∿</span></div>
-    <div className="work-identity__copy"><small>O método de Ikarius</small><h2>Primeiro o que aconteceu. Depois, o que isso pode significar.</h2></div>
-    <ol><li><span>01</span><strong>Fato</strong><p>O que a cena, o corpo, o horário e a matéria permitem afirmar.</p></li><li><span>02</span><strong>Inferência</strong><p>A hipótese permanece separada da evidência até sobreviver ao teste.</p></li><li><span>03</span><strong>Teste</strong><p>Cada resposta precisa produzir uma forma de ser contrariada.</p></li></ol>
+    <div className="work-identity__copy"><small>{copy.label}</small><h2>{copy.title}</h2></div>
+    <ol>{copy.steps.map(([title,text], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><strong>{title}</strong><p>{text}</p></li>)}</ol>
   </section>;
   if (slug === 'menos-um') return <section className="work-identity work-identity--menos-um" data-reveal>
     <div className="work-identity__couple"><strong>Joel</strong><span>&amp;</span><strong>Elisabeth</strong></div>
-    <div className="work-identity__copy"><small>Antes da ausência</small><h2>Uma relação construída no cotidiano — e não apenas lembrada depois da tragédia.</h2><p>Menos Um existe para mostrar o que havia entre os dois antes de o tempo, a culpa e a tentativa de desfazer a perda ocuparem tudo.</p></div>
+    <div className="work-identity__copy"><small>{copy.label}</small><h2>{copy.title}</h2><p>{copy.text}</p></div>
   </section>;
   if (slug === 'a-ultima-danca') return <section className="work-identity work-identity--a-ultima-danca" data-reveal>
     <div className="work-identity__dance" aria-hidden="true"><i/><i/><span>∞</span></div>
-    <div className="work-identity__copy"><small>Depois de Devaneios</small><h2>Uma lembrança íntima e a última oportunidade de impedir um colapso coletivo.</h2><p>O título une Joel e Elisabeth ao limite político dos Arnins: duas interpretações da mesma dança, ambas marcadas por escolhas que não podem ser repetidas sem consequência.</p></div>
+    <div className="work-identity__copy"><small>{copy.label}</small><h2>{copy.title}</h2><p>{copy.text}</p></div>
   </section>;
   if (slug === 'tormenta') return <section className="work-identity work-identity--tormenta" data-reveal>
     <div className="work-identity__storm" aria-hidden="true"><i/><i/><i/></div>
-    <div className="work-identity__copy"><small>Antes do Grande Dia</small><h2>As lendas ainda tinham nomes, dúvidas e coisas a perder.</h2></div>
-    <div className="work-identity__layers"><span>Lendas de Arcanian</span><span>Projeto L.A.C.H.R.Y.M.A.</span><span>Experimentos, reinos e alianças</span></div>
+    <div className="work-identity__copy"><small>{copy.label}</small><h2>{copy.title}</h2></div>
+    <div className="work-identity__layers">{copy.layers.map((item) => <span key={item}>{item}</span>)}</div>
   </section>;
   return null;
 }
@@ -594,16 +768,26 @@ function WorkPage({ work }) {
   const item = localizedWork(work, lang);
   return <main className={`work-page work-page--${work.slug}`} style={{ '--work-accent': work.accent }}>
     <section className="work-hero"><div className="work-hero__image"><img src={work.image} alt=""/></div><div className="work-hero__shade"/><div className="work-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--hero" eager/><p>{item.summary}</p><div className="hero-actions"><ButtonLink href={work.primary.href}>{item.primary.label}</ButtonLink><ButtonLink href="#/wiki" tone="secondary">{d.work.wikiButton}</ButtonLink></div></div></section>
-    {lang !== 'pt' && <div className="translation-note">{d.common.originalPt}</div>}<WorkIdentity slug={work.slug}/><WorkDepth work={work}/><section className="work-manifesto" data-reveal><small>{d.common.direction}</small><h2>{item.long}</h2></section>
-    <section className="work-chapters">{work.sections.map((section, index) => <article key={section.title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{section.title}</h2><p>{section.text}</p></div><div className="work-chapters__line"/></article>)}</section>
+    <WorkIdentity slug={work.slug}/><WorkDepth work={item}/><section className="work-manifesto" data-reveal><small>{d.common.direction}</small><h2>{item.long}</h2></section>
+    <section className="work-chapters">{item.sections.map((section, index) => <article key={section.title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{section.title}</h2><p>{section.text}</p></div><div className="work-chapters__line"/></article>)}</section>
     <section className="work-themes-editorial"><div className="work-themes-editorial__heading"><small>{d.common.direction}</small><ProjectLogo work={work} className="project-logo--themes"/></div>{item.themes.map(([title, text], index) => <div key={title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></div>)}</section>
     <section className="section-block work-wiki"><header className="section-heading" data-reveal><div><small>{d.work.related}</small><h2>{d.nav.wiki}</h2></div><p>{d.work.wikiText}</p></header><RelatedWiki slugs={work.relatedWiki}/></section>
   </main>;
 }
 
+
+const gamePageCopy = {
+  pt:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Quatro pontos de vista para um conflito que atravessa família, investigação, tempo e escolhas feitas muito antes do jogador assumir o controle.', worldTitle:'Um mundo construído para ser atravessado.', worldText:'As regiões não funcionam como fundos intercambiáveis. Arquitetura, circulação, conflito e ritmo mudam de acordo com o lugar e com o personagem em cena.', playTitle:'Uma experiência para uma ou duas pessoas.', playText:'Exploração, ação, investigação ambiental e decisões narrativas serão organizadas em episódios conectados. O segundo jogador precisa existir na história — não apenas ocupar espaço na tela.' },
+  en:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Four points of view for a conflict spanning family, investigation, time and choices made long before the player takes control.', worldTitle:'A world built to be crossed.', worldText:'Regions are not interchangeable backdrops. Architecture, circulation, conflict and rhythm change with each place and each character in the scene.', playTitle:'An experience for one or two players.', playText:'Exploration, action, environmental investigation and narrative decisions are organized into connected episodes. The second player must exist in the story, not merely occupy space on the screen.' },
+  es:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Cuatro puntos de vista para un conflicto que atraviesa familia, investigación, tiempo y decisiones tomadas mucho antes de que el jugador asuma el control.', worldTitle:'Un mundo construido para ser recorrido.', worldText:'Las regiones no funcionan como fondos intercambiables. La arquitectura, la circulación, el conflicto y el ritmo cambian según el lugar y el personaje en escena.', playTitle:'Una experiencia para una o dos personas.', playText:'Exploración, acción, investigación ambiental y decisiones narrativas se organizan en episodios conectados. El segundo jugador debe existir en la historia, no limitarse a ocupar espacio en la pantalla.' },
+  it:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Quattro punti di vista per un conflitto che attraversa famiglia, indagine, tempo e scelte compiute molto prima che il giocatore assuma il controllo.', worldTitle:'Un mondo costruito per essere attraversato.', worldText:'Le regioni non sono sfondi intercambiabili. Architettura, circolazione, conflitto e ritmo cambiano in base al luogo e al personaggio in scena.', playTitle:'Un’esperienza per una o due persone.', playText:'Esplorazione, azione, indagine ambientale e decisioni narrative sono organizzate in episodi collegati. Il secondo giocatore deve esistere nella storia, non soltanto occupare spazio sullo schermo.' },
+  ja:{ castTitle:'Ikarius。Joel。\nAphride。Merius。', castText:'家族、捜査、時間、そしてプレイヤーが操作を始めるずっと前の選択を横断する対立を、四つの視点から描きます。', worldTitle:'歩いて理解するために作られた世界。', worldText:'各地域は交換可能な背景ではありません。建築、移動、対立、リズムは場所と場面にいる人物によって変わります。', playTitle:'一人でも二人でも成立する体験。', playText:'探索、アクション、環境調査、物語上の決断を連続するエピソードとして構成します。二人目のプレイヤーは画面にいるだけでなく、物語の中に存在しなければなりません。' }
+};
+
 function GamePage({ work }) {
   const { d, lang } = useSite();
   const c = editorialCopy[lang] || editorialCopy.pt;
+  const g = gamePageCopy[lang] || gamePageCopy.pt;
   const item = localizedWork(work, lang);
   return <main className="game-page">
     <section className="game-masthead">
@@ -618,7 +802,7 @@ function GamePage({ work }) {
       <div className="game-masthead__status"><span>Two Eyes On You</span><strong>{d.common.soon}</strong></div>
     </section>
 
-    {lang !== 'pt' && <div className="translation-note translation-note--game">{d.common.originalPt}</div>}<WorkDepth work={work} game/><nav className="game-chapter-nav" aria-label={c.characters}>
+    <WorkDepth work={item} game/><nav className="game-chapter-nav" aria-label={c.characters}>
       <a href="#game-story"><span>01</span>{c.gameStory}</a>
       <a href="#game-cast"><span>02</span>{c.characters}</a>
       <a href="#game-world"><span>03</span>{c.world}</a>
@@ -627,14 +811,14 @@ function GamePage({ work }) {
 
     <section id="game-story" className="game-story">
       <div data-reveal><small>{c.gameStory}</small><h2>{item.long}</h2></div>
-      <div data-reveal>{work.sections.map((section, index) => <article key={section.title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}</div>
+      <div data-reveal>{item.sections.map((section, index) => <article key={section.title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}</div>
     </section>
 
     <section id="game-cast" className="game-characters">
-      <header data-reveal><small>{c.characters}</small><h2>Ikarius. Joel.<br/>Aphride. Merius.</h2><p>Quatro pontos de vista para um conflito que atravessa família, investigação, tempo e escolhas feitas muito antes do jogador assumir o controle.</p></header>
-      <nav className="game-cast-index">{work.characters.map((character, index) => <a key={character.slug} href={`#character-${character.slug}`}><span>{String(index + 1).padStart(2, '0')}</span><strong>{character.name}</strong><small>{character.role}</small></a>)}</nav>
+      <header data-reveal><small>{c.characters}</small><h2>{g.castTitle.split("\n").map((line, index) => <React.Fragment key={line}>{index > 0 && <br/>}{line}</React.Fragment>)}</h2><p>{g.castText}</p></header>
+      <nav className="game-cast-index">{item.characters.map((character, index) => <a key={character.slug} href={`#character-${character.slug}`}><span>{String(index + 1).padStart(2, '0')}</span><strong>{character.name}</strong><small>{character.role}</small></a>)}</nav>
       <div className="game-cast-ledger">
-        {work.characters.map((character, index) => <article id={`character-${character.slug}`} key={character.slug} className={index % 2 ? 'is-reversed' : ''} data-reveal>
+        {item.characters.map((character, index) => <article id={`character-${character.slug}`} key={character.slug} className={index % 2 ? 'is-reversed' : ''} data-reveal>
           <div className="game-character__number"><span>{String(index + 1).padStart(2, '0')}</span><strong>{character.name.slice(0, 1)}</strong></div>
           <div className="game-character__copy"><small>{character.role}</small><h2>{character.name}</h2><p>{character.text}</p><SmartLink href={`#/wiki/${character.slug}`} className="inline-link">{c.discover}<Icon name="arrow"/></SmartLink></div>
           <div className="game-character__rhythm" aria-hidden="true"><i/><i/><i/><i/></div>
@@ -642,11 +826,11 @@ function GamePage({ work }) {
       </div>
     </section>
 
-    <section id="game-world" className="game-world-intro" data-reveal><small>{c.world}</small><h2>Um mundo construído para ser atravessado.</h2><p>As regiões não funcionam como fundos intercambiáveis. Arquitetura, circulação, conflito e ritmo mudam de acordo com o lugar e com o personagem em cena.</p></section>
-    <section className="game-locations">{work.worlds.map((place, index) => <article key={place.name} data-reveal><div className="game-location__media"><img src={place.image} alt=""/></div><div className="game-location__shade"/><div className="game-location__copy"><span>{String(index + 1).padStart(2, '0')}</span><h2>{place.name}</h2><p>{place.text}</p></div></article>)}</section>
+    <section id="game-world" className="game-world-intro" data-reveal><small>{c.world}</small><h2>{g.worldTitle}</h2><p>{g.worldText}</p></section>
+    <section className="game-locations">{item.worlds.map((place, index) => <article key={place.name} data-reveal><div className="game-location__media"><img src={place.image} alt=""/></div><div className="game-location__shade"/><div className="game-location__copy"><span>{String(index + 1).padStart(2, '0')}</span><h2>{place.name}</h2><p>{place.text}</p></div></article>)}</section>
 
     <section id="game-play" className="game-final">
-      <div><small>{c.gameplay}</small><h2>Uma experiência para uma ou duas pessoas.</h2><p>Exploração, ação, investigação ambiental e decisões narrativas serão organizadas em episódios conectados. O segundo jogador precisa existir na história — não apenas ocupar espaço na tela.</p><ButtonLink href="#/news" tone="secondary">{d.nav.news}</ButtonLink></div>
+      <div><small>{c.gameplay}</small><h2>{g.playTitle}</h2><p>{g.playText}</p><ButtonLink href="#/news" tone="secondary">{d.nav.news}</ButtonLink></div>
       <img src="./media/game.webp" alt=""/>
     </section>
   </main>;
@@ -655,29 +839,55 @@ function GamePage({ work }) {
 
 const studioJoyCopy = {
   pt: {
-    hello: 'Two Eyes On You',
-    heroA: 'Uma história não termina',
-    heroB: 'quando muda de forma.',
-    heroText: 'Arcanian começou como um universo escrito. Devaneios abriu a investigação; Menos Um volta para Joel e Elisabeth; Tormenta reconstrói o período das lendas; o jogo transforma esses conflitos em escolhas do jogador.',
-    jump: 'Abrir esta obra',
-    introLabel: 'Por que o estúdio existe',
-    introTitle: 'A Two Eyes On You foi criada para desenvolver Arcanian sem reduzir cada nova obra a uma versão da anterior.',
-    introText: 'O livro pode entrar na cabeça de Ikarius. A HQ pode transformar silêncio e passagem de tempo em quadro. O jogo precisa permitir que a pessoa investigue, lute e decida. O trabalho do estúdio é encontrar a forma certa para cada parte do universo.',
-    projectsLabel: 'Arcanian por obra',
-    projectsTitle: 'A mesma história muda quando o ponto de vista muda.',
-    projectsText: 'Devaneios acompanha uma investigação; Menos Um se aproxima de um casamento; Tormenta retorna às pessoas por trás das lendas; o Jogo reorganiza o universo para uma ou duas pessoas.',
-    studioLabel: 'Como as cenas são construídas',
-    studioTitle: 'Primeiro decidimos quem está ali — e o que pode ser perdido.',
-    studioText: 'Depois vêm o traço, a cor, o silêncio, o movimento, a câmera, a interface e a tecnologia. A ordem importa porque acabamento não substitui intenção.',
-    wikiLabel: 'Wiki Arcanian',
-    wikiTitle: 'Personagens, parentescos e acontecimentos com contexto — não apenas uma lista de nomes.',
-    wikiText: 'Os verbetes conectam família, afiliações, lugares, objetos, operações e consequências confirmadas pelas obras e pelos projetos anunciados.',
-    entries: 'verbetes', categories: 'categorias', people: 'personagens',
-    latest: 'O que mudou recentemente', allNews: 'Abrir notícias',
-    outroTitle: 'Devaneios foi o primeiro episódio. Não é o limite do universo.',
-    outroText: 'Continue pela história de Joel e Elisabeth, pelo passado do L.A.C.H.R.Y.M.A., pelo jogo ou pela enciclopédia que liga tudo isso.',
-    explore: 'Conhecer a Two Eyes On You'
+    hello:'Two Eyes On You', heroA:'Uma história não termina', heroB:'quando muda de forma.',
+    heroText:'Arcanian começou como um universo escrito. Devaneios abriu a investigação; Menos Um volta para Joel e Elisabeth; Tormenta reconstrói o período das lendas; o jogo transforma esses conflitos em escolhas do jogador.',
+    jump:'Abrir esta obra', introLabel:'Por que o estúdio existe', introTitle:'A Two Eyes On You foi criada para desenvolver Arcanian sem reduzir cada nova obra a uma versão da anterior.',
+    introText:'O livro pode entrar na cabeça de Ikarius. A HQ pode transformar silêncio e passagem de tempo em quadro. O jogo precisa permitir que a pessoa investigue, lute e decida. O trabalho do estúdio é encontrar a forma certa para cada parte do universo.',
+    projectsLabel:'Arcanian por obra', projectsTitle:'A mesma história muda quando o ponto de vista muda.', projectsText:'Devaneios acompanha uma investigação; Menos Um se aproxima de um casamento; Tormenta retorna às pessoas por trás das lendas; o Jogo reorganiza o universo para uma ou duas pessoas.',
+    studioLabel:'Como as cenas são construídas', studioTitle:'Primeiro decidimos quem está ali — e o que pode ser perdido.', studioText:'Depois vêm o traço, a cor, o silêncio, o movimento, a câmera, a interface e a tecnologia. A ordem importa porque acabamento não substitui intenção.',
+    wikiLabel:'Wiki Arcanian', wikiTitle:'Personagens, parentescos e acontecimentos com contexto — não apenas uma lista de nomes.', wikiText:'Os verbetes conectam família, afiliações, lugares, objetos, operações e consequências confirmadas pelas obras e pelos projetos anunciados.',
+    entries:'verbetes', categories:'categorias', people:'personagens', latest:'O que mudou recentemente', allNews:'Abrir notícias', outroTitle:'Devaneios foi o primeiro episódio. Não é o limite do universo.', outroText:'Continue pela história de Joel e Elisabeth, pelo passado do L.A.C.H.R.Y.M.A., pelo jogo ou pela enciclopédia que liga tudo isso.', explore:'Conhecer a Two Eyes On You'
   },
+  en: {
+    hello:'Two Eyes On You', heroA:'A story does not end', heroB:'when it changes form.',
+    heroText:'Arcanian began as a written universe. Devaneios opened the investigation; Menos Um returns to Joel and Elisabeth; Tormenta rebuilds the age of legends; the game turns those conflicts into player choices.',
+    jump:'Open this work', introLabel:'Why the studio exists', introTitle:'Two Eyes On You was created to develop Arcanian without reducing every new work to another version of the previous one.',
+    introText:'A novel can enter Ikarius’s thoughts. A comic can turn silence and passing time into panels. A game must let people investigate, fight and decide. The studio’s job is to find the right form for each part of the universe.',
+    projectsLabel:'Arcanian by work', projectsTitle:'The same story changes when the point of view changes.', projectsText:'Devaneios follows an investigation; Menos Um moves closer to a marriage; Tormenta returns to the people behind the legends; the Game reorganizes the universe for one or two players.',
+    studioLabel:'How scenes are built', studioTitle:'First we decide who is there — and what can be lost.', studioText:'Then come line, colour, silence, movement, camera, interface and technology. The order matters because polish cannot replace intention.',
+    wikiLabel:'Arcanian Wiki', wikiTitle:'Characters, families and events with context — not merely a list of names.', wikiText:'Entries connect family, affiliations, places, objects, operations and consequences confirmed by the works and announced projects.',
+    entries:'entries', categories:'categories', people:'characters', latest:'What changed recently', allNews:'Open news', outroTitle:'Devaneios was the first episode. It is not the limit of the universe.', outroText:'Continue through Joel and Elisabeth’s story, L.A.C.H.R.Y.M.A.’s past, the game or the encyclopedia connecting it all.', explore:'Discover Two Eyes On You'
+  },
+  es: {
+    hello:'Two Eyes On You', heroA:'Una historia no termina', heroB:'cuando cambia de forma.',
+    heroText:'Arcanian comenzó como un universo escrito. Devaneios abrió la investigación; Menos Um vuelve a Joel y Elisabeth; Tormenta reconstruye la época de las leyendas; el juego transforma esos conflictos en decisiones del jugador.',
+    jump:'Abrir esta obra', introLabel:'Por qué existe el estudio', introTitle:'Two Eyes On You fue creado para desarrollar Arcanian sin reducir cada nueva obra a otra versión de la anterior.',
+    introText:'La novela puede entrar en la mente de Ikarius. El cómic puede convertir el silencio y el paso del tiempo en viñetas. El juego debe permitir investigar, luchar y decidir. El trabajo del estudio es encontrar la forma correcta para cada parte del universo.',
+    projectsLabel:'Arcanian por obra', projectsTitle:'La misma historia cambia cuando cambia el punto de vista.', projectsText:'Devaneios acompaña una investigación; Menos Um se acerca a un matrimonio; Tormenta vuelve a las personas detrás de las leyendas; el Juego reorganiza el universo para una o dos personas.',
+    studioLabel:'Cómo se construyen las escenas', studioTitle:'Primero decidimos quién está allí — y qué puede perderse.', studioText:'Después llegan el trazo, el color, el silencio, el movimiento, la cámara, la interfaz y la tecnología. El orden importa porque el acabado no sustituye la intención.',
+    wikiLabel:'Wiki Arcanian', wikiTitle:'Personajes, parentescos y acontecimientos con contexto — no solo una lista de nombres.', wikiText:'Las entradas conectan familia, afiliaciones, lugares, objetos, operaciones y consecuencias confirmadas por las obras y los proyectos anunciados.',
+    entries:'entradas', categories:'categorías', people:'personajes', latest:'Qué cambió recientemente', allNews:'Abrir noticias', outroTitle:'Devaneios fue el primer episodio. No es el límite del universo.', outroText:'Continúa por la historia de Joel y Elisabeth, el pasado de L.A.C.H.R.Y.M.A., el juego o la enciclopedia que conecta todo.', explore:'Conocer Two Eyes On You'
+  },
+  it: {
+    hello:'Two Eyes On You', heroA:'Una storia non finisce', heroB:'quando cambia forma.',
+    heroText:'Arcanian è nato come universo scritto. Devaneios ha aperto l’indagine; Menos Um torna a Joel ed Elisabeth; Tormenta ricostruisce l’epoca delle leggende; il gioco trasforma quei conflitti in scelte del giocatore.',
+    jump:'Apri quest’opera', introLabel:'Perché esiste lo studio', introTitle:'Two Eyes On You è stato creato per sviluppare Arcanian senza ridurre ogni nuova opera a un’altra versione della precedente.',
+    introText:'Il romanzo può entrare nei pensieri di Ikarius. Il fumetto può trasformare silenzio e passaggio del tempo in tavole. Il gioco deve permettere di indagare, combattere e decidere. Il compito dello studio è trovare la forma giusta per ogni parte dell’universo.',
+    projectsLabel:'Arcanian per opera', projectsTitle:'La stessa storia cambia quando cambia il punto di vista.', projectsText:'Devaneios segue un’indagine; Menos Um si avvicina a un matrimonio; Tormenta torna alle persone dietro le leggende; il Gioco riorganizza l’universo per una o due persone.',
+    studioLabel:'Come vengono costruite le scene', studioTitle:'Prima decidiamo chi è presente — e cosa può essere perduto.', studioText:'Poi arrivano segno, colore, silenzio, movimento, camera, interfaccia e tecnologia. L’ordine conta perché la rifinitura non sostituisce l’intenzione.',
+    wikiLabel:'Wiki Arcanian', wikiTitle:'Personaggi, famiglie ed eventi con contesto — non soltanto un elenco di nomi.', wikiText:'Le voci collegano famiglia, affiliazioni, luoghi, oggetti, operazioni e conseguenze confermate dalle opere e dai progetti annunciati.',
+    entries:'voci', categories:'categorie', people:'personaggi', latest:'Cosa è cambiato di recente', allNews:'Apri le notizie', outroTitle:'Devaneios è stato il primo episodio. Non è il limite dell’universo.', outroText:'Continua con la storia di Joel ed Elisabeth, il passato di L.A.C.H.R.Y.M.A., il gioco o l’enciclopedia che collega tutto.', explore:'Scopri Two Eyes On You'
+  },
+  ja: {
+    hello:'Two Eyes On You', heroA:'物語は終わりません', heroB:'形を変えたときも。',
+    heroText:'Arcanianは文章の世界として始まりました。Devaneiosが捜査を開き、Menos UmがJoelとElisabethへ戻り、Tormentaが伝説の時代を再構築し、ゲームがその対立をプレイヤーの選択へ変えます。',
+    jump:'この作品を開く', introLabel:'スタジオが存在する理由', introTitle:'Two Eyes On Youは、新作を前作の別版にせずArcanianを発展させるために作られました。',
+    introText:'小説はIkariusの思考へ入れます。コミックは沈黙と時間の経過をコマにできます。ゲームは調査、戦闘、決断を可能にしなければなりません。スタジオの仕事は、世界の各部分に正しい形式を見つけることです。',
+    projectsLabel:'作品ごとのArcanian', projectsTitle:'視点が変われば、同じ物語も変わります。', projectsText:'Devaneiosは捜査を追い、Menos Umは結婚生活へ近づき、Tormentaは伝説の背後にいた人々へ戻り、ゲームは一人または二人のために世界を再構成します。',
+    studioLabel:'場面の作り方', studioTitle:'最初に、誰がそこにいて、何を失い得るかを決めます。', studioText:'その後に線、色、沈黙、動き、カメラ、インターフェース、技術が続きます。仕上げは意図の代わりにならないため、順序が重要です。',
+    wikiLabel:'Arcanian Wiki', wikiTitle:'名前の一覧ではなく、文脈のある人物、家族、出来事。', wikiText:'項目は、作品と発表済みプロジェクトで確認された家族、所属、場所、物、作戦、結果をつなぎます。',
+    entries:'項目', categories:'分類', people:'人物', latest:'最近の変更', allNews:'ニュースを開く', outroTitle:'Devaneiosは最初のエピソードでした。世界の限界ではありません。', outroText:'JoelとElisabethの物語、L.A.C.H.R.Y.M.A.の過去、ゲーム、またはすべてを結ぶ百科事典へ進んでください。', explore:'Two Eyes On Youを見る'
+  }
 };
 
 const categoryNames = {
@@ -688,13 +898,25 @@ const categoryNames = {
   ja:{ all:'すべて', characters:'人物', organizations:'組織', places:'場所', concepts:'概念', events:'出来事', anomalies:'異常現象', objects:'物品' }
 };
 
+const bookAtlasCopy = {
+  pt:{eyebrow:'Fonte canônica · primeira edição, 2026',title:'Mapa de Devaneios — Episódio I',text:'A enciclopédia agora acompanha o livro capítulo a capítulo. Cada núcleo conduz aos personagens, lugares, evidências e consequências realmente presentes na obra.',open:'Abrir núcleo',source:'Conteúdo estruturado a partir da edição publicada de Arcanian: Devaneios — Episódio I. Revelações continuam protegidas pelo controle de spoilers.'},
+  en:{eyebrow:'Canonical source · first edition, 2026',title:'Devaneios — Episode I map',text:'The encyclopedia now follows the book chapter by chapter. Each narrative core leads to the characters, locations, evidence and consequences actually established by the work.',open:'Open cluster',source:'Content structured from the published edition of Arcanian: Devaneios — Episode I. Revelations remain protected by spoiler controls.'},
+  es:{eyebrow:'Fuente canónica · primera edición, 2026',title:'Mapa de Devaneios — Episodio I',text:'La enciclopedia ahora sigue el libro capítulo por capítulo. Cada núcleo conduce a los personajes, lugares, pruebas y consecuencias realmente establecidos por la obra.',open:'Abrir núcleo',source:'Contenido estructurado a partir de la edición publicada de Arcanian: Devaneios — Episodio I. Las revelaciones siguen protegidas por el control de spoilers.'},
+  it:{eyebrow:'Fonte canonica · prima edizione, 2026',title:'Mappa di Devaneios — Episodio I',text:'L’enciclopedia ora segue il libro capitolo per capitolo. Ogni nucleo conduce a personaggi, luoghi, prove e conseguenze realmente stabiliti dall’opera.',open:'Apri nucleo',source:'Contenuto strutturato dall’edizione pubblicata di Arcanian: Devaneios — Episodio I. Le rivelazioni restano protette dai controlli spoiler.'},
+  ja:{eyebrow:'正史資料・初版 2026',title:'Devaneios エピソードI 章別マップ',text:'百科事典を本の章構成に沿って再編しました。各章から、作品で実際に確認された人物、場所、証拠、結果へ進めます。',open:'関連記録を開く',source:'『Arcanian: Devaneios — Episode I』2026年刊行版を基準に構成しています。重要な展開はネタバレ設定で保護されます。'}
+};
+
 function WikiPage() {
   const { d, lang } = useSite();
   const c = editorialCopy[lang] || editorialCopy.pt;
+  const wi = wikiInterfaceExtra[lang] || wikiInterfaceExtra.pt;
   const [category, setCategory] = useState('all');
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(allWikiEntries[0]?.slug);
   const [spoilers, setSpoilers] = useState(false);
+  const localizedEntries = useMemo(() => allWikiEntries.map((entry) => localizedWikiEntry(entry, lang)), [lang]);
+  const bookGuide = getBookGuide(lang);
+  const bookCopy = bookAtlasCopy[lang] || bookAtlasCopy.pt;
   const filtered = useMemo(() => allWikiEntries
     .filter((entry) => {
       const item = localizedWikiEntry(entry, lang);
@@ -705,7 +927,7 @@ function WikiPage() {
   useEffect(() => { if (filtered.length && !filtered.some((entry) => entry.slug === selected)) setSelected(filtered[0].slug); }, [filtered, selected]);
   const source = allWikiEntries.find((entry) => entry.slug === selected) || filtered[0] || allWikiEntries[0];
   const current = localizedWikiEntry(source, lang);
-  const profile = getWikiProfile(source, allWikiEntries);
+  const profile = getWikiProfile(current, localizedEntries, lang);
   const locked = current.spoiler > 0 && !spoilers;
   const characters = allWikiEntries.filter((entry) => entry.category === 'characters').length;
   const places = allWikiEntries.filter((entry) => entry.category === 'places').length;
@@ -714,11 +936,19 @@ function WikiPage() {
   return <main className="wiki-page wiki-page--studio">
     <PageHero eyebrow={d.wiki.eyebrow} title={c.encyclopedia} text={c.encyclopediaText} image="./media/welcome.webp" compact/>
     <section className="wiki-overview-bar">
-      <div><strong>{allWikiEntries.length}</strong><span>verbetes publicados</span></div>
+      <div><strong>{allWikiEntries.length}</strong><span>{wi.published}</span></div>
       <div><strong>{characters}</strong><span>{categoryNames[lang]?.characters || 'Personagens'}</span></div>
       <div><strong>{places}</strong><span>{categoryNames[lang]?.places || 'Lugares'}</span></div>
       <div><strong>{events}</strong><span>{categoryNames[lang]?.events || 'Eventos'}</span></div>
-      <p>Conteúdo organizado a partir das obras publicadas e dos projetos anunciados pela Two Eyes On You. Informações não confirmadas não são tratadas como fato.</p>
+      <p>{wi.evidence}</p>
+    </section>
+
+    <section className="wiki-book-atlas" data-reveal>
+      <header><div><small>{bookCopy.eyebrow}</small><h2>{bookCopy.title}</h2></div><p>{bookCopy.text}</p></header>
+      <div className="wiki-book-atlas__track">{bookGuide.map((chapter) => {
+        const target = chapter.focus.find((slug) => allWikiEntries.some((entry) => entry.slug === slug));
+        return <button type="button" key={chapter.number} disabled={!target} onClick={() => { setCategory('all'); setQuery(''); if (target) setSelected(target); setTimeout(() => document.querySelector('.wiki-atlas')?.scrollIntoView({ behavior:document.documentElement.dataset.motion === 'reduced' ? 'auto' : 'smooth', block:'start' }), 30); }}><span>{chapter.number}</span><div><strong>{chapter.title}</strong><p>{chapter.summary}</p><small>{bookCopy.open} · {chapter.focus.filter((slug)=>allWikiEntries.some((entry)=>entry.slug===slug)).length}</small></div><Icon name="arrow"/></button>;
+      })}</div>
     </section>
 
     <section className="wiki-atlas wiki-atlas--expanded">
@@ -730,14 +960,14 @@ function WikiPage() {
       </aside>
 
       <article className="wiki-live wiki-live--expanded">
-        <header><div><small>{categoryNames[lang]?.[current.category] || current.tag}</small><h1>{current.name}</h1><p>{current.alias}</p></div><span className="wiki-spoiler-mark">SPOILER {current.spoiler}</span></header>
-        {locked ? <div className="wiki-entry-lock"><Icon name="lock" size={32}/><h2>{d.wiki.protected}</h2><p>Este verbete reúne acontecimentos que ultrapassam a apresentação inicial da obra.</p><button type="button" onClick={() => setSpoilers(true)}>{d.timeline.show}</button></div> : <>
+        <header><div><small>{categoryNames[lang]?.[current.category] || current.tag}</small><h1>{current.name}</h1><p>{current.alias}</p></div><span className="wiki-spoiler-mark">{wi.spoiler.toUpperCase()} {current.spoiler}</span></header>
+        {locked ? <div className="wiki-entry-lock"><Icon name="lock" size={32}/><h2>{d.wiki.protected}</h2><p>{wi.locked}</p><button type="button" onClick={() => setSpoilers(true)}>{d.timeline.show}</button></div> : <>
           <p className="wiki-live__lead">{current.summary}</p>
           <section className="wiki-facts wiki-facts--ledger"><h2>{c.facts}</h2><dl>{profile.facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>
           <div className="wiki-live__chapters">{profile.sections.slice(0, 4).map((section, index) => <section className="wiki-live__section" key={section.title}><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{section.title}</h2>{section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}</div></section>)}</div>
           <section className="wiki-relations wiki-relations--network"><header><h2>{c.relations}</h2><span>{profile.relationships.length}</span></header>{profile.relationships.map((relationship) => <SmartLink href={`#/wiki/${relationship.slug}`} key={`${relationship.slug}-${relationship.label}`}><div><small>{relationship.label}</small><strong>{relationship.name}</strong><p>{relationship.note}</p></div><Icon name="arrow"/></SmartLink>)}</section>
           <section className="wiki-live__appearances"><h2>{c.appearances}</h2>{profile.works.map((workName, index) => <div key={workName}><span>{String(index + 1).padStart(2, '0')}</span><strong>{workName}</strong></div>)}</section>
-          <p className="wiki-source-note">{c.source}{lang !== 'pt' ? ` · ${d.common.originalPt}` : ''}</p>
+          <p className="wiki-source-note">{bookCopy.source}</p>
           <ButtonLink href={`#/wiki/${current.slug}`} tone="secondary">{c.openFull}</ButtonLink>
         </>}
       </article>
@@ -748,25 +978,33 @@ function WikiPage() {
 function WikiEntryPage({ entry }) {
   const { d, lang } = useSite();
   const c = editorialCopy[lang] || editorialCopy.pt;
+  const wi = wikiInterfaceExtra[lang] || wikiInterfaceExtra.pt;
   const [unlocked, setUnlocked] = useState(false);
+  const localizedEntries = useMemo(() => allWikiEntries.map((source) => localizedWikiEntry(source, lang)), [lang]);
   if (!entry) return <NotFoundPage/>;
   const item = localizedWikiEntry(entry, lang);
-  const profile = getWikiProfile(entry, allWikiEntries);
+  const profile = getWikiProfile(item, localizedEntries, lang);
+  const bookCopy = bookAtlasCopy[lang] || bookAtlasCopy.pt;
   const locked = item.spoiler > 0 && !unlocked;
   return <main className="wiki-entry-page wiki-entry-page--rich">
     <header className="wiki-entry-header"><div><small>{categoryNames[lang]?.[item.category] || item.tag}</small><h1>{item.name}</h1><p>{item.alias}</p></div><SmartLink href="#/wiki" className="inline-link">{d.wiki.back}<Icon name="arrow"/></SmartLink></header>
-    {locked ? <div className="wiki-entry-lock"><Icon name="lock" size={32}/><h2>{d.wiki.protected}</h2><button type="button" onClick={() => setUnlocked(true)}>{d.timeline.show}</button></div> : <div className="wiki-rich-layout">
+    {locked ? <div className="wiki-entry-lock"><Icon name="lock" size={32}/><h2>{d.wiki.protected}</h2><p>{wi.locked}</p><button type="button" onClick={() => setUnlocked(true)}>{d.timeline.show}</button></div> : <div className="wiki-rich-layout">
       <aside className="wiki-rich-index"><small>{c.facts}</small>{profile.sections.map((section, index) => <a href={`#wiki-section-${index}`} key={section.title}><span>{String(index + 1).padStart(2, '0')}</span>{section.title}</a>)}</aside>
-      <article className="wiki-rich-article"><p className="wiki-entry-lead">{item.summary}</p><section className="wiki-facts"><h2>{c.facts}</h2><dl>{profile.facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>{profile.sections.map((section, index) => <section id={`wiki-section-${index}`} key={section.title} className="wiki-rich-section"><small>{String(index + 1).padStart(2, '0')}</small><h2>{section.title}</h2>{section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}</section>)}<p className="wiki-source-note">{c.source}{lang !== 'pt' ? ` · ${d.common.originalPt}` : ''}</p></article>
+      <article className="wiki-rich-article"><p className="wiki-entry-lead">{item.summary}</p><section className="wiki-facts"><h2>{c.facts}</h2><dl>{profile.facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>{profile.sections.map((section, index) => <section id={`wiki-section-${index}`} key={section.title} className="wiki-rich-section"><small>{String(index + 1).padStart(2, '0')}</small><h2>{section.title}</h2>{section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}</section>)}<p className="wiki-source-note">{bookCopy.source}</p></article>
       <aside className="wiki-rich-relations"><small>{c.relations}</small>{profile.relationships.map((relationship) => <SmartLink href={`#/wiki/${relationship.slug}`} key={`${relationship.slug}-${relationship.label}`}><span>{relationship.label}</span><strong>{relationship.name}</strong><p>{relationship.note}</p></SmartLink>)}</aside>
     </div>}
   </main>;
 }
 
 function TimelinePage() {
-  const { d } = useSite();
+  const { d, lang } = useSite();
   const [spoilers, setSpoilers] = useState(false);
-  return <main><PageHero eyebrow={d.timeline.eyebrow} title={d.timeline.title} text={d.timeline.text} image="./media/tormenta.webp"><button type="button" className="button-link button-link--primary" onClick={() => setSpoilers(!spoilers)}><span>{spoilers ? d.timeline.hide : d.timeline.show}</span><Icon name={spoilers ? 'eye' : 'lock'}/></button></PageHero><section className="section-block timeline-list">{timelineEvents.map((event, index) => <article key={`${event.date}-${event.title}`} data-reveal className={event.spoiler && !spoilers ? 'is-locked' : ''}><span>{String(index + 1).padStart(2, '0')}</span><time>{event.date}</time><div><h2>{event.spoiler && !spoilers ? d.timeline.locked : event.title}</h2><p>{event.spoiler && !spoilers ? d.timeline.lockedText : event.text}</p></div></article>)}</section></main>;
+  const translated = timelineTranslations[lang];
+  const items = timelineEvents.map((event, index) => {
+    const local = translated?.[index];
+    return local ? { ...event, date:local[0], title:local[1], text:local[2] } : event;
+  });
+  return <main><PageHero eyebrow={d.timeline.eyebrow} title={d.timeline.title} text={d.timeline.text} image="./media/tormenta.webp"><button type="button" className="button-link button-link--primary" onClick={() => setSpoilers(!spoilers)}><span>{spoilers ? d.timeline.hide : d.timeline.show}</span><Icon name={spoilers ? 'eye' : 'lock'}/></button></PageHero><section className="section-block timeline-list">{items.map((event, index) => <article key={`${event.date}-${event.title}`} data-reveal className={event.spoiler && !spoilers ? 'is-locked' : ''}><span>{String(index + 1).padStart(2, '0')}</span><time>{event.date}</time><div><h2>{event.spoiler && !spoilers ? d.timeline.locked : event.title}</h2><p>{event.spoiler && !spoilers ? d.timeline.lockedText : event.text}</p></div></article>)}</section></main>;
 }
 
 function NewsPage() {
@@ -776,9 +1014,10 @@ function NewsPage() {
 }
 
 function MediaPage() {
-  const { d } = useSite();
+  const { d, lang } = useSite();
   const images = ['./media/banner.webp', './media/devaneios.webp', './media/menos-um.webp', './media/tormenta.webp', './media/game.webp', './media/welcome.webp'];
-  return <main><PageHero eyebrow={d.media.eyebrow} title={d.media.title} text={d.media.text} image="./media/game.webp"/><section className="section-block media-video"><header className="section-heading"><div><small>{d.media.video}</small><h2>Jogo</h2></div></header><video controls poster="./media/game.webp"><source src="./media/arcanian.mp4" type="video/mp4"/></video></section><section className="section-block media-gallery"><header className="section-heading"><div><small>{d.media.images}</small><h2>Two Eyes On You</h2></div></header><div>{images.map((image, index) => <figure key={image} data-reveal><img src={image} alt=""/><figcaption>{String(index + 1).padStart(2, '0')} / Two Eyes On You</figcaption></figure>)}</div></section></main>;
+  const gameTitle = localizedWork(works.find((item) => item.slug === 'arcanian'), lang).displayTitle;
+  return <main><PageHero eyebrow={d.media.eyebrow} title={d.media.title} text={d.media.text} image="./media/game.webp"/><section className="section-block media-video"><header className="section-heading"><div><small>{d.media.video}</small><h2>{gameTitle}</h2></div></header><video controls poster="./media/game.webp"><source src="./media/arcanian.mp4" type="video/mp4"/></video></section><section className="section-block media-gallery"><header className="section-heading"><div><small>{d.media.images}</small><h2>Two Eyes On You</h2></div></header><div>{images.map((image, index) => <figure key={image} data-reveal><img src={image} alt=""/><figcaption>{String(index + 1).padStart(2, '0')} / Two Eyes On You</figcaption></figure>)}</div></section></main>;
 }
 
 const studioContent = {
@@ -861,14 +1100,15 @@ function AboutPage() {
 }
 
 function DocumentationPage() {
-  const { d } = useSite();
-  return <main><PageHero eyebrow={d.docs.eyebrow} title={d.docs.title} text={d.docs.text} image="./media/banner.webp"/><section className="section-block document-list">{docs.map((doc, index) => <SmartLink href={`#/documentation/${doc.slug}`} key={doc.slug} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{doc.title}</h2><p>{doc.description}</p></div><Icon name="arrow"/></SmartLink>)}</section></main>;
+  const { d, lang } = useSite();
+  return <main><PageHero eyebrow={d.docs.eyebrow} title={d.docs.title} text={d.docs.text} image="./media/banner.webp"/><section className="section-block document-list">{docs.map((doc, index) => { const local = docsTranslations[lang]?.[doc.slug]; return <SmartLink href={`#/documentation/${doc.slug}`} key={doc.slug} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{local?.[0] || doc.title}</h2><p>{local?.[1] || doc.description}</p></div><Icon name="arrow"/></SmartLink>; })}</section></main>;
 }
 
 function LegalDocumentPage({ legalDoc }) {
   const { d, lang } = useSite();
   if (!legalDoc) return <NotFoundPage/>;
-  return <main className="legal-page"><header className="legal-header"><small>{d.docs.updated} {legalDoc.updated}</small><h1>{legalDoc.title}</h1><p>{legalDoc.subtitle}</p>{lang !== 'pt' && <div className="legal-language-note"><Icon name="globe"/><span>{d.docs.legalOriginal}</span></div>}</header><section className="legal-layout"><aside><small>{d.docs.summary}</small>{legalDoc.sections.map((section, index) => <button type="button" key={section.title} onClick={() => document.querySelector(`#legal-${index}`)?.scrollIntoView({ behavior: 'smooth' })}>{section.title}</button>)}</aside><article>{legalDoc.sections.map((section, index) => <section id={`legal-${index}`} key={section.title}><h2>{section.title}</h2>{section.items.map((item, itemIndex) => item.type === 'list' ? <ul key={itemIndex}>{item.items.map((value) => <li key={value}>{value}</li>)}</ul> : <p key={itemIndex}>{item.text}</p>)}</section>)}</article></section></main>;
+  const local = localizedLegalDocument(legalDoc, lang);
+  return <main className="legal-page"><header className="legal-header"><small>{d.docs.updated} {local.updated}</small><h1>{local.title}</h1><p>{local.subtitle}</p></header><section className="legal-layout"><aside><small>{d.docs.summary}</small>{local.sections.map((section, index) => <button type="button" key={section.title} onClick={() => document.querySelector(`#legal-${index}`)?.scrollIntoView({ behavior: 'smooth' })}>{section.title}</button>)}</aside><article>{local.sections.map((section, index) => <section id={`legal-${index}`} key={section.title}><h2>{section.title}</h2>{section.items.map((item, itemIndex) => item.type === 'list' ? <ul key={itemIndex}>{item.items.map((value) => <li key={value}>{value}</li>)}</ul> : <p key={itemIndex}>{item.text}</p>)}</section>)}</article></section></main>;
 }
 
 function ContactPage() {
@@ -892,8 +1132,10 @@ function NotFoundPage() {
 
 function Footer() {
   const { d } = useSite();
-  return <footer className="site-footer"><div><img src="./media/logo.webp" alt=""/><div><strong>Two Eyes On You</strong><small>{d.footer.location}</small></div></div><nav><SmartLink href="#/arcanian">{d.nav.projects}</SmartLink><SmartLink href="#/news">{d.nav.news}</SmartLink><SmartLink href="#/wiki">{d.nav.wiki}</SmartLink><SmartLink href="#/about">{d.nav.studio}</SmartLink><SmartLink href="#/documentation">{d.nav.documents}</SmartLink><SmartLink href="#/contact">{d.nav.contact}</SmartLink></nav><span>{d.footer.rights}</span></footer>;
+  return <footer className="site-footer"><div><span className="brand-logo-surface footer-logo"><img src="./media/logo.webp" alt=""/></span><div><strong>Two Eyes On You</strong><small>{d.footer.location}</small></div></div><nav><SmartLink href="#/arcanian">{d.nav.projects}</SmartLink><SmartLink href="#/news">{d.nav.news}</SmartLink><SmartLink href="#/wiki">{d.nav.wiki}</SmartLink><SmartLink href="#/about">{d.nav.studio}</SmartLink><SmartLink href="#/documentation">{d.nav.documents}</SmartLink><SmartLink href="#/contact">{d.nav.contact}</SmartLink></nav><span>{d.footer.rights}</span></footer>;
 }
+
+const defaultA11y = { highContrast:false, reduceMotion:false, underlineLinks:false, enhancedFocus:true, customCursor:true };
 
 function App() {
   const route = useRoute();
@@ -903,11 +1145,23 @@ function App() {
     const saved = localStorage.getItem('teoy-language');
     return languages.some((item) => item.id === saved) ? saved : 'pt';
   });
-  const [theme, setThemeState] = useState(() => {
-    const saved = localStorage.getItem('teoy-theme');
-    const version = localStorage.getItem('teoy-theme-version');
-    if (version !== '12') { localStorage.setItem('teoy-theme-version', '12'); return 'studio'; }
-    return themes.some((item) => item.id === saved) ? saved : 'studio';
+const [theme, setThemeState] = useState(() => {
+  const saved = localStorage.getItem('teoy-theme');
+  const version = localStorage.getItem('teoy-theme-version');
+
+  if (version !== '16') {
+    localStorage.setItem('teoy-theme-version', '16');
+    localStorage.setItem('teoy-theme', 'night');
+    return 'night';
+  }
+
+  return themes.some((item) => item.id === saved) ? saved : 'night';
+});
+  const [font, setFontState] = useState(() => ['studio','editorial','humanist','accessible'].includes(localStorage.getItem('teoy-font')) ? localStorage.getItem('teoy-font') : 'studio');
+  const [textSize, setTextSizeState] = useState(() => ['compact','standard','large','xlarge'].includes(localStorage.getItem('teoy-text-size')) ? localStorage.getItem('teoy-text-size') : 'standard');
+  const [a11y, setA11yState] = useState(() => {
+    try { return { ...defaultA11y, ...JSON.parse(localStorage.getItem('teoy-a11y') || '{}') }; }
+    catch { return defaultA11y; }
   });
   const d = getDictionary(lang);
 
@@ -928,7 +1182,31 @@ function App() {
     setThemeState(value);
   };
 
-  useReveal(`${route}|${lang}|${theme}`);
+  const setFont = (value) => {
+    if (!fontOptions.some((item) => item.id === value)) return;
+    localStorage.setItem('teoy-font', value);
+    setFontState(value);
+  };
+
+  const setTextSize = (value) => {
+    if (!textSizeOptions.some((item) => item.id === value)) return;
+    localStorage.setItem('teoy-text-size', value);
+    setTextSizeState(value);
+  };
+
+  const setA11y = (value) => {
+    const next = { ...defaultA11y, ...value };
+    localStorage.setItem('teoy-a11y', JSON.stringify(next));
+    setA11yState(next);
+  };
+
+  const resetPreferences = () => {
+    setFont('studio');
+    setTextSize('standard');
+    setA11y(defaultA11y);
+  };
+
+  useReveal(`${route}|${lang}|${theme}|${font}|${textSize}|${JSON.stringify(a11y)}`);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -940,6 +1218,17 @@ function App() {
     document.documentElement.lang = option?.html || 'pt-BR';
     document.documentElement.dataset.language = lang;
   }, [lang]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.font = font;
+    root.dataset.textSize = textSize;
+    root.dataset.contrast = a11y.highContrast ? 'high' : 'normal';
+    root.dataset.motion = a11y.reduceMotion ? 'reduced' : 'full';
+    root.dataset.links = a11y.underlineLinks ? 'underlined' : 'standard';
+    root.dataset.focus = a11y.enhancedFocus ? 'enhanced' : 'standard';
+    root.dataset.cursor = a11y.customCursor ? 'authorial' : 'system';
+  }, [font, textSize, a11y]);
 
   useEffect(() => {
     const handler = (event) => {
@@ -983,13 +1272,15 @@ function App() {
     return <HomePage/>;
   };
 
-  const context = useMemo(() => ({ d, lang, setLang, theme, setTheme }), [d, lang, theme]);
+  const context = useMemo(() => ({ d, lang, setLang, theme, setTheme, font, setFont, textSize, setTextSize, a11y, setA11y, resetPreferences }), [d, lang, theme, font, textSize, a11y]);
+  const skipLabel = {pt:'Ir para o conteúdo',en:'Skip to content',es:'Ir al contenido',it:'Vai al contenuto',ja:'本文へ移動'}[lang];
   return <SiteContext.Provider value={context}>
+    <a className="skip-link" href="#main-content">{skipLabel}</a>
     <div className="app-shell">
       <SideRail route={route} onSearch={() => setSearchOpen(true)} onSettings={() => setSettingsOpen(true)}/>
       <div className="app-main">
         <TopBar route={route} onSearch={() => setSearchOpen(true)} onSettings={() => setSettingsOpen(true)}/>
-        <div key={route} className="route-stage">{renderRoute()}</div>
+        <div id="main-content" tabIndex="-1" key={route} className="route-stage">{renderRoute()}</div>
         <Footer/>
       </div>
       <CommandPalette open={searchOpen} close={() => setSearchOpen(false)}/>

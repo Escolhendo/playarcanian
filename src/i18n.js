@@ -1,3 +1,6 @@
+import { workContentTranslations } from './fullTranslations.js';
+import { createLocalizedWikiEntry } from './wikiLocalization.js';
+
 export const languages = [
   { id: 'pt', label: 'Português', short: 'PT', html: 'pt-BR' },
   { id: 'en', label: 'English', short: 'EN', html: 'en' },
@@ -7,19 +10,16 @@ export const languages = [
 ];
 
 export const themes = [
-  { id: 'studio', key: 'studio' },
   { id: 'night', key: 'night' },
-  { id: 'light', key: 'light' },
   { id: 'sand', key: 'sand' },
   { id: 'blue', key: 'blue' }
 ];
-
 const dictionaries = {
   pt: {
     nav: { home:'Início', projects:'Projetos', news:'Notícias', wiki:'Wiki', timeline:'Cronologia', media:'Mídia', studio:'Estúdio', documents:'Documentos', contact:'Contato', buy:'Comprar Devaneios' },
     routes: { '/':'Início', '/arcanian':'Projetos', '/wiki':'Wiki Arcanian', '/timeline':'Cronologia', '/news':'Notícias', '/media':'Mídia', '/about':'Estúdio', '/documentation':'Documentos', '/contact':'Contato', '/purchase':'Comprar Devaneios' },
     common: { explore:'Explorar', learn:'Saiba mais', viewAll:'Ver tudo', readMore:'Ler mais', back:'Voltar', search:'Pesquisar', close:'Fechar', buy:'Comprar', available:'Disponível', soon:'Em desenvolvimento', external:'Abre em outra plataforma', overview:'Visão geral', direction:'Direção', connections:'Conexões', noResults:'Nenhum resultado encontrado.', originalPt:'Conteúdo editorial disponível no original em português.' },
-    settings: { title:'Preferências do site', description:'Escolha a aparência e o idioma. As opções ficam salvas neste navegador.', theme:'Tema', language:'Idioma', studio:'Estúdio colorido', night:'Escuro', light:'Claro', sand:'Areia', blue:'Azul editorial', open:'Aparência e idioma' },
+    settings: { title:'Preferências do site', description:'Ajuste idioma, identidade visual, leitura e acessibilidade. As escolhas ficam salvas neste navegador.', theme:'Tema', language:'Idioma', studio:'Ateliê Arcanian', night:'Arquivo Noturno', light:'Edição Museográfica', sand:'Códice Editorial', blue:'Terminal Analítico', open:'Escolher tema' },
     search: { title:'Busca rápida', placeholder:'Busque uma obra, notícia, pessoa ou página', navigation:'Navegação', work:'Projeto', wiki:'Wiki', document:'Documento' },
     home: {
       eyebrow:'Two Eyes On You Studios',
@@ -67,7 +67,7 @@ const dictionaries = {
     nav: { home:'Home', projects:'Projects', news:'News', wiki:'Wiki', timeline:'Timeline', media:'Media', studio:'Studio', documents:'Documents', contact:'Contact', buy:'Buy Devaneios' },
     routes: { '/':'Home', '/arcanian':'Projects', '/wiki':'Arcanian Wiki', '/timeline':'Timeline', '/news':'News', '/media':'Media', '/about':'Studio', '/documentation':'Documents', '/contact':'Contact', '/purchase':'Buy Devaneios' },
     common: { explore:'Explore', learn:'Learn more', viewAll:'View all', readMore:'Read more', back:'Back', search:'Search', close:'Close', buy:'Buy', available:'Available', soon:'In development', external:'Opens on another platform', overview:'Overview', direction:'Direction', connections:'Connections', noResults:'No results found.', originalPt:'Editorial content is available in its original Portuguese version.' },
-    settings: { title:'Site preferences', description:'Choose the appearance and language. Your choices are saved in this browser.', theme:'Theme', language:'Language', studio:'Colorful studio', night:'Dark', light:'Light', sand:'Sand', blue:'Editorial blue', open:'Appearance and language' },
+    settings: { title:'Site preferences', description:'Adjust language, visual identity, reading and accessibility. Your choices are saved in this browser.', theme:'Theme', language:'Language', studio:'Arcanian Atelier', night:'Nocturne Archive', light:'Gallery Edition', sand:'Editorial Codex', blue:'Analytical Terminal', open:'Appearance and language' },
     search: { title:'Quick search', placeholder:'Search for a project, news item, person or page', navigation:'Navigation', work:'Project', wiki:'Wiki', document:'Document' },
     home: { eyebrow:'Two Eyes On You Studios', title:'Stories to read, play and remember.', text:'The home of Devaneios, Menos Um, Tormenta and the Arcanian Game.', primary:'Explore our projects', secondary:'About the studio', featured:'Featured', latest:'Latest news', projects:'Studio projects', projectsText:'Each story chooses the format that serves it best. Arcanian connects books, comics and a game without turning them into the same experience.', studioTitle:'A story does not have to end where it began.', studioText:'Two Eyes On You was created to build projects that cross formats without losing authorship. We define the scene, characters and feeling first. Technology comes later.', studioButton:'Meet Two Eyes On You' },
     projects: { eyebrow:'Arcanian in different forms', title:'Projects', text:'Four works entering the same universe through different conflicts and points of view.', choose:'Choose a project', intro:'Arcanian is the studio’s main universe. Every title stands on its own while sharing consequences, characters and ideas.' },
@@ -87,7 +87,7 @@ const dictionaries = {
     nav: { home:'Inicio', projects:'Proyectos', news:'Noticias', wiki:'Wiki', timeline:'Cronología', media:'Medios', studio:'Estudio', documents:'Documentos', contact:'Contacto', buy:'Comprar Devaneios' },
     routes: { '/':'Inicio', '/arcanian':'Proyectos', '/wiki':'Wiki Arcanian', '/timeline':'Cronología', '/news':'Noticias', '/media':'Medios', '/about':'Estudio', '/documentation':'Documentos', '/contact':'Contacto', '/purchase':'Comprar Devaneios' },
     common: { explore:'Explorar', learn:'Saber más', viewAll:'Ver todo', readMore:'Leer más', back:'Volver', search:'Buscar', close:'Cerrar', buy:'Comprar', available:'Disponible', soon:'En desarrollo', external:'Se abre en otra plataforma', overview:'Resumen', direction:'Dirección', connections:'Conexiones', noResults:'No se encontraron resultados.', originalPt:'El contenido editorial está disponible en su versión original en portugués.' },
-    settings: { title:'Preferencias del sitio', description:'Elige la apariencia y el idioma. Tus opciones se guardan en este navegador.', theme:'Tema', language:'Idioma', studio:'Estudio colorido', night:'Oscuro', light:'Claro', sand:'Arena', blue:'Azul editorial', open:'Apariencia e idioma' },
+    settings: { title:'Preferencias del sitio', description:'Ajusta idioma, identidad visual, lectura y accesibilidad. Tus opciones se guardan en este navegador.', theme:'Tema', language:'Idioma', studio:'Atelier Arcanian', night:'Archivo Nocturno', light:'Edición Museográfica', sand:'Códice Editorial', blue:'Terminal Analítico', open:'Apariencia e idioma' },
     search: { title:'Búsqueda rápida', placeholder:'Busca un proyecto, noticia, persona o página', navigation:'Navegación', work:'Proyecto', wiki:'Wiki', document:'Documento' },
     home: { eyebrow:'Two Eyes On You Studios', title:'Historias para leer, jugar y recordar.', text:'Un estudio independiente brasileño que crea universos originales en literatura, juegos, cómics, imagen y sonido.', primary:'Conoce nuestros proyectos', secondary:'Sobre el estudio', featured:'Destacado', latest:'Últimas noticias', projects:'Proyectos del estudio', projectsText:'Cada obra elige el formato que mejor sirve a la historia. Arcanian conecta libros, cómics y un juego sin convertirlos en la misma experiencia.', studioTitle:'Una obra no tiene que terminar donde empezó.', studioText:'Two Eyes On You nació para crear proyectos que atraviesan formatos sin perder autoría. Primero definimos la escena, los personajes y la sensación. La tecnología viene después.', studioButton:'Conoce Two Eyes On You' },
     projects: { eyebrow:'Universos y obras', title:'Proyectos', text:'Literatura, cómics y juegos desarrollados bajo una misma dirección creativa.', choose:'Elige un proyecto', intro:'Arcanian es el universo principal del estudio. Cada título funciona por separado y comparte consecuencias, personajes e ideas.' },
@@ -107,7 +107,7 @@ const dictionaries = {
     nav: { home:'Home', projects:'Progetti', news:'Notizie', wiki:'Wiki', timeline:'Cronologia', media:'Media', studio:'Studio', documents:'Documenti', contact:'Contatti', buy:'Acquista Devaneios' },
     routes: { '/':'Home', '/arcanian':'Progetti', '/wiki':'Wiki Arcanian', '/timeline':'Cronologia', '/news':'Notizie', '/media':'Media', '/about':'Studio', '/documentation':'Documenti', '/contact':'Contatti', '/purchase':'Acquista Devaneios' },
     common: { explore:'Esplora', learn:'Scopri di più', viewAll:'Vedi tutto', readMore:'Leggi', back:'Indietro', search:'Cerca', close:'Chiudi', buy:'Acquista', available:'Disponibile', soon:'In sviluppo', external:'Si apre su un’altra piattaforma', overview:'Panoramica', direction:'Direzione', connections:'Connessioni', noResults:'Nessun risultato trovato.', originalPt:'Il contenuto editoriale è disponibile nella versione originale in portoghese.' },
-    settings: { title:'Preferenze del sito', description:'Scegli aspetto e lingua. Le preferenze vengono salvate in questo browser.', theme:'Tema', language:'Lingua', studio:'Studio colorato', night:'Scuro', light:'Chiaro', sand:'Sabbia', blue:'Blu editoriale', open:'Aspetto e lingua' },
+    settings: { title:'Preferenze del sito', description:'Regola lingua, identità visiva, lettura e accessibilità. Le preferenze vengono salvate in questo browser.', theme:'Tema', language:'Lingua', studio:'Atelier Arcanian', night:'Archivio Notturno', light:'Edizione Museale', sand:'Codice Editoriale', blue:'Terminale Analitico', open:'Aspetto e lingua' },
     search: { title:'Ricerca rapida', placeholder:'Cerca un progetto, una notizia, una persona o una pagina', navigation:'Navigazione', work:'Progetto', wiki:'Wiki', document:'Documento' },
     home: { eyebrow:'Two Eyes On You Studios', title:'Storie da leggere, giocare e ricordare.', text:'Uno studio indipendente brasiliano che crea mondi originali attraverso letteratura, giochi, fumetti, immagini e suono.', primary:'Scopri i nostri progetti', secondary:'Chi siamo', featured:'In evidenza', latest:'Ultime notizie', projects:'Progetti dello studio', projectsText:'Ogni opera sceglie il formato più adatto alla storia. Arcanian collega libri, fumetti e un gioco senza renderli la stessa esperienza.', studioTitle:'Una storia non deve finire dove è iniziata.', studioText:'Two Eyes On You nasce per creare progetti che attraversano i formati senza perdere autorialità. Prima definiamo scena, personaggi e sensazione. La tecnologia viene dopo.', studioButton:'Scopri Two Eyes On You' },
     projects: { eyebrow:'Mondi e opere', title:'Progetti', text:'Letteratura, fumetti e giochi sviluppati sotto un’unica direzione creativa.', choose:'Scegli un progetto', intro:'Arcanian è l’universo principale dello studio. Ogni titolo è autonomo, ma condivide conseguenze, personaggi e idee.' },
@@ -127,7 +127,7 @@ const dictionaries = {
     nav: { home:'ホーム', projects:'プロジェクト', news:'ニュース', wiki:'Wiki', timeline:'年表', media:'メディア', studio:'スタジオ', documents:'ドキュメント', contact:'お問い合わせ', buy:'Devaneiosを購入' },
     routes: { '/':'ホーム', '/arcanian':'プロジェクト', '/wiki':'Arcanian Wiki', '/timeline':'年表', '/news':'ニュース', '/media':'メディア', '/about':'スタジオ', '/documentation':'ドキュメント', '/contact':'お問い合わせ', '/purchase':'Devaneiosを購入' },
     common: { explore:'見る', learn:'詳しく見る', viewAll:'すべて見る', readMore:'続きを読む', back:'戻る', search:'検索', close:'閉じる', buy:'購入', available:'発売中', soon:'開発中', external:'外部プラットフォームで開きます', overview:'概要', direction:'方向性', connections:'関連', noResults:'結果が見つかりません。', originalPt:'編集本文はポルトガル語の原文で提供されています。' },
-    settings: { title:'サイト設定', description:'外観と言語を選択できます。設定はこのブラウザーに保存されます。', theme:'テーマ', language:'言語', studio:'カラフルスタジオ', night:'ダーク', light:'ライト', sand:'サンド', blue:'エディトリアルブルー', open:'外観と言語' },
+    settings: { title:'サイト設定', description:'言語、視覚テーマ、読みやすさ、アクセシビリティを調整できます。設定はこのブラウザーに保存されます。', theme:'テーマ', language:'言語', studio:'Arcanian アトリエ', night:'夜間アーカイブ', light:'ギャラリー・エディション', sand:'編集コーデックス', blue:'分析ターミナル', open:'外観と言語' },
     search: { title:'クイック検索', placeholder:'作品、ニュース、人物、ページを検索', navigation:'ナビゲーション', work:'プロジェクト', wiki:'Wiki', document:'ドキュメント' },
     home: { eyebrow:'Two Eyes On You Studios', title:'読み、遊び、記憶に残る物語。', text:'文学、ゲーム、コミック、映像、音を通じて独自の世界をつくるブラジルのインディペンデントスタジオです。', primary:'プロジェクトを見る', secondary:'スタジオについて', featured:'注目作品', latest:'最新ニュース', projects:'スタジオのプロジェクト', projectsText:'物語ごとに最適な形式を選びます。Arcanianは書籍、コミック、ゲームをつなぎますが、同じ体験にはしません。', studioTitle:'物語は、始まった形式で終わる必要はありません。', studioText:'Two Eyes On Youは、作者性を失わずに複数の形式を横断する作品をつくるために生まれました。まず場面、人物、感情を定め、技術はその後に選びます。', studioButton:'Two Eyes On Youについて' },
     projects: { eyebrow:'世界と作品', title:'プロジェクト', text:'一つのクリエイティブディレクションのもとで制作される文学、コミック、ゲーム。', choose:'プロジェクトを選ぶ', intro:'Arcanianはスタジオの中心となる世界です。各作品は単独でも楽しめますが、結果、人物、テーマを共有しています。' },
@@ -229,25 +229,24 @@ export function getByPath(object, path) {
 }
 
 export function localizedWork(work, lang) {
-  const translated = workTranslations[lang]?.[work.slug];
+  if (lang === 'pt') return work;
+  const translated = workContentTranslations[lang]?.[work.slug] || workTranslations[lang]?.[work.slug];
   if (!translated) return work;
+  const primaryLabel = typeof translated.primary === 'string' ? translated.primary : translated.primary?.label;
   return {
     ...work,
+    ...translated,
     title: translated.title || work.title,
     displayTitle: translated.displayTitle || translated.title || work.displayTitle,
-    eyebrow: translated.eyebrow,
-    summary: translated.summary,
-    long: translated.long,
-    themes: translated.themes,
-    primary: { ...work.primary, label: translated.primary }
+    primary: { ...work.primary, ...(typeof translated.primary === 'object' ? translated.primary : {}), label: primaryLabel || work.primary?.label }
   };
 }
 
 export function localizedWikiEntry(entry, lang) {
   if (lang === 'pt') return { ...entry, translated: true };
   const translated = featuredWikiTranslations[lang]?.[entry.slug];
-  if (!translated) return { ...entry, translated: false };
-  return { ...entry, ...translated, translated: true };
+  const base = createLocalizedWikiEntry(entry, lang);
+  return translated ? { ...base, ...translated, meta:base.meta, translated:true } : base;
 }
 
 export const newsTranslations = {

@@ -178,157 +178,85 @@ const profileOverrides = {
   tormenta: { works: ['Arcanian: Tormenta'] }
 };
 
-const categoryProfiles = {
-  characters: { kind: 'Personagem', status: 'Situação ainda não divulgada', historyTitle: 'Trajetória conhecida', relationTitle: 'Família e relações', contextTitle: 'Afiliações, lugares e acontecimentos' },
-  organizations: { kind: 'Organização', status: 'Atuação descrita nas obras', historyTitle: 'Origem e atuação', relationTitle: 'Pessoas e estruturas relacionadas', contextTitle: 'Operações e alcance' },
-  places: { kind: 'Local', status: 'Local conhecido no universo', historyTitle: 'Geografia e presença narrativa', relationTitle: 'Pessoas, instituições e acontecimentos', contextTitle: 'Importância no universo' },
-  concepts: { kind: 'Conceito', status: 'Definição baseada no material publicado', historyTitle: 'Funcionamento conhecido', relationTitle: 'Conceitos e casos relacionados', contextTitle: 'Limites e consequências' },
-  events: { kind: 'Evento', status: 'Acontecimento registrado na narrativa', historyTitle: 'Antecedentes e desenvolvimento', relationTitle: 'Participantes e consequências', contextTitle: 'Impacto posterior' },
-  anomalies: { kind: 'Anomalia', status: 'Fenômeno documentado', historyTitle: 'Comportamento observado', relationTitle: 'Casos, lugares e evidências', contextTitle: 'Interpretações e riscos' },
-  objects: { kind: 'Objeto', status: 'Presença documentada nas obras', historyTitle: 'Origem e utilização', relationTitle: 'Portadores, casos e conceitos', contextTitle: 'Função narrativa e material' }
+const profileCopy = {
+  pt:{
+    categories:{
+      characters:['Personagem','Situação ainda não divulgada','Trajetória conhecida','Família e relações','Afiliações, lugares e acontecimentos'],
+      organizations:['Organização','Atuação descrita nas obras','Origem e atuação','Pessoas e estruturas relacionadas','Operações e alcance'],
+      places:['Local','Local conhecido no universo','Geografia e presença narrativa','Pessoas, instituições e acontecimentos','Importância no universo'],
+      concepts:['Conceito','Definição baseada no material publicado','Funcionamento conhecido','Conceitos e casos relacionados','Limites e consequências'],
+      events:['Evento','Acontecimento registrado na narrativa','Antecedentes e desenvolvimento','Participantes e consequências','Impacto posterior'],
+      anomalies:['Anomalia','Fenômeno documentado','Comportamento observado','Casos, lugares e evidências','Interpretações e riscos'],
+      objects:['Objeto','Presença documentada nas obras','Origem e utilização','Portadores, casos e conceitos','Função narrativa e material']
+    },
+    facts:{type:'Tipo',name:'Nome completo',alias:'Também conhecido como',role:'Atuação',family:'Família e parentesco',affiliation:'Afiliação',origin:'Origem',place:'Local associado',status:'Situação',first:'Primeira aparição',works:'Presença nas obras',classification:'Classificação',designation:'Designação',other:'Outro nome',function:'Função no universo',people:'Pessoas relacionadas',organizations:'Organizações relacionadas',places:'Lugares associados',connections:'Número de conexões'},
+    none:'Nenhuma ligação desse tipo foi divulgada.', notApplicable:'Não se aplica.', unknown:'Não divulgado no material publicado.', noAlias:'Nenhum outro nome divulgado', variable:'Não confirmada ou variável.', noPlace:'Não estabelecido de forma pública.', noFamily:'Nenhum parentesco foi identificado no material publicado até o momento.', overview:'Visão geral', presence:'Presença nas obras', documented:'Conexão documentada', noConnection:'Nenhuma conexão adicional foi estabelecida no material publicado.', relationNote:(name,text)=>`${name}: ${text}`, relationFallback:(name)=>`A entrada aparece ligada a ${name} no material publicado.`, context:(name)=>`As conexões acima organizam ${name} no universo sem transformar informações ainda não publicadas em fatos.`, work:(work)=>`${work}. A entrada é apresentada, citada ou anunciada nesse projeto conforme o material público disponível.`, groups:[['Personagens',['characters']],['Organizações',['organizations']],['Lugares',['places']],['Conceitos e anomalias',['concepts','anomalies']],['Eventos e objetos',['events','objects']]]
+  },
+  en:{
+    categories:{characters:['Character','Documented in the published material','Known trajectory','Family and relationships','Affiliations, places and events'],organizations:['Organization','Activity documented in the works','Origin and activity','Related people and structures','Operations and reach'],places:['Location','Known location in the universe','Geography and narrative presence','People, institutions and events','Importance in the universe'],concepts:['Concept','Definition based on published material','Known operation','Related concepts and cases','Limits and consequences'],events:['Event','Event recorded in the narrative','Background and development','Participants and consequences','Later impact'],anomalies:['Anomaly','Documented phenomenon','Observed behaviour','Cases, places and evidence','Interpretations and risks'],objects:['Object','Documented presence in the works','Origin and use','Holders, cases and concepts','Narrative and material function']},
+    facts:{type:'Type',name:'Full name',alias:'Also known as',role:'Role',family:'Family and kinship',affiliation:'Affiliation',origin:'Origin',place:'Associated location',status:'Status',first:'First appearance',works:'Presence in works',classification:'Classification',designation:'Designation',other:'Other name',function:'Function in the universe',people:'Related people',organizations:'Related organizations',places:'Associated locations',connections:'Number of connections'},
+    none:'No connection of this type has been disclosed.',notApplicable:'Not applicable.',unknown:'Not disclosed in the published material.',noAlias:'No other name disclosed',variable:'Unconfirmed or variable.',noPlace:'Not publicly established.',noFamily:'No family relationship has been identified in the published material.',overview:'Overview',presence:'Presence in the works',documented:'Documented connection',noConnection:'No additional connection has been established in the published material.',relationNote:(name,text)=>`${name}: ${text}`,relationFallback:(name)=>`The published material links this entry to ${name}.`,context:(name)=>`The links above place ${name} within the universe without presenting unpublished information as fact.`,work:(work)=>`${work}. The entry is presented, mentioned or announced in this project according to the available public material.`,groups:[['Characters',['characters']],['Organizations',['organizations']],['Locations',['places']],['Concepts and anomalies',['concepts','anomalies']],['Events and objects',['events','objects']]]
+  },
+  es:{
+    categories:{characters:['Personaje','Documentado en el material publicado','Trayectoria conocida','Familia y relaciones','Afiliaciones, lugares y acontecimientos'],organizations:['Organización','Actividad descrita en las obras','Origen y actividad','Personas y estructuras relacionadas','Operaciones y alcance'],places:['Lugar','Lugar conocido en el universo','Geografía y presencia narrativa','Personas, instituciones y acontecimientos','Importancia en el universo'],concepts:['Concepto','Definición basada en el material publicado','Funcionamiento conocido','Conceptos y casos relacionados','Límites y consecuencias'],events:['Acontecimiento','Acontecimiento registrado en la narración','Antecedentes y desarrollo','Participantes y consecuencias','Impacto posterior'],anomalies:['Anomalía','Fenómeno documentado','Comportamiento observado','Casos, lugares y pruebas','Interpretaciones y riesgos'],objects:['Objeto','Presencia documentada en las obras','Origen y uso','Portadores, casos y conceptos','Función narrativa y material']},
+    facts:{type:'Tipo',name:'Nombre completo',alias:'También conocido como',role:'Función',family:'Familia y parentesco',affiliation:'Afiliación',origin:'Origen',place:'Lugar asociado',status:'Situación',first:'Primera aparición',works:'Presencia en las obras',classification:'Clasificación',designation:'Designación',other:'Otro nombre',function:'Función en el universo',people:'Personas relacionadas',organizations:'Organizaciones relacionadas',places:'Lugares asociados',connections:'Número de conexiones'},
+    none:'No se ha revelado ninguna conexión de este tipo.',notApplicable:'No se aplica.',unknown:'No revelado en el material publicado.',noAlias:'No se ha revelado otro nombre',variable:'No confirmada o variable.',noPlace:'No establecido públicamente.',noFamily:'No se ha identificado parentesco en el material publicado.',overview:'Visión general',presence:'Presencia en las obras',documented:'Conexión documentada',noConnection:'No se ha establecido ninguna conexión adicional en el material publicado.',relationNote:(name,text)=>`${name}: ${text}`,relationFallback:(name)=>`El material publicado vincula esta entrada con ${name}.`,context:(name)=>`Las conexiones anteriores sitúan a ${name} en el universo sin presentar información no publicada como un hecho.`,work:(work)=>`${work}. La entrada aparece, se menciona o se anuncia en este proyecto según el material público disponible.`,groups:[['Personajes',['characters']],['Organizaciones',['organizations']],['Lugares',['places']],['Conceptos y anomalías',['concepts','anomalies']],['Acontecimientos y objetos',['events','objects']]]
+  },
+  it:{
+    categories:{characters:['Personaggio','Documentato nel materiale pubblicato','Percorso noto','Famiglia e relazioni','Affiliazioni, luoghi ed eventi'],organizations:['Organizzazione','Attività descritta nelle opere','Origine e attività','Persone e strutture collegate','Operazioni e portata'],places:['Luogo','Luogo noto nell’universo','Geografia e presenza narrativa','Persone, istituzioni ed eventi','Importanza nell’universo'],concepts:['Concetto','Definizione basata sul materiale pubblicato','Funzionamento noto','Concetti e casi collegati','Limiti e conseguenze'],events:['Evento','Evento registrato nella narrazione','Antefatti e sviluppo','Partecipanti e conseguenze','Impatto successivo'],anomalies:['Anomalia','Fenomeno documentato','Comportamento osservato','Casi, luoghi e prove','Interpretazioni e rischi'],objects:['Oggetto','Presenza documentata nelle opere','Origine e utilizzo','Portatori, casi e concetti','Funzione narrativa e materiale']},
+    facts:{type:'Tipo',name:'Nome completo',alias:'Conosciuto anche come',role:'Ruolo',family:'Famiglia e parentela',affiliation:'Affiliazione',origin:'Origine',place:'Luogo associato',status:'Stato',first:'Prima apparizione',works:'Presenza nelle opere',classification:'Classificazione',designation:'Designazione',other:'Altro nome',function:'Funzione nell’universo',people:'Persone collegate',organizations:'Organizzazioni collegate',places:'Luoghi associati',connections:'Numero di collegamenti'},
+    none:'Non è stato rivelato alcun collegamento di questo tipo.',notApplicable:'Non applicabile.',unknown:'Non rivelato nel materiale pubblicato.',noAlias:'Nessun altro nome rivelato',variable:'Non confermata o variabile.',noPlace:'Non stabilito pubblicamente.',noFamily:'Nessuna parentela è stata identificata nel materiale pubblicato.',overview:'Panoramica',presence:'Presenza nelle opere',documented:'Collegamento documentato',noConnection:'Nessun collegamento aggiuntivo è stato stabilito nel materiale pubblicato.',relationNote:(name,text)=>`${name}: ${text}`,relationFallback:(name)=>`Il materiale pubblicato collega questa voce a ${name}.`,context:(name)=>`I collegamenti precedenti collocano ${name} nell’universo senza presentare informazioni non pubblicate come fatti.`,work:(work)=>`${work}. La voce è presentata, citata o annunciata in questo progetto secondo il materiale pubblico disponibile.`,groups:[['Personaggi',['characters']],['Organizzazioni',['organizations']],['Luoghi',['places']],['Concetti e anomalie',['concepts','anomalies']],['Eventi e oggetti',['events','objects']]]
+  },
+  ja:{
+    categories:{characters:['人物','出版資料で確認済み','確認された経歴','家族と関係','所属・場所・出来事'],organizations:['組織','作品内で活動を確認','起源と活動','関係する人物と構造','作戦と範囲'],places:['場所','世界内で確認された場所','地理と物語上の役割','人物・組織・出来事','世界における重要性'],concepts:['概念','出版資料に基づく定義','確認された仕組み','関連概念と事件','限界と結果'],events:['出来事','物語に記録された出来事','背景と展開','参加者と結果','その後の影響'],anomalies:['異常現象','記録された現象','観測された挙動','事件・場所・証拠','解釈と危険'],objects:['物品','作品内で存在を確認','起源と用途','所持者・事件・概念','物語上・物質上の機能']},
+    facts:{type:'種別',name:'正式名',alias:'別名',role:'役割',family:'家族・親族',affiliation:'所属',origin:'出自',place:'関連場所',status:'状況',first:'初登場',works:'登場作品',classification:'分類',designation:'名称',other:'別称',function:'世界内の機能',people:'関連人物',organizations:'関連組織',places:'関連場所',connections:'接続数'},
+    none:'この種類の関係はまだ公開されていません。',notApplicable:'該当なし。',unknown:'出版資料では未公開です。',noAlias:'別名は公開されていません',variable:'未確認または変動します。',noPlace:'公開情報では確定していません。',noFamily:'出版資料で親族関係は確認されていません。',overview:'概要',presence:'登場作品',documented:'確認された関係',noConnection:'出版資料で追加の関係は確認されていません。',relationNote:(name,text)=>`${name}：${text}`,relationFallback:(name)=>`出版資料では${name}との関係が示されています。`,context:(name)=>`上の関係は、未公開情報を事実化せずに${name}を世界内へ位置づけます。`,work:(work)=>`${work}。公開資料に基づき、この企画で登場・言及・発表されています。`,groups:[['人物',['characters']],['組織',['organizations']],['場所',['places']],['概念と異常現象',['concepts','anomalies']],['出来事と物品',['events','objects']]]
+  }
 };
 
-const relationLabels = {
-  characters: { characters: 'Relação pessoal ou narrativa', organizations: 'Afiliação ou contato', places: 'Local associado', concepts: 'Conceito ligado à trajetória', events: 'Evento relacionado', anomalies: 'Anomalia relacionada', objects: 'Objeto associado' },
-  organizations: { characters: 'Pessoa relacionada', organizations: 'Instituição relacionada', places: 'Área de atuação', concepts: 'Linha de pesquisa ou princípio', events: 'Operação ou acontecimento', anomalies: 'Fenômeno estudado', objects: 'Recurso ou evidência' },
-  places: { characters: 'Pessoa associada', organizations: 'Instituição presente', places: 'Região relacionada', concepts: 'Conceito associado', events: 'Acontecimento no local', anomalies: 'Fenômeno registrado', objects: 'Objeto encontrado ou utilizado' },
-  concepts: { characters: 'Pessoa ligada ao conceito', organizations: 'Instituição relacionada', places: 'Local de manifestação', concepts: 'Conceito relacionado', events: 'Evento em que aparece', anomalies: 'Manifestação anômala', objects: 'Objeto relacionado' },
-  events: { characters: 'Participante ou vítima', organizations: 'Organização envolvida', places: 'Local do acontecimento', concepts: 'Conceito central', events: 'Evento relacionado', anomalies: 'Fenômeno presente', objects: 'Objeto relevante' },
-  anomalies: { characters: 'Pessoa exposta', organizations: 'Instituição investigadora', places: 'Local de ocorrência', concepts: 'Princípio relacionado', events: 'Caso associado', anomalies: 'Fenômeno relacionado', objects: 'Evidência ou vetor' },
-  objects: { characters: 'Portador ou criador', organizations: 'Instituição relacionada', places: 'Local associado', concepts: 'Princípio de funcionamento', events: 'Caso ou uso registrado', anomalies: 'Reação observada', objects: 'Objeto relacionado' }
-};
+function findEntry(slug, allEntries) { return allEntries.find((item) => item.slug === slug); }
 
-function findEntry(slug, allEntries) {
-  return allEntries.find((item) => item.slug === slug);
-}
+function categoryData(entry, t) { return t.categories[entry.category] || t.categories.concepts; }
 
-function relationNote(entry, related) {
-  if (!related) return 'A conexão foi indicada nas obras, mas os detalhes públicos permanecem limitados.';
-  const first = related.summary?.trim() || related.body?.[0]?.trim();
-  return first ? `${related.name}: ${first}` : `A entrada aparece ligada a ${related.name} no material publicado.`;
-}
-
-function automaticRelationships(entry, allEntries) {
-  return entry.related.map((slug) => {
+function automaticRelationships(entry, allEntries, t) {
+  return (entry.related || []).map((slug) => {
     const related = findEntry(slug, allEntries);
-    return {
-      slug,
-      name: related?.name || slug,
-      label: relationLabels[entry.category]?.[related?.category] || 'Conexão documentada',
-      note: relationNote(entry, related)
-    };
+    const first = related?.summary?.trim() || related?.body?.[0]?.trim();
+    return { slug, name:related?.name || slug, label:t.documented, note:first ? t.relationNote(related?.name || slug, first) : t.relationFallback(related?.name || slug) };
   });
 }
 
-function groupedNames(relationships, allEntries, categories) {
-  const values = relationships
-    .filter((relationship) => categories.includes(findEntry(relationship.slug, allEntries)?.category))
-    .map((relationship) => relationship.name);
-  return values.length ? values.join(' · ') : 'Nenhuma ligação desse tipo foi divulgada.';
+function relationshipsFor(entry, allEntries, lang, t) {
+  const manual = lang === 'pt' ? relationshipOverrides[entry.slug] : null;
+  return manual ? manual.map(([slug,label,note])=>({slug,label,note,name:findEntry(slug,allEntries)?.name || slug})) : automaticRelationships(entry,allEntries,t);
 }
 
-function buildContextParagraphs(entry, relationships, allEntries) {
-  const groups = [
-    ['Personagens', ['characters']],
-    ['Organizações', ['organizations']],
-    ['Lugares', ['places']],
-    ['Conceitos e anomalias', ['concepts', 'anomalies']],
-    ['Eventos e objetos', ['events', 'objects']]
-  ];
-  return groups
-    .map(([label, categories]) => {
-      const names = groupedNames(relationships, allEntries, categories);
-      return names.startsWith('Nenhuma') ? null : `${label}: ${names}.`;
-    })
-    .filter(Boolean)
-    .concat([`As conexões acima são apresentadas como relações editoriais entre entradas. Elas ajudam a localizar ${entry.name} no universo sem transformar informações ainda não publicadas em fatos.`]);
+function groupedNames(relationships, allEntries, categories, t) {
+  const values=relationships.filter((r)=>categories.includes(findEntry(r.slug,allEntries)?.category)).map((r)=>r.name);
+  return values.length ? values.join(' · ') : t.none;
 }
 
-function getWorks(entry, override) {
-  return entry.meta?.works || override.works || ['Arcanian: Devaneios — Episódio I'];
+function getWorks(entry, override) { return entry.meta?.works || override.works || ['Arcanian: Devaneios — Episódio I']; }
+function getFamily(entry, override, t) { return entry.category !== 'characters' ? t.notApplicable : entry.meta?.family || override.family || t.noFamily; }
+
+function buildFacts(entry, allEntries, relationships, override, category, t) {
+  const orgs=groupedNames(relationships,allEntries,['organizations'],t), places=groupedNames(relationships,allEntries,['places'],t), people=groupedNames(relationships,allEntries,['characters'],t), works=getWorks(entry,override), f=t.facts;
+  if(entry.category==='characters') return [[f.type,category[0]],[f.name,entry.name],[f.alias,entry.alias||t.noAlias],[f.role,entry.meta?.occupation||override.occupation||entry.tag||t.unknown],[f.family,getFamily(entry,override,t)],[f.affiliation,entry.meta?.affiliation||override.affiliation||(orgs===t.none?t.variable:orgs)],[f.origin,entry.meta?.origin||override.origin||t.unknown],[f.place,entry.meta?.residence||override.residence||(places===t.none?t.noPlace:places)],[f.status,entry.meta?.status||override.status||category[1]],[f.first,entry.meta?.firstAppearance||t.unknown],[f.works,works.join(' · ')]];
+  return [[f.classification,category[0]],[f.designation,entry.name],[f.other,entry.alias||t.noAlias],[f.function,entry.meta?.occupation||override.occupation||entry.tag||t.unknown],[f.people,people],[f.organizations,orgs],[f.places,places],[f.status,entry.meta?.status||override.status||category[1]],[f.first,entry.meta?.firstAppearance||t.unknown],[f.works,works.join(' · ')],[f.connections,String(relationships.length)]];
 }
 
-function getFamily(entry, override) {
-  if (entry.category !== 'characters') return 'Não se aplica.';
-  return entry.meta?.family || override.family || 'Nenhum parentesco foi identificado no material publicado até o momento.';
+function contextParagraphs(entry, relationships, allEntries, t) {
+  return t.groups.map(([label,categories])=>{const names=groupedNames(relationships,allEntries,categories,t);return names===t.none?null:`${label}: ${names}.`;}).filter(Boolean).concat([t.context(entry.name)]);
 }
 
-function buildFacts(entry, allEntries, relationships, override, category) {
-  const relatedOrganizations = groupedNames(relationships, allEntries, ['organizations']);
-  const relatedPlaces = groupedNames(relationships, allEntries, ['places']);
-  const relatedPeople = groupedNames(relationships, allEntries, ['characters']);
-  const works = getWorks(entry, override);
-
-  if (entry.category === 'characters') {
-    return [
-      ['Tipo', category.kind],
-      ['Nome completo', entry.name],
-      ['Também conhecido como', entry.alias || 'Nenhum outro nome divulgado'],
-      ['Atuação', entry.meta?.occupation || override.occupation || entry.tag || 'Função não divulgada'],
-      ['Família e parentesco', getFamily(entry, override)],
-      ['Afiliação', entry.meta?.affiliation || override.affiliation || (relatedOrganizations.startsWith('Nenhuma') ? 'Não confirmada ou variável.' : relatedOrganizations)],
-      ['Origem', entry.meta?.origin || override.origin || 'Não divulgada no material publicado.'],
-      ['Local associado', entry.meta?.residence || override.residence || (relatedPlaces.startsWith('Nenhuma') ? 'Não estabelecido de forma pública.' : relatedPlaces)],
-      ['Situação', entry.meta?.status || override.status || category.status],
-      ['Primeira aparição', entry.meta?.firstAppearance || 'Não especificada editorialmente.'],
-      ['Presença nas obras', works.join(' · ')]
-    ];
-  }
-
-  return [
-    ['Classificação', category.kind],
-    ['Designação', entry.name],
-    ['Outro nome', entry.alias || 'Nenhum outro nome divulgado'],
-    ['Função no universo', entry.meta?.occupation || override.occupation || entry.tag || 'Função descrita na narrativa'],
-    ['Pessoas relacionadas', relatedPeople],
-    ['Organizações relacionadas', relatedOrganizations],
-    ['Lugares associados', relatedPlaces],
-    ['Situação conhecida', entry.meta?.status || override.status || category.status],
-    ['Primeira aparição', entry.meta?.firstAppearance || 'Não especificada editorialmente.'],
-    ['Presença nas obras', works.join(' · ')],
-    ['Número de conexões', String(relationships.length)]
-  ];
-}
-
-export function getWikiProfile(entry, allEntries) {
-  const category = categoryProfiles[entry.category] || categoryProfiles.concepts;
-  const override = profileOverrides[entry.slug] || {};
-  const manual = relationshipOverrides[entry.slug];
-  const relationships = manual
-    ? manual.map(([slug, label, note]) => ({ slug, label, note, name: findEntry(slug, allEntries)?.name || slug }))
-    : automaticRelationships(entry, allEntries);
-  const works = getWorks(entry, override);
-  const body = (entry.body || []).filter(Boolean);
-  const history = body.length ? body : [entry.summary];
-  const relationParagraphs = entry.category === 'characters'
-    ? [getFamily(entry, override), ...relationships.map((item) => `${item.label} — ${item.name}. ${item.note}`)]
-    : relationships.map((item) => `${item.label} — ${item.name}. ${item.note}`);
-
-  return {
-    facts: buildFacts(entry, allEntries, relationships, override, category),
-    relationships,
-    works,
-    sections: [
-      {
-        title: 'Visão geral',
-        paragraphs: [entry.summary, history[0]].filter((value, index, array) => value && array.indexOf(value) === index)
-      },
-      {
-        title: category.historyTitle,
-        paragraphs: [history[1] || history[0], ...history.slice(2)].filter(Boolean)
-      },
-      {
-        title: category.relationTitle,
-        paragraphs: relationParagraphs.length ? relationParagraphs : ['Nenhuma conexão adicional foi estabelecida no material publicado.']
-      },
-      {
-        title: category.contextTitle,
-        paragraphs: buildContextParagraphs(entry, relationships, allEntries)
-      },
-      {
-        title: 'Presença nas obras',
-        paragraphs: works.map((work) => `${work}. A entrada é apresentada, citada ou anunciada dentro desse projeto conforme o material público disponível.`)
-      }
-    ]
-  };
+export function getWikiProfile(entry, allEntries, lang='pt') {
+  const t=profileCopy[lang] || profileCopy.pt, category=categoryData(entry,t), override=lang==='pt'?(profileOverrides[entry.slug]||{}):{}, relationships=relationshipsFor(entry,allEntries,lang,t), works=getWorks(entry,override), body=(entry.body||[]).filter(Boolean), history=body.length?body:[entry.summary];
+  const relationParagraphs=entry.category==='characters'?[getFamily(entry,override,t),...relationships.map((r)=>`${r.label} — ${r.name}. ${r.note}`)]:relationships.map((r)=>`${r.label} — ${r.name}. ${r.note}`);
+  return { facts:buildFacts(entry,allEntries,relationships,override,category,t), relationships, works, sections:[
+    {title:t.overview,paragraphs:[entry.summary,history[0]].filter((v,i,a)=>v&&a.indexOf(v)===i)},
+    {title:category[2],paragraphs:[history[1]||history[0],...history.slice(2)].filter(Boolean)},
+    {title:category[3],paragraphs:relationParagraphs.length?relationParagraphs:[t.noConnection]},
+    {title:category[4],paragraphs:contextParagraphs(entry,relationships,allEntries,t)},
+    {title:t.presence,paragraphs:works.map(t.work)}
+  ]};
 }

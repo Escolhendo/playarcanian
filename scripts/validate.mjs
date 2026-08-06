@@ -2,14 +2,22 @@ import { access } from 'node:fs/promises';
 import { works, news, docs } from '../src/data.js';
 import { wikiEntries } from '../src/wiki.js';
 import { wikiSupplement } from '../src/wikiSupplement.js';
+import { finalWikiEntries } from '../src/wikiFinal.js';
+import { getBookGuide } from '../src/bookGuide.js';
 import { legalDocuments } from '../src/legal.js';
 import { getWikiProfile } from '../src/wikiDetails.js';
 
 const errors = [];
-const allWikiEntries = [...wikiEntries, ...wikiSupplement];
+const allWikiEntries = [...wikiEntries, ...wikiSupplement, ...finalWikiEntries];
 const workSlugs = new Set(works.map((item) => item.slug));
 const wikiSlugs = new Set(allWikiEntries.map((item) => item.slug));
 const legalSlugs = new Set(legalDocuments.map((item) => item.slug));
+
+const duplicateWikiSlugs = allWikiEntries.map((item) => item.slug).filter((slug, index, values) => values.indexOf(slug) !== index);
+for (const slug of new Set(duplicateWikiSlugs)) errors.push(`Wiki duplicada: ${slug}`);
+for (const chapter of getBookGuide('pt')) {
+  if (!(chapter.focus || []).some((slug) => wikiSlugs.has(slug))) errors.push(`Mapa do livro ${chapter.number}: nenhum verbete existente`);
+}
 
 for (const work of works) {
   for (const slug of work.relatedWiki || []) {
