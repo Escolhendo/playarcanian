@@ -202,7 +202,7 @@ const menosUm = {
 
 const ultimaDanca = {
   en:{
-    eyebrow:'Novel · Absolute Void · After Devaneios', title:'The Last Dance', displayTitle:'Arcanian: The Last Dance',
+    eyebrow:'Novel · Absolute Void · Direct sequel to Devaneios', title:'The Last Dance', displayTitle:'Arcanian: The Last Dance',
     summary:'After Devaneios, Ikarius, Joel and the Arnins face a crisis that can no longer be treated as an isolated case: a violent outbreak, political decisions and Hiussen’s plan begin pushing different peoples toward the same collapse.',
     long:'The Last Dance is the direct continuation of Absolute Void. Investigation, memory and survival no longer move separately. Ikarius studies the origin of an outbreak whose behavior resembles rabies; Joel realizes that his life with Elisabeth still shapes every decision he makes; and the Arnins must act while their queen follows a plan tied to Hiussen. The title carries two meanings: Joel and Elisabeth’s dance, preserved in memory, and the Arnins’ last opportunity before the conflict becomes irreversible.', primary:'Explore the work',
     facts:[['Series','Absolute Void'],['Position','Direct continuation of Devaneios'],['Central cast','Ikarius, Joel and the Arnins'],['Conflict','Outbreak, political choices and Hiussen’s plan']],
@@ -224,7 +224,7 @@ const ultimaDanca = {
     ]
   },
   es:{
-    eyebrow:'Novela · Vacío Absoluto · Después de Devaneios', title:'La Última Danza', displayTitle:'Arcanian: La Última Danza',
+    eyebrow:'Novela · Vacío Absoluto · Secuela directa de Devaneios', title:'La Última Danza', displayTitle:'Arcanian: La Última Danza',
     summary:'Después de Devaneios, Ikarius, Joel y los Arnins afrontan una crisis que ya no puede tratarse como un caso aislado: un brote violento, decisiones políticas y el plan de Hiussen empujan a distintos pueblos hacia el mismo colapso.',
     long:'La Última Danza continúa directamente Vacío Absoluto. Investigación, memoria y supervivencia dejan de avanzar por separado. Ikarius estudia un brote de comportamiento similar a la rabia; Joel comprende que su vida con Elisabeth todavía dirige sus decisiones; y los Arnins deben actuar mientras su reina sigue un plan vinculado a Hiussen. El título tiene dos sentidos: el baile de Joel y Elisabeth, preservado como recuerdo, y la última oportunidad de los Arnins antes de que el conflicto sea irreversible.', primary:'Conocer la obra',
     facts:[['Serie','Vacío Absoluto'],['Posición','Continuación directa de Devaneios'],['Núcleo','Ikarius, Joel y los Arnins'],['Conflicto','Brote, decisiones políticas y plan de Hiussen']],
@@ -246,7 +246,7 @@ const ultimaDanca = {
     ]
   },
   it:{
-    eyebrow:'Romanzo · Vuoto Assoluto · Dopo Devaneios', title:'L’Ultima Danza', displayTitle:'Arcanian: L’Ultima Danza',
+    eyebrow:'Romanzo · Vuoto Assoluto · Seguito diretto di Devaneios', title:'L’Ultima Danza', displayTitle:'Arcanian: L’Ultima Danza',
     summary:'Dopo Devaneios, Ikarius, Joel e gli Arnins affrontano una crisi che non può più essere trattata come un caso isolato: un’epidemia violenta, decisioni politiche e il piano di Hiussen spingono popoli diversi verso lo stesso collasso.',
     long:'L’Ultima Danza è la continuazione diretta di Vuoto Assoluto. Indagine, memoria e sopravvivenza non procedono più separate. Ikarius studia un’epidemia dal comportamento simile alla rabbia; Joel capisce che la vita con Elisabeth continua a guidare le sue scelte; gli Arnins devono agire mentre la regina segue un piano legato a Hiussen. Il titolo ha due significati: la danza di Joel ed Elisabeth conservata nella memoria e l’ultima possibilità degli Arnins prima che il conflitto diventi irreversibile.', primary:'Scopri l’opera',
     facts:[['Serie','Vuoto Assoluto'],['Posizione','Continuazione diretta di Devaneios'],['Nucleo','Ikarius, Joel e gli Arnins'],['Conflitto','Epidemia, scelte politiche e piano di Hiussen']],
@@ -268,7 +268,7 @@ const ultimaDanca = {
     ]
   },
   ja:{
-    eyebrow:'小説 · 絶対の虚無 · Devaneiosの後', title:'最後のダンス', displayTitle:'Arcanian: 最後のダンス',
+    eyebrow:'小説 · 絶対の虚無 · Devaneiosの直接の続編', title:'最後のダンス', displayTitle:'Arcanian: 最後のダンス',
     summary:'Devaneiosの後、Ikarius、Joel、Arninsは、もはや孤立した事件として扱えない危機に直面します。暴力的な感染、政治判断、Hiussenの計画が異なる人々を同じ崩壊へ押し進めます。',
     long:'「最後のダンス」は「絶対の虚無」の直接の続編です。捜査、記憶、生存は別々に進めなくなります。Ikariusは狂犬病に似た行動を引き起こす発生源を調べ、JoelはElisabethとの生活が今も自分の判断を形づくると知り、Arninsは女王がHiussenにつながる計画を進める中で行動します。題名は、記憶に残るJoelとElisabethのダンスと、後戻りできなくなる前のArnins最後の機会を指します。', primary:'作品を見る',
     facts:[['シリーズ','絶対の虚無'],['位置','Devaneiosの直接の続編'],['中心','Ikarius、Joel、Arnins'],['対立','感染、政治判断、Hiussenの計画']],
@@ -389,9 +389,9 @@ const tormenta = {
 const game = {
   en:{
     title:'Game', displayTitle:'Game', eyebrow:'Game · Narrative action adventure',
-    summary:'Ikarius and Joel lead an original campaign that reorganizes events from Devaneios, Menos Um, The Last Dance and other periods of Arcanian as an interactive experience.',
-    long:'The game does not reproduce one book chapter by chapter. It brings together characters who understand the same conflict in incompatible ways: Ikarius seeks verifiable rules; Joel knows what happens when they break. The campaign combines side exploration, environmental investigation, combat, narrative choices and scenes designed for one or two players, with stylized 2D/2.5D art and hand-drawn sprites rather than pixel art.', primary:'View the game',
-    facts:[['Format','Narrative action adventure'],['Structure','Episodic campaign'],['Players','One or two'],['Art direction','Stylized 2D/2.5D · hand-drawn sprites']],
+    summary:'Ikarius and Joel lead an original campaign adapting Devaneios, Menos Um and Tormenta as an interactive experience without reducing the books and comic to playable cutscenes.',
+    long:'The game adapts Devaneios, Menos Um and Tormenta through a campaign with its own order. It brings together characters who understand the same conflict in incompatible ways: Ikarius seeks verifiable rules; Joel knows what happens when they break. The campaign combines side exploration, environmental investigation, combat, narrative choices and scenes designed for one or two players, with stylized 2D/2.5D art and hand-drawn sprites rather than pixel art.', primary:'View the game',
+    facts:[['Format','Narrative action adventure'],['Structure','Episodic campaign'],['Players','One or two'],['Adapted works','Devaneios · Menos Um · Tormenta'],['Art direction','Stylized 2D/2.5D · hand-drawn sprites']],
     themes:[['Two protagonists','Ikarius investigates what happened; Joel recognizes what may happen if another choice breaks reality.'],['An original adaptation','Scenes, conflicts and locations are reorganized to create agency, pace and consequence — not pages in motion.'],['Cooperation with dramatic purpose','The second player occupies a role inside the story and changes how scenes, exploration and conflict are read.'],['Art as a starting point','Character, line, palette and intention come before scenery and technology. The scene should feel like a living illustration without ceasing to be playable.']],
     threads:[
       {title:'Investigate with Ikarius',text:'Traces, object placement, anomalous behavior and environmental contradictions produce hypotheses the player can test, not only collectible text.'},
@@ -406,7 +406,7 @@ const game = {
       {slug:'merius',name:'Merius',role:'Veteran and strategist',text:'After living twenty years as Rafael Corvino, Merius returns with files, routes and accumulated knowledge. His experience helps the group, but the lie sustaining it prevents trust and strategy from becoming the same thing.'}
     ],
     worlds:[
-      {name:'Bravara',image:'./media/game.webp',text:'Coastal cities, industrial regions, mountains and institutions that continue functioning beside the impossible. Investigation must coexist with buses, work, neighborhoods and ordinary life.'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'Coastal cities, industrial regions, mountains and institutions that continue functioning beside the impossible. Investigation must coexist with buses, work, neighborhoods and ordinary life.'},
       {name:'City of Wonders',image:'./media/banner.webp',text:'Ikarius’s city, compressed between hills, tunnels, bay, viaducts and public routes. Its geography determines how the player crosses districts and reads the contrast between routine and anomaly.'},
       {name:'Bayrule',image:'./media/tormenta.webp',text:'A territory of political borders, clandestine routes, underworld networks and alliances that change after dark. Exploration and conflict gain another rhythm outside Bravara’s institutions.'},
       {name:'Koreth',image:'./media/welcome.webp',text:'A territory tied to the Arnins, the Codex and the conclusion of Devaneios. Its scale allows confrontations and discoveries threatening more than one city.'}
@@ -418,14 +418,14 @@ const game = {
       {title:'Side exploration and combat',text:'The structure starts from a 2D/2.5D side-scroller with movement, action and encounters composed like illustrated scenes. Combat and exploration keep the player active without destroying narrative rhythm.'},
       {title:'One or two players',text:'The campaign works alone and in co-op. Each character needs a dramatic and mechanical role so the second player is never a duplicate or a presence without consequence.'},
       {title:'Art direction',text:'The process begins by choosing who composes the scene, which colors it needs and whether the line should feel gentle, rough or aggressive. Environment, animation and technology are then organized around the composition.'},
-      {title:'Episodes and different works',text:'The first game adapts more than Devaneios. Menos Um, The Last Dance, Joel’s past and other parts of Arcanian enter an episodic structure able to change period, character and tone without losing continuity.'}
+      {title:'Three works, one original campaign',text:'Devaneios provides the investigation and the Mountevoir case; Menos Um gives weight to Joel and Elisabeth’s past; Tormenta takes players to the age of legends and Project L.A.C.H.R.Y.M.A. The adaptation reorganizes these cores without erasing each work’s identity.'}
     ]
   },
   es:{
     title:'Juego', displayTitle:'Juego', eyebrow:'Juego · Aventura narrativa de acción',
-    summary:'Ikarius y Joel protagonizan una campaña original que reorganiza acontecimientos de Devaneios, Menos Um, La Última Danza y otros períodos de Arcanian como experiencia interactiva.',
-    long:'El juego no reproduce un solo libro capítulo por capítulo. Reúne personajes que comprenden el mismo conflicto de formas incompatibles: Ikarius busca reglas verificables; Joel conoce las consecuencias de romperlas. La campaña combina exploración lateral, investigación ambiental, combate, decisiones narrativas y escenas para una o dos personas, con arte 2D/2.5D estilizado y sprites dibujados a mano, sin pixel art.', primary:'Ver el juego',
-    facts:[['Formato','Aventura narrativa de acción'],['Estructura','Campaña episódica'],['Jugadores','Una o dos personas'],['Dirección de arte','2D/2.5D estilizado · sprites dibujados a mano']],
+    summary:'Ikarius y Joel protagonizan una campaña original que adapta Devaneios, Menos Um y Tormenta como experiencia interactiva sin reducir los libros y el cómic a escenas jugables.',
+    long:'El juego adapta Devaneios, Menos Um y Tormenta dentro de una campaña con orden propio. Reúne personajes que comprenden el mismo conflicto de formas incompatibles: Ikarius busca reglas verificables; Joel conoce las consecuencias de romperlas. La campaña combina exploración lateral, investigación ambiental, combate, decisiones narrativas y escenas para una o dos personas, con arte 2D/2.5D estilizado y sprites dibujados a mano, sin pixel art.', primary:'Ver el juego',
+    facts:[['Formato','Aventura narrativa de acción'],['Estructura','Campaña episódica'],['Jugadores','Una o dos personas'],['Obras adaptadas','Devaneios · Menos Um · Tormenta'],['Dirección de arte','2D/2.5D estilizado · sprites dibujados a mano']],
     themes:[['Dos protagonistas','Ikarius investiga lo ocurrido; Joel reconoce lo que puede pasar si otra elección rompe la realidad.'],['Una adaptación propia','Escenas, conflictos y lugares se reorganizan para crear agencia, ritmo y consecuencia, no páginas en movimiento.'],['Cooperación con función dramática','La segunda persona ocupa un papel dentro de la historia y cambia la lectura de escena, exploración y conflicto.'],['El arte como punto de partida','Personaje, trazo, paleta e intención vienen antes del escenario y la tecnología.']],
     threads:[
       {title:'Investigar con Ikarius',text:'Vestigios, posición de objetos, comportamiento anómalo y contradicciones ambientales producen hipótesis que el jugador puede probar.'},
@@ -440,7 +440,7 @@ const game = {
       {slug:'merius',name:'Merius',role:'Veterano y estratega',text:'Después de vivir veinte años como Rafael Corvino, Merius regresa con archivos, rutas y conocimiento. Su experiencia ayuda, pero la mentira que la sostuvo impide confundir confianza con estrategia.'}
     ],
     worlds:[
-      {name:'Bravara',image:'./media/game.webp',text:'Ciudades costeras, regiones industriales, sierras e instituciones que siguen funcionando junto a lo imposible. La investigación convive con autobuses, trabajo, barrios y vida común.'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'Ciudades costeras, regiones industriales, sierras e instituciones que siguen funcionando junto a lo imposible. La investigación convive con autobuses, trabajo, barrios y vida común.'},
       {name:'Ciudad de las Maravillas',image:'./media/banner.webp',text:'La ciudad de Ikarius, comprimida entre montes, túneles, bahía, viaductos y rutas públicas. Su geografía determina cómo se recorren los barrios y se percibe el contraste entre rutina y anomalía.'},
       {name:'Bayrule',image:'./media/tormenta.webp',text:'Territorio de fronteras políticas, rutas clandestinas, submundo y alianzas que cambian con la noche. La exploración gana otro ritmo fuera de Bravara.'},
       {name:'Koreth',image:'./media/welcome.webp',text:'Territorio ligado a los Arnins, el Codex y el final de Devaneios. Su escala permite enfrentamientos y descubrimientos que amenazan más que una ciudad.'}
@@ -452,14 +452,14 @@ const game = {
       {title:'Exploración lateral y combate',text:'La estructura parte de un side-scroller 2D/2.5D con movimiento, acción y encuentros compuestos como escenas ilustradas.'},
       {title:'Una o dos personas',text:'La campaña funciona en solitario y cooperativo. Cada personaje necesita una función dramática y mecánica para que el segundo jugador no sea una copia.'},
       {title:'Dirección de arte',text:'Primero se decide quién compone la escena, qué colores necesita y si el trazo debe ser amable, áspero o agresivo. Después se organizan entorno, animación y tecnología.'},
-      {title:'Episodios y obras distintas',text:'El primer juego adapta más que Devaneios. Menos Um, La Última Danza, el pasado de Joel y otras partes entran en una estructura episódica capaz de cambiar época y tono.'}
+      {title:'Tres obras, una campaña propia',text:'Devaneios aporta la investigación y el caso Mountevoir; Menos Um da peso al pasado de Joel y Elisabeth; Tormenta lleva al período de las leyendas y al Proyecto L.A.C.H.R.Y.M.A. La adaptación reorganiza estos núcleos sin borrar la identidad de cada obra.'}
     ]
   },
   it:{
     title:'Gioco', displayTitle:'Gioco', eyebrow:'Gioco · Avventura narrativa d’azione',
-    summary:'Ikarius e Joel guidano una campagna originale che riorganizza eventi di Devaneios, Menos Um, L’Ultima Danza e altri periodi di Arcanian come esperienza interattiva.',
-    long:'Il gioco non riproduce un solo libro capitolo per capitolo. Riunisce personaggi che comprendono lo stesso conflitto in modi incompatibili: Ikarius cerca regole verificabili; Joel conosce le conseguenze di infrangerle. La campagna unisce esplorazione laterale, indagine ambientale, combattimento, scelte narrative e scene per uno o due giocatori, con arte 2D/2.5D stilizzata e sprite disegnati a mano, senza pixel art.', primary:'Vedi il gioco',
-    facts:[['Formato','Avventura narrativa d’azione'],['Struttura','Campagna episodica'],['Giocatori','Uno o due'],['Direzione artistica','2D/2.5D stilizzato · sprite disegnati a mano']],
+    summary:'Ikarius e Joel guidano una campagna originale che adatta Devaneios, Menos Um e Tormenta come esperienza interattiva senza ridurre libri e fumetto a scene giocabili.',
+    long:'Il gioco adatta Devaneios, Menos Um e Tormenta in una campagna con un ordine proprio. Riunisce personaggi che comprendono lo stesso conflitto in modi incompatibili: Ikarius cerca regole verificabili; Joel conosce le conseguenze di infrangerle. La campagna unisce esplorazione laterale, indagine ambientale, combattimento, scelte narrative e scene per uno o due giocatori, con arte 2D/2.5D stilizzata e sprite disegnati a mano, senza pixel art.', primary:'Vedi il gioco',
+    facts:[['Formato','Avventura narrativa d’azione'],['Struttura','Campagna episodica'],['Giocatori','Uno o due'],['Opere adattate','Devaneios · Menos Um · Tormenta'],['Direzione artistica','2D/2.5D stilizzato · sprite disegnati a mano']],
     themes:[['Due protagonisti','Ikarius indaga su ciò che è accaduto; Joel riconosce ciò che può accadere se un’altra scelta rompe la realtà.'],['Un adattamento originale','Scene, conflitti e luoghi vengono riorganizzati per creare azione, ritmo e conseguenze, non pagine in movimento.'],['Cooperazione con funzione drammatica','Il secondo giocatore occupa un ruolo nella storia e cambia la lettura di scena, esplorazione e scontro.'],['L’arte come punto di partenza','Personaggio, segno, tavolozza e intenzione precedono ambiente e tecnologia.']],
     threads:[
       {title:'Indagare con Ikarius',text:'Tracce, posizione degli oggetti, comportamento anomalo e contraddizioni ambientali producono ipotesi che il giocatore può verificare.'},
@@ -474,7 +474,7 @@ const game = {
       {slug:'merius',name:'Merius',role:'Veterano e stratega',text:'Dopo vent’anni come Rafael Corvino, Merius torna con archivi, rotte e conoscenza. L’esperienza aiuta il gruppo, ma la menzogna che l’ha sostenuta separa fiducia e strategia.'}
     ],
     worlds:[
-      {name:'Bravara',image:'./media/game.webp',text:'Città costiere, regioni industriali, montagne e istituzioni che continuano a funzionare accanto all’impossibile. L’indagine convive con autobus, lavoro, quartieri e vita comune.'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'Città costiere, regioni industriali, montagne e istituzioni che continuano a funzionare accanto all’impossibile. L’indagine convive con autobus, lavoro, quartieri e vita comune.'},
       {name:'Città delle Meraviglie',image:'./media/banner.webp',text:'La città di Ikarius, stretta tra colline, gallerie, baia, viadotti e percorsi pubblici. La geografia determina il movimento e il contrasto tra routine e anomalia.'},
       {name:'Bayrule',image:'./media/tormenta.webp',text:'Territorio di confini politici, rotte clandestine, sottosuolo e alleanze che cambiano di notte. Esplorazione e conflitto hanno un ritmo diverso da Bravara.'},
       {name:'Koreth',image:'./media/welcome.webp',text:'Territorio legato agli Arnins, al Codex e alla conclusione di Devaneios. La sua scala permette scontri e scoperte che minacciano più di una città.'}
@@ -486,14 +486,14 @@ const game = {
       {title:'Esplorazione laterale e combattimento',text:'La struttura parte da un side-scroller 2D/2.5D con movimento, azione e incontri composti come scene illustrate.'},
       {title:'Uno o due giocatori',text:'La campagna funziona da soli e in cooperativa. Ogni personaggio ha una funzione drammatica e meccanica, evitando una seconda presenza senza conseguenze.'},
       {title:'Direzione artistica',text:'Prima si decide chi compone la scena, quali colori servono e se il segno deve essere morbido, ruvido o aggressivo. Poi si organizzano ambiente, animazione e tecnologia.'},
-      {title:'Episodi e opere differenti',text:'Il primo gioco adatta più di Devaneios. Menos Um, L’Ultima Danza, il passato di Joel e altre parti entrano in una struttura episodica capace di cambiare periodo e tono.'}
+      {title:'Tre opere, una campagna originale',text:'Devaneios porta l’indagine e il caso Mountevoir; Menos Um dà peso al passato di Joel ed Elisabeth; Tormenta conduce all’epoca delle leggende e al Progetto L.A.C.H.R.Y.M.A. L’adattamento riorganizza questi nuclei senza cancellarne l’identità.'}
     ]
   },
   ja:{
     title:'ゲーム', displayTitle:'ゲーム', eyebrow:'ゲーム · ナラティブアクションアドベンチャー',
-    summary:'IkariusとJoelが、Devaneios、Menos Um、「最後のダンス」、Arcanianの他の時代をインタラクティブな体験として再構成する独自のキャンペーンを導きます。',
-    long:'ゲームは一冊の本を章ごとに再現しません。同じ対立を両立しない方法で理解する人物を近づけます。Ikariusは検証できる規則を求め、Joelは規則を破った結果を知っています。横方向の探索、環境捜査、戦闘、物語の選択、一人または二人向けの場面を、手描きスプライトによる2D/2.5D表現で組み合わせます。ピクセルアートではありません。', primary:'ゲームを見る',
-    facts:[['形式','ナラティブアクションアドベンチャー'],['構成','エピソード制キャンペーン'],['人数','一人または二人'],['アート','2D/2.5D · 手描きスプライト']],
+    summary:'IkariusとJoelが、Devaneios、Menos Um、Tormentaをインタラクティブな体験へ適応する独自キャンペーンを導きます。本やコミックを単なる操作可能な映像にはしません。',
+    long:'ゲームはDevaneios、Menos Um、Tormentaを独自の順序を持つキャンペーンへ適応します。同じ対立を両立しない方法で理解する人物を近づけます。Ikariusは検証できる規則を求め、Joelは規則を破った結果を知っています。横方向の探索、環境捜査、戦闘、物語の選択、一人または二人向けの場面を、手描きスプライトによる2D/2.5D表現で組み合わせます。ピクセルアートではありません。', primary:'ゲームを見る',
+    facts:[['形式','ナラティブアクションアドベンチャー'],['構成','エピソード制キャンペーン'],['人数','一人または二人'],['原作','Devaneios · Menos Um · Tormenta'],['アート','2D/2.5D · 手描きスプライト']],
     themes:[['二人の主人公','Ikariusは何が起きたかを調べ、Joelは次の選択が現実を壊した時に起きることを知っています。'],['独自のアダプテーション','場面、対立、場所を、ページの動画化ではなく、操作、リズム、結果を作るため再構成します。'],['物語上の意味を持つ協力','二人目のプレイヤーは物語の役割を持ち、場面、探索、対立の読み方を変えます。'],['出発点としてのアート','人物、線、色、意図を背景と技術より先に決めます。']],
     threads:[
       {title:'Ikariusと捜査する',text:'痕跡、物の位置、異常の挙動、環境の矛盾が、プレイヤーが検証できる仮説を作ります。収集テキストだけにはしません。'},
@@ -508,7 +508,7 @@ const game = {
       {slug:'merius',name:'Merius',role:'ベテラン・戦略家',text:'Rafael Corvinoとして二十年生きた後、Meriusは記録、経路、知識を持って戻ります。経験は助けになりますが、それを支えた嘘は信頼と戦略を同じものにさせません。'}
     ],
     worlds:[
-      {name:'Bravara',image:'./media/game.webp',text:'沿岸都市、工業地域、山岳、そして不可能な出来事の隣で機能を続ける制度。捜査はバス、仕事、住宅地、日常と共存します。'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'沿岸都市、工業地域、山岳、そして不可能な出来事の隣で機能を続ける制度。捜査はバス、仕事、住宅地、日常と共存します。'},
       {name:'驚異の街',image:'./media/banner.webp',text:'丘、トンネル、湾、高架道路、公共交通に挟まれたIkariusの街。地形が地区の移動と日常・異常の対比を決めます。'},
       {name:'Bayrule',image:'./media/tormenta.webp',text:'政治的境界、秘密経路、地下社会、夜に変わる同盟の地域。Bravaraの制度外では探索と対立のリズムが変わります。'},
       {name:'Koreth',image:'./media/welcome.webp',text:'Arnins、Codex、Devaneiosの終盤につながる地域。一つの都市を越える脅威を描ける規模があります。'}
@@ -520,7 +520,7 @@ const game = {
       {title:'横方向探索と戦闘',text:'2D/2.5Dのサイドスクローラーを基礎に、移動、アクション、イラストの場面のように構成された遭遇を組み合わせます。'},
       {title:'一人または二人',text:'一人でも協力でも遊べます。各人物に物語上・機械上の役割を与え、二人目を単なる複製にしません。'},
       {title:'アートディレクション',text:'誰が場面にいるか、どの色が必要か、線が優しいか荒いか攻撃的かを先に決めます。背景、アニメーション、技術は構図の後に組み立てます。'},
-      {title:'エピソードと異なる作品',text:'最初のゲームはDevaneiosだけを扱いません。Menos Um、「最後のダンス」、Joelの過去、他の時代が、期間と雰囲気を変えながら連続する構造へ入ります。'}
+      {title:'三作品、一つの独自キャンペーン',text:'Devaneiosは捜査とMountevoir事件を、Menos UmはJoelとElisabethの過去を、Tormentaは伝説の時代とL.A.C.H.R.Y.M.A.計画を担います。各作品の個性を消さずに再構成します。'}
     ]
   }
 };

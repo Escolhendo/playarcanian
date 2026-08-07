@@ -18,6 +18,7 @@ import {
 import { timelineTranslations, docsTranslations, wikiInterfaceExtra } from './fullTranslations.js';
 import { localizedLegalDocument } from './legalTranslations.js';
 import './styles.css';
+import './redesign.css';
 
 const allWikiEntries = [...wikiEntries, ...wikiSupplement, ...finalWikiEntries];
 
@@ -557,89 +558,188 @@ function ProjectSignature({ slug }) {
   </div>;
 }
 
+
+const redesignCopy = {
+  pt: {
+    home: {
+      eyebrow: 'Estúdio independente · Santos, Brasil',
+      titleA: 'Histórias que', titleB: 'mudam de forma.',
+      text: 'Livros, quadrinhos e jogos conectados pelo universo Arcanian — cada obra com uma linguagem própria.',
+      projects: 'Explorar projetos', studio: 'Conhecer o estúdio',
+      selected: 'Projetos em foco', selectedTitle: 'Não são versões da mesma página.',
+      film: 'Filme do livro', filmTitle: 'Devaneios em movimento.', filmText: 'Uma apresentação visual do primeiro episódio publicado de Arcanian.',
+      wiki: 'Arquivo Arcanian', wikiTitle: 'A história completa fica na Wiki.', wikiText: 'Personagens, famílias, eventos e conexões canônicas, sem transformar a página inicial em um manual.', openWiki: 'Entrar na Wiki'
+    },
+    projects: { eyebrow:'Universo Arcanian', title:'Cinco portas. Cinco ritmos.', text:'Escolha pela atmosfera, não por uma lista de descrições.' },
+    media: { eyebrow:'Mídias', title:'Imagem, som e movimento.', film:'Vídeo oficial de Devaneios', gallery:'Arquivo visual', platform:'Plataformas do jogo', platforms:'Steam e Xbox', steam:'Em desenvolvimento para Steam', still:'Quadros estáticos' },
+    purchase: { eyebrow:'Arcanian: Devaneios', title:'Escolha a loja.', text:'A Amazon reúne as edições física e digital. A Uiclap oferece a edição física sob demanda.', amazon:'Comprar na Amazon', amazonMeta:'Físico + Kindle', uiclap:'Comprar na Uiclap', uiclapMeta:'Livro físico', note:'Preço, frete e disponibilidade são definidos pelas lojas.' },
+    about: { eyebrow:'Two Eyes On You', title:'Um estúdio para histórias que não cabem em um único formato.', text:'A forma vem depois da intenção: romance para entrar no pensamento, quadrinho para controlar o silêncio e jogo para entregar parte da decisão ao público.', pillars:[['Narrativa','Personagens e consequências antes de exposição.'],['Direção visual','Cada projeto recebe ritmo, tipografia e composição próprios.'],['Tecnologia','Ferramentas servem à cena — nunca o contrário.']] },
+    contact: { eyebrow:'Contato', title:'Vamos falar sobre trabalho, imprensa ou parceria.', text:'Use o e-mail institucional. Propostas objetivas recebem respostas melhores.', mail:'Enviar e-mail' },
+    work: { openWiki:'Aprofundar na Wiki', watch:'Assistir ao vídeo', stores:'Ver edições', chapter:'Recorte narrativo', evidence:'Pistas centrais', acts:'Três atos', layers:'Camadas da tormenta', gameStatus:'Em desenvolvimento', gamePlatform:'Steam', gameFeatures:'Estrutura do jogo', gameCast:'Personagens jogáveis', gameWorld:'Mundos', gamePlatforms:'Plataformas planejadas', platformPlan:'PC e Xbox', adaptationLabel:'Obras adaptadas', adaptationTitle:'Devaneios, Menos Um e Tormenta entram na mesma campanha.', adaptationText:'O jogo reorganiza acontecimentos, personagens e períodos dessas três obras para criar investigação, combate e escolhas próprias — sem funcionar como resumo interativo.', directContinuation:'SEQUÊNCIA DIRETA DE DEVANEIOS', devaneiosEpisode:'Devaneios. Episódio I.', beforeRupture:'Antes da ruptura.', lastChance:'UMA ÚLTIMA CHANCE', chapterLabel:'CAPÍTULO', beforeGreatDay:'ANTES DO GRANDE DIA', playStoryTitle:'Jogar a história. Não apenas assistir.', worldCountsTitle:'O cenário também conta.', act:'ATO' }
+  },
+  en: {
+    home: { eyebrow:'Independent studio · Santos, Brazil', titleA:'Stories that', titleB:'change form.', text:'Books, comics and games connected by the Arcanian universe — each work with its own language.', projects:'Explore projects', studio:'Meet the studio', selected:'Featured projects', selectedTitle:'They are not versions of the same page.', film:'Book film', filmTitle:'Devaneios in motion.', filmText:'A visual presentation of Arcanian’s first published episode.', wiki:'Arcanian archive', wikiTitle:'The full story lives in the Wiki.', wikiText:'Characters, families, events and canonical connections without turning the homepage into a manual.', openWiki:'Enter the Wiki' },
+    projects:{eyebrow:'Arcanian universe',title:'Five doors. Five rhythms.',text:'Choose by atmosphere, not by a wall of descriptions.'},
+    media:{eyebrow:'Media',title:'Image, sound and movement.',film:'Official Devaneios video',gallery:'Visual archive',platform:'Game platforms',platforms:'Steam and Xbox',steam:'In development for Steam', still:'Still frames'},
+    purchase:{eyebrow:'Arcanian: Devaneios',title:'Choose the store.',text:'Amazon carries physical and digital editions. Uiclap offers the print-on-demand physical edition.',amazon:'Buy on Amazon',amazonMeta:'Print + Kindle',uiclap:'Buy on Uiclap',uiclapMeta:'Print book',note:'Price, shipping and availability are set by each store.'},
+    about:{eyebrow:'Two Eyes On You',title:'A studio for stories that do not fit a single format.',text:'Form comes after intent: prose enters thought, comics control silence and games hand part of the decision to the audience.',pillars:[['Narrative','Characters and consequences before exposition.'],['Visual direction','Each project gets its own rhythm, typography and composition.'],['Technology','Tools serve the scene — never the opposite.']]},
+    contact:{eyebrow:'Contact',title:'Let’s talk about work, press or partnerships.',text:'Use the studio email. Clear proposals get better answers.',mail:'Send email'},
+    work:{openWiki:'Go deeper in the Wiki',watch:'Watch the video',stores:'See editions',chapter:'Narrative cut',evidence:'Central clues',acts:'Three acts',layers:'Layers of the storm',gameStatus:'In development',gamePlatform:'Steam',gameFeatures:'Game structure',gameCast:'Playable characters',gameWorld:'Worlds', gamePlatforms:'Planned platforms', platformPlan:'PC and Xbox', adaptationLabel:'Adapted works', adaptationTitle:'Devaneios, Menos Um and Tormenta share one original campaign.', adaptationText:'The game reorganizes events, characters and periods from these three works to create its own investigation, combat and choices — not an interactive recap.', directContinuation:'DIRECT SEQUEL TO DEVANEIOS', devaneiosEpisode:'Devaneios. Episode I.', beforeRupture:'Before the rupture.', lastChance:'ONE LAST CHANCE', chapterLabel:'CHAPTER', beforeGreatDay:'BEFORE THE GREAT DAY', playStoryTitle:'Play the story. Don’t just watch.', worldCountsTitle:'The setting tells the story too.', act:'ACT'}
+  },
+  es: {
+    home:{eyebrow:'Estudio independiente · Santos, Brasil',titleA:'Historias que',titleB:'cambian de forma.',text:'Libros, cómics y juegos conectados por el universo Arcanian — cada obra con un lenguaje propio.',projects:'Explorar proyectos',studio:'Conocer el estudio',selected:'Proyectos destacados',selectedTitle:'No son versiones de la misma página.',film:'Video del libro',filmTitle:'Devaneios en movimiento.',filmText:'Una presentación visual del primer episodio publicado de Arcanian.',wiki:'Archivo Arcanian',wikiTitle:'La historia completa está en la Wiki.',wikiText:'Personajes, familias, eventos y conexiones canónicas sin convertir el inicio en un manual.',openWiki:'Entrar en la Wiki'},
+    projects:{eyebrow:'Universo Arcanian',title:'Cinco puertas. Cinco ritmos.',text:'Elige por la atmósfera, no por una pared de descripciones.'},
+    media:{eyebrow:'Medios',title:'Imagen, sonido y movimiento.',film:'Video oficial de Devaneios',gallery:'Archivo visual',platform:'Plataformas del juego',platforms:'Steam y Xbox',steam:'En desarrollo para Steam', still:'Fotogramas'},
+    purchase:{eyebrow:'Arcanian: Devaneios',title:'Elige la tienda.',text:'Amazon reúne las ediciones física y digital. Uiclap ofrece la edición física bajo demanda.',amazon:'Comprar en Amazon',amazonMeta:'Físico + Kindle',uiclap:'Comprar en Uiclap',uiclapMeta:'Libro físico',note:'Precio, envío y disponibilidad son definidos por cada tienda.'},
+    about:{eyebrow:'Two Eyes On You',title:'Un estudio para historias que no caben en un solo formato.',text:'La forma viene después de la intención: la prosa entra en el pensamiento, el cómic controla el silencio y el juego entrega parte de la decisión al público.',pillars:[['Narrativa','Personajes y consecuencias antes que exposición.'],['Dirección visual','Cada proyecto recibe ritmo, tipografía y composición propios.'],['Tecnología','Las herramientas sirven a la escena — nunca al contrario.']]},
+    contact:{eyebrow:'Contacto',title:'Hablemos de trabajo, prensa o colaboración.',text:'Usa el correo institucional. Las propuestas objetivas reciben mejores respuestas.',mail:'Enviar correo'},
+    work:{openWiki:'Profundizar en la Wiki',watch:'Ver el video',stores:'Ver ediciones',chapter:'Recorte narrativo',evidence:'Pistas centrales',acts:'Tres actos',layers:'Capas de la tormenta',gameStatus:'En desarrollo',gamePlatform:'Steam',gameFeatures:'Estructura del juego',gameCast:'Personajes jugables',gameWorld:'Mundos', gamePlatforms:'Plataformas previstas', platformPlan:'PC y Xbox', adaptationLabel:'Obras adaptadas', adaptationTitle:'Devaneios, Menos Um y Tormenta comparten una campaña propia.', adaptationText:'El juego reorganiza acontecimientos, personajes y períodos de estas tres obras para crear investigación, combate y decisiones propias, no un resumen interactivo.', directContinuation:'SECUELA DIRECTA DE DEVANEIOS', devaneiosEpisode:'Devaneios. Episodio I.', beforeRupture:'Antes de la ruptura.', lastChance:'UNA ÚLTIMA OPORTUNIDAD', chapterLabel:'CAPÍTULO', beforeGreatDay:'ANTES DEL GRAN DÍA', playStoryTitle:'Jugar la historia. No solo mirar.', worldCountsTitle:'El escenario también cuenta.', act:'ACTO'}
+  },
+  it: {
+    home:{eyebrow:'Studio indipendente · Santos, Brasile',titleA:'Storie che',titleB:'cambiano forma.',text:'Libri, fumetti e giochi collegati dall’universo Arcanian — ogni opera con un linguaggio proprio.',projects:'Esplora i progetti',studio:'Scopri lo studio',selected:'Progetti in evidenza',selectedTitle:'Non sono versioni della stessa pagina.',film:'Video del libro',filmTitle:'Devaneios in movimento.',filmText:'Una presentazione visiva del primo episodio pubblicato di Arcanian.',wiki:'Archivio Arcanian',wikiTitle:'La storia completa vive nella Wiki.',wikiText:'Personaggi, famiglie, eventi e connessioni canoniche senza trasformare la home in un manuale.',openWiki:'Entra nella Wiki'},
+    projects:{eyebrow:'Universo Arcanian',title:'Cinque porte. Cinque ritmi.',text:'Scegli dall’atmosfera, non da un muro di descrizioni.'},
+    media:{eyebrow:'Media',title:'Immagine, suono e movimento.',film:'Video ufficiale di Devaneios',gallery:'Archivio visivo',platform:'Piattaforme del gioco',platforms:'Steam e Xbox',steam:'In sviluppo per Steam', still:'Fotogrammi'},
+    purchase:{eyebrow:'Arcanian: Devaneios',title:'Scegli il negozio.',text:'Amazon riunisce le edizioni fisica e digitale. Uiclap offre l’edizione fisica print-on-demand.',amazon:'Acquista su Amazon',amazonMeta:'Cartaceo + Kindle',uiclap:'Acquista su Uiclap',uiclapMeta:'Libro cartaceo',note:'Prezzo, spedizione e disponibilità sono definiti dai negozi.'},
+    about:{eyebrow:'Two Eyes On You',title:'Uno studio per storie che non entrano in un solo formato.',text:'La forma viene dopo l’intenzione: la prosa entra nel pensiero, il fumetto controlla il silenzio e il gioco consegna parte della decisione al pubblico.',pillars:[['Narrativa','Personaggi e conseguenze prima dell’esposizione.'],['Direzione visiva','Ogni progetto riceve ritmo, tipografia e composizione propri.'],['Tecnologia','Gli strumenti servono la scena — mai il contrario.']]},
+    contact:{eyebrow:'Contatti',title:'Parliamo di lavoro, stampa o collaborazioni.',text:'Usa l’email dello studio. Le proposte chiare ricevono risposte migliori.',mail:'Invia email'},
+    work:{openWiki:'Approfondisci nella Wiki',watch:'Guarda il video',stores:'Vedi edizioni',chapter:'Taglio narrativo',evidence:'Indizi centrali',acts:'Tre atti',layers:'Strati della tormenta',gameStatus:'In sviluppo',gamePlatform:'Steam',gameFeatures:'Struttura del gioco',gameCast:'Personaggi giocabili',gameWorld:'Mondi', gamePlatforms:'Piattaforme previste', platformPlan:'PC e Xbox', adaptationLabel:'Opere adattate', adaptationTitle:'Devaneios, Menos Um e Tormenta condividono una campagna originale.', adaptationText:'Il gioco riorganizza eventi, personaggi e periodi delle tre opere per creare indagine, combattimento e scelte proprie, non un riassunto interattivo.', directContinuation:'SEGUITO DIRETTO DI DEVANEIOS', devaneiosEpisode:'Devaneios. Episodio I.', beforeRupture:'Prima della frattura.', lastChance:'UN’ULTIMA POSSIBILITÀ', chapterLabel:'CAPITOLO', beforeGreatDay:'PRIMA DEL GRANDE GIORNO', playStoryTitle:'Gioca la storia. Non limitarti a guardare.', worldCountsTitle:'Anche l’ambientazione racconta.', act:'ATTO'}
+  },
+  ja: {
+    home:{eyebrow:'インディペンデント・スタジオ · ブラジル、サントス',titleA:'物語は',titleB:'形を変える。',text:'Arcanianの世界でつながる本、コミック、ゲーム。作品ごとに異なる言語とリズムを持ちます。',projects:'作品を見る',studio:'スタジオについて',selected:'注目作品',selectedTitle:'同じページの着せ替えではありません。',film:'書籍映像',filmTitle:'動き出すDevaneios。',filmText:'Arcanian最初の刊行エピソードを映像で紹介します。',wiki:'Arcanianアーカイブ',wikiTitle:'詳しい物語はWikiへ。',wikiText:'人物、家族、出来事、正史のつながりを、ホームを説明書にせず整理します。',openWiki:'Wikiを開く'},
+    projects:{eyebrow:'Arcanianユニバース',title:'五つの入口。五つのリズム。',text:'説明の量ではなく、空気で選んでください。'},
+    media:{eyebrow:'メディア',title:'映像、音、動き。',film:'Devaneios公式映像',gallery:'ビジュアル・アーカイブ',platform:'ゲームの対応プラットフォーム',platforms:'Steam・Xbox',steam:'Steam向けに開発中', still:'静止画'},
+    purchase:{eyebrow:'Arcanian: Devaneios',title:'ストアを選ぶ。',text:'Amazonでは紙版とデジタル版、Uiclapではオンデマンド紙版を扱います。',amazon:'Amazonで購入',amazonMeta:'紙版 + Kindle',uiclap:'Uiclapで購入',uiclapMeta:'紙の本',note:'価格、送料、在庫は各ストアが決定します。'},
+    about:{eyebrow:'Two Eyes On You',title:'一つの形式に収まらない物語のためのスタジオ。',text:'意図が先、形式は後。小説は思考へ入り、コミックは沈黙を制御し、ゲームは判断の一部を観客へ渡します。',pillars:[['物語','説明より先に人物と結果。'],['ビジュアル','各作品に固有のリズム、書体、構図。'],['技術','道具は場面に仕える。逆ではありません。']]},
+    contact:{eyebrow:'お問い合わせ',title:'仕事、取材、協業について話しましょう。',text:'スタジオのメールをご利用ください。要点の明確な提案ほど回答しやすくなります。',mail:'メールを送る'},
+    work:{openWiki:'Wikiで詳しく見る',watch:'映像を見る',stores:'版を選ぶ',chapter:'物語の焦点',evidence:'中心となる手掛かり',acts:'三幕',layers:'嵐の層',gameStatus:'開発中',gamePlatform:'Steam',gameFeatures:'ゲーム構造',gameCast:'プレイアブル人物',gameWorld:'世界', gamePlatforms:'予定プラットフォーム', platformPlan:'PC・Xbox', adaptationLabel:'原作', adaptationTitle:'Devaneios、Menos Um、Tormentaを一つの独自キャンペーンへ。', adaptationText:'三作品の出来事、人物、時代を再構成し、捜査、戦闘、選択を作ります。操作できる要約ではありません。', directContinuation:'DEVANEIOSの直接の続編', devaneiosEpisode:'Devaneios。エピソードI。', beforeRupture:'亀裂の前。', lastChance:'最後の機会', chapterLabel:'章', beforeGreatDay:'「大いなる日」の前', playStoryTitle:'物語を遊ぶ。見るだけではない。', worldCountsTitle:'舞台も物語を語る。', act:'幕'}
+  }
+};
+
+const shortProjectCopy = {
+  pt:{devaneios:'Uma investigação que se recusa a permanecer enterrada.','menos-um':'Joel e Elisabeth antes de a ausência ocupar tudo.','a-ultima-danca':'Sequência direta de Devaneios: a investigação se transforma em crise coletiva.',tormenta:'As pessoas que existiam antes de virarem lendas.',arcanian:'Devaneios, Menos Um e Tormenta adaptados em uma campanha própria.'},
+  en:{devaneios:'An investigation that refuses to stay buried.','menos-um':'Joel and Elisabeth before absence occupied everything.','a-ultima-danca':'A direct sequel to Devaneios, where investigation becomes collective crisis.',tormenta:'The people who existed before becoming legends.',arcanian:'Devaneios, Menos Um and Tormenta adapted into an original campaign.'},
+  es:{devaneios:'Una investigación que se niega a permanecer enterrada.','menos-um':'Joel y Elisabeth antes de que la ausencia lo ocupara todo.','a-ultima-danca':'Secuela directa de Devaneios: la investigación se convierte en crisis colectiva.',tormenta:'Las personas que existían antes de convertirse en leyendas.',arcanian:'Devaneios, Menos Um y Tormenta adaptados en una campaña propia.'},
+  it:{devaneios:'Un’indagine che rifiuta di restare sepolta.','menos-um':'Joel ed Elisabeth prima che l’assenza occupasse tutto.','a-ultima-danca':'Seguito diretto di Devaneios: l’indagine diventa crisi collettiva.',tormenta:'Le persone esistite prima di diventare leggende.',arcanian:'Devaneios, Menos Um e Tormenta adattati in una campagna originale.'},
+  ja:{devaneios:'埋もれたままでいることを拒む捜査。','menos-um':'不在がすべてを占める前のJoelとElisabeth。','a-ultima-danca':'Devaneiosの直接の続編。捜査は集団的危機へ変わります。',tormenta:'伝説になる前に生きていた人々。',arcanian:'Devaneios、Menos Um、Tormentaを独自キャンペーンへ適応。'}
+};
+
+function InteractiveEye3D({ compact = false }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return undefined;
+
+    const reset = () => {
+      node.dataset.active = 'false';
+      node.style.setProperty('--eye-rx', '0deg');
+      node.style.setProperty('--eye-ry', '0deg');
+      node.style.setProperty('--pupil-x', '0px');
+      node.style.setProperty('--pupil-y', '0px');
+    };
+
+    const track = (event) => {
+      const box = node.getBoundingClientRect();
+      const activation = compact ? 190 : 300;
+      const withinX = event.clientX >= box.left - activation && event.clientX <= box.right + activation;
+      const withinY = event.clientY >= box.top - activation && event.clientY <= box.bottom + activation;
+      if (!withinX || !withinY) {
+        reset();
+        return;
+      }
+
+      const centerX = box.left + box.width / 2;
+      const centerY = box.top + box.height / 2;
+      const x = Math.max(-1, Math.min(1, (event.clientX - centerX) / (box.width * .68)));
+      const y = Math.max(-1, Math.min(1, (event.clientY - centerY) / (box.height * .58)));
+      node.dataset.active = 'true';
+      node.style.setProperty('--eye-rx', `${-y * 8}deg`);
+      node.style.setProperty('--eye-ry', `${x * 12}deg`);
+      node.style.setProperty('--pupil-x', `${x * (compact ? 22 : 34)}px`);
+      node.style.setProperty('--pupil-y', `${y * (compact ? 13 : 19)}px`);
+    };
+
+    window.addEventListener('pointermove', track, { passive: true });
+    window.addEventListener('blur', reset);
+    return () => {
+      window.removeEventListener('pointermove', track);
+      window.removeEventListener('blur', reset);
+    };
+  }, [compact]);
+
+  return <div ref={ref} className={`vision-object ${compact ? 'vision-object--compact' : ''}`} aria-hidden="true">
+    <div className="vision-object__activation"/>
+    <div className="vision-object__halo"><i/><i/><i/></div>
+    <div className="vision-object__eye">
+      <div className="vision-object__sclera"/>
+      <img className="vision-object__ink" src="./media/eye-ink.webp" alt=""/>
+      <span className="vision-object__iris"><img src="./media/eye-iris.webp" alt=""/></span>
+    </div>
+    <div className="vision-object__axis vision-object__axis--one"/><div className="vision-object__axis vision-object__axis--two"/>
+    <small>TWO / EYES / ON / YOU</small>
+  </div>;
+}
+
+function SteamMark({ size = 31 }) {
+  return <svg className="steam-mark" viewBox="0 0 64 64" width={size} height={size} aria-hidden="true" fill="none">
+    <circle cx="32" cy="32" r="30" fill="currentColor" opacity=".12"/>
+    <circle cx="43.5" cy="21" r="10.5" stroke="currentColor" strokeWidth="5"/>
+    <circle cx="43.5" cy="21" r="4.5" fill="currentColor"/>
+    <circle cx="20" cy="43" r="7" stroke="currentColor" strokeWidth="4"/>
+    <path d="M25.5 39.2 36.8 30l8.4 1.2M8 37l7.2 3.4" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>;
+}
+
+function XboxMark({ size = 31 }) {
+  return <svg className="xbox-mark" viewBox="0 0 64 64" width={size} height={size} aria-hidden="true" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="currentColor" strokeWidth="3"/>
+    <path d="M17 16.5c6.5 1.2 11.5 4.2 15 8.1 3.5-3.9 8.5-6.9 15-8.1-4.6-3-9.8-4.5-15-4.5s-10.4 1.5-15 4.5Z" fill="currentColor"/>
+    <path d="M14 22c3.2 2 8.2 6.7 13.2 12.4C22.5 40 18.7 45.7 16.5 50M50 22c-3.2 2-8.2 6.7-13.2 12.4C41.5 40 45.3 45.7 47.5 50" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>
+  </svg>;
+}
+
+function PlatformBadge() {
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  return <div className="platform-badge platform-badge--dual">
+    <small>{c.work.gamePlatforms}</small>
+    <span><SteamMark/><strong>Steam</strong></span>
+    <span><XboxMark/><strong>Xbox</strong></span>
+  </div>;
+}
+
 function HomePage() {
-  const { d, lang } = useSite();
-  const copy = studioJoyCopy[lang] || studioJoyCopy.pt;
-  const [active, setActive] = useState(0);
-  const work = works[active];
-  const item = localizedWork(work, lang);
-  const localizedItems = useMemo(() => localizedNews(news, lang), [lang]);
-  const characterCount = allWikiEntries.filter((entry) => entry.category === 'characters').length;
-
-  return <main className="joy-home" style={{ '--active-color': work.accent }}>
-    <section className="joy-hero">
-      <div className="joy-hero__shapes" aria-hidden="true"><i/><i/><i/><i/><i/></div>
-      <div className="joy-hero__copy" data-reveal>
-        <div className="joy-kicker"><span/><small>{copy.hello}</small></div>
-        <h1><span>{copy.heroA}</span><span>{copy.heroB}</span></h1>
-        <p>{copy.heroText}</p>
-        <div className="hero-actions"><ButtonLink href="#/arcanian">{d.home.primary}</ButtonLink><ButtonLink href="#/about" tone="secondary">{copy.explore}</ButtonLink></div>
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  const lines = shortProjectCopy[lang] || shortProjectCopy.pt;
+  return <main className="neo-home">
+    <section className="neo-home__hero">
+      <div className="neo-home__hero-copy" data-reveal>
+        <h1><span>{c.home.titleA}</span><em>{c.home.titleB}</em></h1>
+        <p>{c.home.text}</p>
+        <div className="hero-actions"><ButtonLink href="#/arcanian">{c.home.projects}</ButtonLink><ButtonLink href="#/about" tone="secondary">{c.home.studio}</ButtonLink></div>
       </div>
-
-      <div className="joy-hero__stage" data-reveal>
-        <div className="joy-hero__frame" key={work.slug}>
-          <img src={work.image} alt=""/>
-          <span className="joy-hero__sticker">{String(active + 1).padStart(2, '0')} / {String(works.length).padStart(2, '0')}</span>
-          <span className="joy-hero__spark joy-hero__spark--one">✦</span>
-          <span className="joy-hero__spark joy-hero__spark--two">●</span>
-        </div>
-        <div className="joy-hero__feature">
-          <small>{copy.featured} · {item.eyebrow}</small>
-          <ProjectLogo work={work} className="project-logo--feature" eager/>
-          <p>{item.summary}</p>
-          <SmartLink href={`#/obra/${work.slug}`} className="joy-round-link" aria-label={copy.jump}><Icon name="arrow" size={24}/></SmartLink>
-        </div>
-      </div>
-
+      <InteractiveEye3D/>
     </section>
 
-    <div className="joy-ribbon" aria-label={copy.ribbon}><div><span>{copy.ribbon}</span><span aria-hidden="true">{copy.ribbon}</span></div></div>
-
-    <section className="joy-intro">
-      <div className="joy-intro__copy" data-reveal><small>{copy.introLabel}</small><h2>{copy.introTitle}</h2><p>{copy.introText}</p><ButtonLink href="#/about" tone="outline">{d.home.secondary}</ButtonLink></div>
-      <div className="joy-intro__collage" data-reveal>
-        <figure><img src="./media/banner.webp" alt=""/></figure>
-        <figure><img src="./media/welcome.webp" alt=""/></figure>
-        <span>TOY</span><i aria-hidden="true">✷</i>
+    <section className="neo-home__projects">
+      <header data-reveal><small>{c.home.selected}</small><h2>{c.home.selectedTitle}</h2></header>
+      <div className="project-mosaic">
+        {works.map((work, index) => <SmartLink href={`#/obra/${work.slug}`} key={work.slug} className={`project-mosaic__card project-mosaic__card--${work.slug}`} style={{'--project-accent':work.accent}} data-reveal>
+          <img src={work.image} alt="" loading={index < 2 ? 'eager' : 'lazy'}/><span className="project-mosaic__shade"/>
+          <div><small>{String(index + 1).padStart(2,'0')}</small><ProjectLogo work={work} className="project-logo--mosaic"/><p>{lines[work.slug]}</p><b><Icon name="arrow"/></b></div>
+        </SmartLink>)}
       </div>
     </section>
 
-    <section className="joy-projects">
-      <header data-reveal><div><small>{copy.projectsLabel}</small><h2>{copy.projectsTitle}</h2></div><p>{copy.projectsText}</p></header>
-      <div className="joy-projects__list">
-        {works.map((candidate, index) => {
-          const local = localizedWork(candidate, lang);
-          return <SmartLink href={`#/obra/${candidate.slug}`} key={candidate.slug} className={`joy-project joy-project--${candidate.slug}`} style={{ '--project-color': candidate.accent }} data-reveal>
-            <span className="joy-project__number">{String(index + 1).padStart(2, '0')}</span>
-            <div className="joy-project__image"><img src={candidate.image} alt=""/><i/></div>
-            <div className="joy-project__copy"><small>{local.eyebrow}</small><ProjectLogo work={candidate} className="project-logo--list"/><p>{local.summary}</p><ProjectSignature slug={candidate.slug}/><strong>{d.common.explore}<Icon name="arrow" size={18}/></strong></div>
-          </SmartLink>;
-        })}
-      </div>
+    <section className="neo-home__film">
+      <div className="neo-film__copy" data-reveal><small>{c.home.film}</small><h2>{c.home.filmTitle}</h2><p>{c.home.filmText}</p><ButtonLink href="#/purchase" tone="outline">{c.work.stores}</ButtonLink></div>
+      <div className="neo-film__screen" data-reveal><video autoPlay loop muted playsInline preload="auto" poster="./media/devaneios.webp" aria-label={c.home.filmTitle}><source src="./media/arcanian.mp4" type="video/mp4"/></video><span>{c.work.devaneiosEpisode.toUpperCase()}</span></div>
     </section>
 
-    <section className="joy-studio">
-      <div className="joy-studio__visual" data-reveal><div><img src="./media/game.webp" alt=""/></div><div><img src="./media/devaneios.webp" alt=""/></div><span>{episodeMarkCopy[lang] || episodeMarkCopy.pt}</span></div>
-      <div className="joy-studio__copy"><header data-reveal><small>{copy.studioLabel}</small><h2>{copy.studioTitle}</h2><p>{copy.studioText}</p></header><ol>{(studioHomeCopy[lang] || studioHomeCopy.pt).steps.map(([number, title, text]) => <li key={number} data-reveal><span>{number}</span><div><h3>{title}</h3><p>{text}</p></div></li>)}</ol></div>
-    </section>
-
-    <section className="joy-wiki">
-      <div className="joy-wiki__number" data-reveal><strong>{allWikiEntries.length}</strong><span>{copy.entries}</span><i aria-hidden="true">+</i></div>
-      <div className="joy-wiki__copy" data-reveal><small>{copy.wikiLabel}</small><h2>{copy.wikiTitle}</h2><p>{copy.wikiText}</p><div className="joy-wiki__stats"><span><strong>{wikiCategories.length - 1}</strong>{copy.categories}</span><span><strong>{characterCount}</strong>{copy.people}</span></div><ButtonLink href="#/wiki">{(studioHomeCopy[lang] || studioHomeCopy.pt).openWiki}</ButtonLink></div>
-      <div className="joy-wiki__orbit" aria-hidden="true"><i/><i/><i/></div>
-    </section>
-
-    <section className="joy-news">
-      <header data-reveal><div><small>{copy.latest}</small><h2>{d.nav.news}</h2></div><ButtonLink href="#/news" tone="outline">{copy.allNews}</ButtonLink></header>
-      <div className="joy-news__layout">
-        {localizedItems[0] && <SmartLink href={localizedItems[0].href} className="joy-news__lead" data-reveal><img src={localizedItems[0].image} alt=""/><div><span>{localizedItems[0].date}</span><small>{localizedItems[0].category}</small><h3>{localizedItems[0].title}</h3><p>{localizedItems[0].text}</p><Icon name="arrow"/></div></SmartLink>}
-        <div className="joy-news__more">{localizedItems.slice(1).map((newsItem, index) => <SmartLink href={newsItem.href} key={`${newsItem.title}-${index}`} data-reveal><span>{newsItem.date}</span><div><small>{newsItem.category}</small><h3>{newsItem.title}</h3></div><Icon name="arrow"/></SmartLink>)}</div>
-      </div>
-    </section>
-
-    <section className="joy-outro">
-      <div className="joy-outro__shape" aria-hidden="true"><span>2</span><Icon name="eye" size={118}/></div>
-      <div data-reveal><h2>{copy.outroTitle}</h2><p>{copy.outroText}</p><div className="hero-actions"><ButtonLink href="#/arcanian">{d.home.primary}</ButtonLink><ButtonLink href="#/wiki" tone="secondary">{d.nav.wiki}</ButtonLink></div></div>
+    <section className="neo-home__wiki">
+      <div data-reveal><small>{c.home.wiki}</small><h2>{c.home.wikiTitle}</h2><p>{c.home.wikiText}</p><ButtonLink href="#/wiki">{c.home.openWiki}</ButtonLink></div>
+      <div className="neo-home__wiki-number" aria-hidden="true"><strong>{allWikiEntries.length}</strong><span>ENTRIES</span></div>
     </section>
   </main>;
 }
@@ -664,12 +764,17 @@ function ProjectIndex({ compact = false }) {
 }
 
 function ProjectsPage() {
-  const { d, lang } = useSite();
-  const c = editorialCopy[lang] || editorialCopy.pt;
-  return <main>
-    <PageHero eyebrow={d.projects.eyebrow} title={d.projects.title} text={d.projects.text} image="./media/banner.webp"/>
-    <section className="editorial-intro" data-reveal><small>{c.works}</small><h2>{d.projects.intro}</h2></section>
-    <ProjectIndex compact/>
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  const lines = shortProjectCopy[lang] || shortProjectCopy.pt;
+  return <main className="neo-projects-page">
+    <section className="neo-projects-hero"><div data-reveal><small>{c.projects.eyebrow}</small><h1>{c.projects.title}</h1><p>{c.projects.text}</p></div><InteractiveEye3D compact/></section>
+    <section className="neo-projects-grid">
+      {works.map((work,index)=><SmartLink href={`#/obra/${work.slug}`} key={work.slug} className={`neo-project-tile neo-project-tile--${work.slug}`} style={{'--project-accent':work.accent}} data-reveal>
+        <div className="neo-project-tile__media"><img src={work.image} alt="" loading="lazy"/><i/></div>
+        <div className="neo-project-tile__copy"><span>{String(index+1).padStart(2,'0')}</span><ProjectLogo work={work} className="project-logo--tile"/><p>{lines[work.slug]}</p><Icon name="arrow"/></div>
+      </SmartLink>)}
+    </section>
   </main>;
 }
 
@@ -761,81 +866,260 @@ function WorkDepth({ work, game = false }) {
   </section>;
 }
 
+function CaseSpiral3D() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+    const context = canvas.getContext('2d');
+    if (!context) return undefined;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let width = 1;
+    let height = 1;
+    let pixelRatio = 1;
+    let frame = 0;
+    let lastTime = performance.now();
+    let phase = 0;
+    let rotationX = -0.48;
+    let rotationY = 0.32;
+    let targetX = rotationX;
+    let targetY = rotationY;
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const resize = () => {
+      const bounds = canvas.getBoundingClientRect();
+      width = Math.max(1, bounds.width);
+      height = Math.max(1, bounds.height);
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    };
+
+    const handlePointer = (event) => {
+      const bounds = canvas.getBoundingClientRect();
+      const normalizedX = clamp((event.clientX - bounds.left) / bounds.width * 2 - 1, -1.4, 1.4);
+      const normalizedY = clamp((event.clientY - bounds.top) / bounds.height * 2 - 1, -1.4, 1.4);
+      targetY = 0.3 + normalizedX * 0.26;
+      targetX = -0.48 - normalizedY * 0.2;
+    };
+
+    const draw = (now) => {
+      const elapsed = Math.min(34, now - lastTime);
+      lastTime = now;
+      if (!reduceMotion.matches) phase += elapsed * 0.00034;
+      rotationX += (targetX - rotationX) * 0.045;
+      rotationY += (targetY - rotationY) * 0.045;
+
+      context.clearRect(0, 0, width, height);
+      const base = Math.min(width, height);
+      const centerX = width * 0.5;
+      const centerY = height * 0.5;
+      const camera = base * 1.55;
+      const cosX = Math.cos(rotationX);
+      const sinX = Math.sin(rotationX);
+      const cosY = Math.cos(rotationY);
+      const sinY = Math.sin(rotationY);
+
+      const project = (x, y, z) => {
+        const rotatedY = y * cosX - z * sinX;
+        const rotatedZ1 = y * sinX + z * cosX;
+        const rotatedX = x * cosY + rotatedZ1 * sinY;
+        const rotatedZ = -x * sinY + rotatedZ1 * cosY;
+        const perspective = camera / (camera - rotatedZ);
+        return {
+          x: centerX + rotatedX * perspective,
+          y: centerY + rotatedY * perspective,
+          z: rotatedZ,
+          scale: perspective
+        };
+      };
+
+      const points = [];
+      const pointCount = 230;
+      for (let index = 0; index < pointCount; index += 1) {
+        const progress = index / (pointCount - 1);
+        const angle = progress * Math.PI * 9.4 + phase;
+        const radius = base * (0.018 + progress * 0.37);
+        const depth = Math.sin(angle * 0.78 + phase * 1.6) * base * 0.082
+          + (progress - 0.5) * base * 0.035;
+        points.push(project(
+          Math.cos(angle) * radius,
+          Math.sin(angle) * radius * 0.78,
+          depth
+        ));
+      }
+
+      const segments = [];
+      for (let index = 1; index < points.length; index += 1) {
+        segments.push({
+          from: points[index - 1],
+          to: points[index],
+          depth: (points[index - 1].z + points[index].z) * 0.5,
+          progress: index / points.length
+        });
+      }
+      segments.sort((a, b) => a.depth - b.depth);
+
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
+      segments.forEach((segment) => {
+        const depthRatio = clamp((segment.depth / base + 0.28) / 0.56, 0, 1);
+        const scale = (segment.from.scale + segment.to.scale) * 0.5;
+        const tubeWidth = base * (0.018 + segment.progress * 0.004) * scale;
+
+        context.beginPath();
+        context.moveTo(segment.from.x + 2.5, segment.from.y + 5);
+        context.lineTo(segment.to.x + 2.5, segment.to.y + 5);
+        context.strokeStyle = `rgba(0, 0, 0, ${0.32 + depthRatio * 0.3})`;
+        context.lineWidth = tubeWidth * 1.35;
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(segment.from.x, segment.from.y);
+        context.lineTo(segment.to.x, segment.to.y);
+        context.strokeStyle = `rgba(${170 + Math.round(depthRatio * 70)}, ${34 + Math.round(depthRatio * 45)}, ${61 + Math.round(depthRatio * 55)}, ${0.46 + depthRatio * 0.5})`;
+        context.lineWidth = tubeWidth;
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(segment.from.x - tubeWidth * 0.14, segment.from.y - tubeWidth * 0.18);
+        context.lineTo(segment.to.x - tubeWidth * 0.14, segment.to.y - tubeWidth * 0.18);
+        context.strokeStyle = `rgba(255, 194, 203, ${0.08 + depthRatio * 0.46})`;
+        context.lineWidth = Math.max(0.8, tubeWidth * 0.17);
+        context.stroke();
+      });
+
+      const core = context.createRadialGradient(centerX - base * 0.02, centerY - base * 0.025, 0, centerX, centerY, base * 0.085);
+      core.addColorStop(0, 'rgba(255, 235, 239, .96)');
+      core.addColorStop(0.16, 'rgba(236, 78, 99, .98)');
+      core.addColorStop(0.55, 'rgba(108, 14, 35, .92)');
+      core.addColorStop(1, 'rgba(20, 4, 10, 0)');
+      context.fillStyle = core;
+      context.beginPath();
+      context.arc(centerX, centerY, base * 0.088, 0, Math.PI * 2);
+      context.fill();
+
+      frame = window.requestAnimationFrame(draw);
+    };
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
+    window.addEventListener('pointermove', handlePointer, { passive: true });
+    resize();
+    frame = window.requestAnimationFrame(draw);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('pointermove', handlePointer);
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return <div className="case-hero__spiral" aria-hidden="true">
+    <div className="case-hero__spiral-orbits"><i/><i/><i/></div>
+    <canvas ref={canvasRef}/>
+    <span className="case-hero__spiral-depth"/>
+  </div>;
+}
+
+function DevaneiosPage({ work, item }) {
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  return <main className="project-page project-page--devaneios" style={{'--work-accent':work.accent}}>
+    <section className="case-hero">
+      <div className="case-hero__media"><img src={work.image} alt=""/></div><div className="case-hero__veil"/>
+      <div className="case-file-tabs" aria-hidden="true"><span>CASE 01</span><span>MNT-04</span><span>08.08.1974</span></div>
+      <div className="case-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--case" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.pt)[work.slug]}</p><div className="hero-actions"><ButtonLink href="#/purchase">{c.work.stores}</ButtonLink><ButtonLink href="#/wiki" tone="secondary">{c.work.openWiki}</ButtonLink></div></div>
+      <div className="case-hero__stamp" aria-hidden="true"><b>EVIDÊNCIA</b><span>CAMPO FORTE</span></div>
+      <CaseSpiral3D/>
+      <div className="case-hero__facts">{item.facts.slice(0,4).map(([label,value])=><div key={label}><small>{label}</small><strong>{value}</strong></div>)}</div>
+    </section>
+    <section className="case-film"><div data-reveal><small>{c.work.watch}</small><h2>{c.work.devaneiosEpisode}</h2></div><video autoPlay loop muted playsInline preload="auto" poster="./media/devaneios.webp" data-reveal aria-label={c.work.devaneiosEpisode}><source src="./media/arcanian.mp4" type="video/mp4"/></video></section>
+    <section className="case-ledger"><header data-reveal><small>{c.work.evidence}</small><h2>{workIdentityCopy[lang]?.devaneios?.title || workIdentityCopy.pt.devaneios.title}</h2></header><div>{item.threads.slice(0,4).map((thread,index)=><article key={thread.title} data-reveal><span>{String(index+1).padStart(2,'0')}</span><h3>{thread.title}</h3><p>{thread.text}</p></article>)}</div></section>
+    <section className="project-endcap"><span aria-hidden="true">CASE / 01</span><div><h2>{c.home.wikiTitle}</h2><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></div></section>
+  </main>;
+}
+
+function MenosUmPage({ work, item }) {
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  const identity = workIdentityCopy[lang]?.['menos-um'] || workIdentityCopy.pt['menos-um'];
+  return <main className="project-page project-page--menos-um" style={{'--work-accent':work.accent}}>
+    <section className="minus-hero">
+      <div className="minus-hero__number" aria-hidden="true">−1</div>
+      <div className="minus-hero__thread" aria-hidden="true"><i/><i/><i/><span>J + E</span></div>
+      <div className="minus-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--minus" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.pt)[work.slug]}</p><div className="hero-actions"><ButtonLink href="#/wiki/joel">Joel</ButtonLink><ButtonLink href="#/wiki/elisabeth" tone="secondary">Elisabeth</ButtonLink></div></div>
+      <figure data-reveal><img src={work.image} alt=""/><figcaption>JOEL × ELISABETH</figcaption><span className="minus-photo-date">ANTES DA RUPTURA</span></figure>
+      <div className="minus-margin-note" aria-hidden="true"><span>promessa</span><i/><span>casa</span><i/><span>futuro</span></div>
+    </section>
+    <section className="minus-manifesto" data-reveal><small>{identity.label}</small><h2>{identity.title}</h2><p>{identity.text}</p></section>
+    <section className="minus-moments"><header data-reveal><small>{c.work.chapter}</small><h2>{c.work.beforeRupture}</h2></header><div>{item.sections.slice(0,3).map((section,index)=><article key={section.title} data-reveal><span>0{index+1}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}</div></section>
+    <section className="minus-end"><div aria-hidden="true"><span>J</span><i/><span>E</span></div><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></section>
+  </main>;
+}
+
+function UltimaDancaPage({ work, item }) {
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  const identity = workIdentityCopy[lang]?.['a-ultima-danca'] || workIdentityCopy.pt['a-ultima-danca'];
+  return <main className="project-page project-page--dance" style={{'--work-accent':work.accent}}>
+    <section className="dance-hero"><div className="dance-hero__curtain"/><div className="dance-hero__spotlight"/><img src={work.image} alt=""/><div className="dance-program" aria-hidden="true"><span>ATO I</span><span>ATO II</span><span>ATO III</span></div><div className="dance-hero__copy" data-reveal><div className="dance-sequel-tag"><span>{c.work.directContinuation}</span><ProjectLogo work={works.find((candidate)=>candidate.slug==='devaneios')} compact/></div><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--dance" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.pt)[work.slug]}</p><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></div><div className="dance-hero__infinity" aria-hidden="true">∞</div><div className="dance-heartline" aria-hidden="true"><i/><i/><i/></div></section>
+    <section className="dance-statement" data-reveal><small>{identity.label}</small><h2>{identity.title}</h2><p>{identity.text}</p></section>
+    <section className="dance-acts"><header data-reveal><small>{c.work.acts}</small><span>I — II — III</span></header>{item.sections.slice(0,3).map((section,index)=><article key={section.title} data-reveal><div><span>{c.work.act} {index+1}</span><h2>{section.title}</h2></div><p>{section.text}</p></article>)}</section>
+    <section className="dance-final"><div className="dance-final__line"/><strong>{c.work.lastChance}</strong><div className="dance-final__line"/></section>
+  </main>;
+}
+
+function TormentaPage({ work, item }) {
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  const identity = workIdentityCopy[lang]?.tormenta || workIdentityCopy.pt.tormenta;
+  const panels = [work.image,'./media/welcome.webp','./media/game.webp'];
+  return <main className="project-page project-page--tormenta" style={{'--work-accent':work.accent}}>
+    <section className="storm-hero"><div className="storm-hero__sky"><img src={work.image} alt=""/></div><div className="storm-lightning" aria-hidden="true"><i/><i/><i/></div><div className="storm-issue" aria-hidden="true"><span>ISSUE 01</span><b>{c.work.beforeGreatDay}</b></div><div className="storm-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--storm" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.pt)[work.slug]}</p><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></div><div className="storm-hero__mark" aria-hidden="true"><i/><i/><i/></div></section>
+    <section className="storm-layers"><header data-reveal><small>{c.work.layers}</small><h2>{identity.title}</h2></header><div>{identity.layers.map((layer,index)=><span key={layer} data-reveal><b>0{index+1}</b>{layer}</span>)}</div></section>
+    <section className="storm-panels">{item.sections.slice(0,3).map((section,index)=><article key={section.title} data-reveal><img src={panels[index]} alt="" loading="lazy"/><div><span>{c.work.chapterLabel} / 0{index+1}</span><h2>{section.title}</h2><p>{section.text}</p></div></article>)}</section>
+    <section className="storm-end"><span>{c.work.beforeGreatDay}</span><ButtonLink href="#/timeline" tone="secondary">Timeline</ButtonLink></section>
+  </main>;
+}
+
 function WorkPage({ work }) {
-  const { d, lang } = useSite();
+  const { lang } = useSite();
   if (!work) return <NotFoundPage/>;
   if (work.slug === 'arcanian') return <GamePage work={work}/>;
   const item = localizedWork(work, lang);
-  return <main className={`work-page work-page--${work.slug}`} style={{ '--work-accent': work.accent }}>
-    <section className="work-hero"><div className="work-hero__image"><img src={work.image} alt=""/></div><div className="work-hero__shade"/><div className="work-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--hero" eager/><p>{item.summary}</p><div className="hero-actions"><ButtonLink href={work.primary.href}>{item.primary.label}</ButtonLink><ButtonLink href="#/wiki" tone="secondary">{d.work.wikiButton}</ButtonLink></div></div></section>
-    <WorkIdentity slug={work.slug}/><WorkDepth work={item}/><section className="work-manifesto" data-reveal><small>{d.common.direction}</small><h2>{item.long}</h2></section>
-    <section className="work-chapters">{item.sections.map((section, index) => <article key={section.title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{section.title}</h2><p>{section.text}</p></div><div className="work-chapters__line"/></article>)}</section>
-    <section className="work-themes-editorial"><div className="work-themes-editorial__heading"><small>{d.common.direction}</small><ProjectLogo work={work} className="project-logo--themes"/></div>{item.themes.map(([title, text], index) => <div key={title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></div>)}</section>
-    <section className="section-block work-wiki"><header className="section-heading" data-reveal><div><small>{d.work.related}</small><h2>{d.nav.wiki}</h2></div><p>{d.work.wikiText}</p></header><RelatedWiki slugs={work.relatedWiki}/></section>
-  </main>;
+  if (work.slug === 'devaneios') return <DevaneiosPage work={work} item={item}/>;
+  if (work.slug === 'menos-um') return <MenosUmPage work={work} item={item}/>;
+  if (work.slug === 'a-ultima-danca') return <UltimaDancaPage work={work} item={item}/>;
+  if (work.slug === 'tormenta') return <TormentaPage work={work} item={item}/>;
+  return <NotFoundPage/>;
 }
-
-
-const gamePageCopy = {
-  pt:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Quatro pontos de vista para um conflito que atravessa família, investigação, tempo e escolhas feitas muito antes do jogador assumir o controle.', worldTitle:'Um mundo construído para ser atravessado.', worldText:'As regiões não funcionam como fundos intercambiáveis. Arquitetura, circulação, conflito e ritmo mudam de acordo com o lugar e com o personagem em cena.', playTitle:'Uma experiência para uma ou duas pessoas.', playText:'Exploração, ação, investigação ambiental e decisões narrativas serão organizadas em episódios conectados. O segundo jogador precisa existir na história — não apenas ocupar espaço na tela.' },
-  en:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Four points of view for a conflict spanning family, investigation, time and choices made long before the player takes control.', worldTitle:'A world built to be crossed.', worldText:'Regions are not interchangeable backdrops. Architecture, circulation, conflict and rhythm change with each place and each character in the scene.', playTitle:'An experience for one or two players.', playText:'Exploration, action, environmental investigation and narrative decisions are organized into connected episodes. The second player must exist in the story, not merely occupy space on the screen.' },
-  es:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Cuatro puntos de vista para un conflicto que atraviesa familia, investigación, tiempo y decisiones tomadas mucho antes de que el jugador asuma el control.', worldTitle:'Un mundo construido para ser recorrido.', worldText:'Las regiones no funcionan como fondos intercambiables. La arquitectura, la circulación, el conflicto y el ritmo cambian según el lugar y el personaje en escena.', playTitle:'Una experiencia para una o dos personas.', playText:'Exploración, acción, investigación ambiental y decisiones narrativas se organizan en episodios conectados. El segundo jugador debe existir en la historia, no limitarse a ocupar espacio en la pantalla.' },
-  it:{ castTitle:'Ikarius. Joel.\nAphride. Merius.', castText:'Quattro punti di vista per un conflitto che attraversa famiglia, indagine, tempo e scelte compiute molto prima che il giocatore assuma il controllo.', worldTitle:'Un mondo costruito per essere attraversato.', worldText:'Le regioni non sono sfondi intercambiabili. Architettura, circolazione, conflitto e ritmo cambiano in base al luogo e al personaggio in scena.', playTitle:'Un’esperienza per una o due persone.', playText:'Esplorazione, azione, indagine ambientale e decisioni narrative sono organizzate in episodi collegati. Il secondo giocatore deve esistere nella storia, non soltanto occupare spazio sullo schermo.' },
-  ja:{ castTitle:'Ikarius。Joel。\nAphride。Merius。', castText:'家族、捜査、時間、そしてプレイヤーが操作を始めるずっと前の選択を横断する対立を、四つの視点から描きます。', worldTitle:'歩いて理解するために作られた世界。', worldText:'各地域は交換可能な背景ではありません。建築、移動、対立、リズムは場所と場面にいる人物によって変わります。', playTitle:'一人でも二人でも成立する体験。', playText:'探索、アクション、環境調査、物語上の決断を連続するエピソードとして構成します。二人目のプレイヤーは画面にいるだけでなく、物語の中に存在しなければなりません。' }
-};
 
 function GamePage({ work }) {
-  const { d, lang } = useSite();
-  const c = editorialCopy[lang] || editorialCopy.pt;
-  const g = gamePageCopy[lang] || gamePageCopy.pt;
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
   const item = localizedWork(work, lang);
-  return <main className="game-page">
-    <section className="game-masthead">
-      <div className="game-masthead__media"><img src={work.image} alt=""/></div>
-      <div className="game-masthead__shade"/>
-      <div className="game-masthead__copy" data-reveal>
-        <small>{item.eyebrow}</small>
-        <ProjectLogo work={work} className="project-logo--hero" eager/>
-        <p>{c.gameIntro}</p>
-        <button type="button" className="button-link button-link--primary" onClick={() => document.querySelector('#game-story')?.scrollIntoView({ behavior: 'smooth' })}><span>{c.gameStory}</span><Icon name="arrow" size={17}/></button>
-      </div>
-      <div className="game-masthead__status"><span>Two Eyes On You</span><strong>{d.common.soon}</strong></div>
+  const lines = shortProjectCopy[lang] || shortProjectCopy.pt;
+  return <main className="neo-game-page" style={{'--work-accent':work.accent}}>
+    <section className="neo-game-hero">
+      <div className="neo-game-hero__media"><img src={work.image} alt=""/></div><div className="neo-game-hero__veil"/><div className="game-scanlines" aria-hidden="true"/>
+      <div className="neo-game-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--game-new" eager/><p>{lines.arcanian}</p><PlatformBadge/><div className="hero-actions"><ButtonLink href="#/news">{c.work.gameStatus}</ButtonLink><ButtonLink href="#/wiki" tone="secondary">{c.work.openWiki}</ButtonLink></div></div>
+      <div className="neo-game-hero__object" aria-hidden="true"><div><i/><i/><i/></div><span>PLAY</span></div>
     </section>
-
-    <WorkDepth work={item} game/><nav className="game-chapter-nav" aria-label={c.characters}>
-      <a href="#game-story"><span>01</span>{c.gameStory}</a>
-      <a href="#game-cast"><span>02</span>{c.characters}</a>
-      <a href="#game-world"><span>03</span>{c.world}</a>
-      <a href="#game-play"><span>04</span>{c.gameplay}</a>
-    </nav>
-
-    <section id="game-story" className="game-story">
-      <div data-reveal><small>{c.gameStory}</small><h2>{item.long}</h2></div>
-      <div data-reveal>{item.sections.map((section, index) => <article key={section.title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}</div>
+    <section className="game-adaptation">
+      <header data-reveal><small>{c.work.adaptationLabel}</small><h2>{c.work.adaptationTitle}</h2><p>{c.work.adaptationText}</p></header>
+      <div className="game-adaptation__works">{['devaneios','menos-um','tormenta'].map((slug,index)=>{const source=works.find((candidate)=>candidate.slug===slug);return <SmartLink href={`#/obra/${slug}`} key={slug} data-reveal><span>{String(index+1).padStart(2,'0')}</span><ProjectLogo work={source}/><Icon name="arrow"/></SmartLink>;})}</div>
     </section>
-
-    <section id="game-cast" className="game-characters">
-      <header data-reveal><small>{c.characters}</small><h2>{g.castTitle.split("\n").map((line, index) => <React.Fragment key={line}>{index > 0 && <br/>}{line}</React.Fragment>)}</h2><p>{g.castText}</p></header>
-      <nav className="game-cast-index">{item.characters.map((character, index) => <a key={character.slug} href={`#character-${character.slug}`}><span>{String(index + 1).padStart(2, '0')}</span><strong>{character.name}</strong><small>{character.role}</small></a>)}</nav>
-      <div className="game-cast-ledger">
-        {item.characters.map((character, index) => <article id={`character-${character.slug}`} key={character.slug} className={index % 2 ? 'is-reversed' : ''} data-reveal>
-          <div className="game-character__number"><span>{String(index + 1).padStart(2, '0')}</span><strong>{character.name.slice(0, 1)}</strong></div>
-          <div className="game-character__copy"><small>{character.role}</small><h2>{character.name}</h2><p>{character.text}</p><SmartLink href={`#/wiki/${character.slug}`} className="inline-link">{c.discover}<Icon name="arrow"/></SmartLink></div>
-          <div className="game-character__rhythm" aria-hidden="true"><i/><i/><i/><i/></div>
-        </article>)}
-      </div>
-    </section>
-
-    <section id="game-world" className="game-world-intro" data-reveal><small>{c.world}</small><h2>{g.worldTitle}</h2><p>{g.worldText}</p></section>
-    <section className="game-locations">{item.worlds.map((place, index) => <article key={place.name} data-reveal><div className="game-location__media"><img src={place.image} alt=""/></div><div className="game-location__shade"/><div className="game-location__copy"><span>{String(index + 1).padStart(2, '0')}</span><h2>{place.name}</h2><p>{place.text}</p></div></article>)}</section>
-
-    <section id="game-play" className="game-final">
-      <div><small>{c.gameplay}</small><h2>{g.playTitle}</h2><p>{g.playText}</p><ButtonLink href="#/news" tone="secondary">{d.nav.news}</ButtonLink></div>
-      <img src="./media/game.webp" alt=""/>
-    </section>
+    <section className="neo-game-platform"><header><small>{c.work.gamePlatforms}</small><strong>{c.work.platformPlan}</strong></header><div className="game-platform-list"><span><SteamMark size={46}/><b>Steam</b></span><span><XboxMark size={46}/><b>Xbox</b></span></div></section>
+    <section className="neo-game-features"><header data-reveal><small>{c.work.gameFeatures}</small><h2>{c.work.playStoryTitle}</h2></header><div>{item.sections.slice(0,4).map((section,index)=><article key={section.title} data-reveal><span>0{index+1}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}</div></section>
+    <section className="neo-game-cast"><header data-reveal><small>{c.work.gameCast}</small><h2>Ikarius. Joel.<br/>Aphride. Merius.</h2></header><div>{item.characters.map((character,index)=><SmartLink href={`#/wiki/${character.slug}`} key={character.slug} data-reveal><span>{String(index+1).padStart(2,'0')}</span><strong>{character.name}</strong><small>{character.role}</small><Icon name="arrow"/></SmartLink>)}</div></section>
+    <section className="neo-game-world"><header data-reveal><small>{c.work.gameWorld}</small><h2>{c.work.worldCountsTitle}</h2></header><div>{item.worlds.map((place,index)=><article key={place.name} data-reveal><img src={place.image} alt="" loading="lazy"/><div><span>0{index+1}</span><h3>{place.name}</h3><p>{place.text}</p></div></article>)}</div></section>
   </main>;
 }
-
 
 const studioJoyCopy = {
   pt: {
@@ -1014,10 +1298,22 @@ function NewsPage() {
 }
 
 function MediaPage() {
-  const { d, lang } = useSite();
-  const images = ['./media/banner.webp', './media/devaneios.webp', './media/menos-um.webp', './media/tormenta.webp', './media/game.webp', './media/welcome.webp'];
-  const gameTitle = localizedWork(works.find((item) => item.slug === 'arcanian'), lang).displayTitle;
-  return <main><PageHero eyebrow={d.media.eyebrow} title={d.media.title} text={d.media.text} image="./media/game.webp"/><section className="section-block media-video"><header className="section-heading"><div><small>{d.media.video}</small><h2>{gameTitle}</h2></div></header><video controls poster="./media/game.webp"><source src="./media/arcanian.mp4" type="video/mp4"/></video></section><section className="section-block media-gallery"><header className="section-heading"><div><small>{d.media.images}</small><h2>Two Eyes On You</h2></div></header><div>{images.map((image, index) => <figure key={image} data-reveal><img src={image} alt=""/><figcaption>{String(index + 1).padStart(2, '0')} / Two Eyes On You</figcaption></figure>)}</div></section></main>;
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  const gallery = [
+    ['./media/banner.webp','Two Eyes On You'],
+    ['./media/devaneios.webp','Devaneios'],
+    ['./media/menos-um.webp','Menos Um'],
+    ['./media/ultima-danca.webp','A Última Dança'],
+    ['./media/tormenta.webp','Tormenta'],
+    ['./media/game.webp','Arcanian — Jogo']
+  ];
+  return <main className="neo-media-page">
+    <section className="neo-media-hero"><div data-reveal><small>{c.media.eyebrow}</small><h1>{c.media.title}</h1></div><div className="neo-media-hero__orb" aria-hidden="true"><i/><i/><span>REC</span></div></section>
+    <section className="neo-media-film"><header data-reveal><small>{c.media.film}</small><h2>Devaneios / Episódio I</h2></header><video autoPlay loop muted playsInline preload="auto" poster="./media/devaneios.webp" data-reveal aria-label={c.media.film}><source src="./media/arcanian.mp4" type="video/mp4"/></video></section>
+    <section className="neo-media-platform neo-media-platform--dual" data-reveal><header><small>{c.media.platform}</small><strong>{c.media.platforms}</strong></header><div className="media-platform-marks"><span><SteamMark size={48}/><b>Steam</b></span><span><XboxMark size={48}/><b>Xbox</b></span></div></section>
+    <section className="neo-media-gallery"><header data-reveal><small>{c.media.gallery}</small><h2>{c.media.still}</h2></header><div>{gallery.map(([image,label],index)=><figure key={image} data-reveal><img src={image} alt="" loading="lazy"/><figcaption><span>{String(index+1).padStart(2,'0')}</span>{label}</figcaption></figure>)}</div></section>
+  </main>;
 }
 
 const studioContent = {
@@ -1094,14 +1390,22 @@ const studioContent = {
 };
 
 function AboutPage() {
-  const { d, lang } = useSite();
-  const local = studioContent[lang] || studioContent.pt;
-  return <main className="studio-page"><PageHero eyebrow={d.studio.eyebrow} title={d.studio.title} text={d.studio.text} image="./media/banner.webp"><ButtonLink href="#/contact">{d.studio.contact}</ButtonLink></PageHero><section className="section-block studio-manifesto"><div data-reveal><small>{d.studio.manifesto}</small><h2>{d.studio.manifestoTitle}</h2></div><div data-reveal><p>{d.studio.p1}</p><p>{d.studio.p2}</p></div></section><section className="studio-areas">{local.areas.map(([title, text], index) => <article key={title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><h2>{title}</h2><p>{text}</p></article>)}</section><section className="section-block studio-process"><header className="section-heading" data-reveal><div><small>{d.studio.process}</small><h2>{d.studio.processTitle}</h2></div></header><div>{local.process.map(([number, title, text]) => <article key={number} data-reveal><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section><section className="section-block studio-projects"><header className="section-heading" data-reveal><div><small>{d.studio.projects}</small><h2>Arcanian</h2></div><ButtonLink href="#/arcanian" tone="outline">{d.common.explore}</ButtonLink></header><div>{works.map((work) => { const item = localizedWork(work, lang); return <SmartLink href={`#/obra/${work.slug}`} key={work.slug} data-reveal><img src={work.image} alt=""/><ProjectLogo work={work} compact/><Icon name="arrow"/></SmartLink>; })}</div></section><section className="studio-contact"><div><small>{d.studio.contact}</small><h2>{d.studio.contactTitle}</h2></div><ButtonLink href="#/contact">{d.nav.contact}</ButtonLink></section></main>;
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  return <main className="neo-about-page">
+    <section className="neo-about-hero"><div data-reveal><small>{c.about.eyebrow}</small><h1>{c.about.title}</h1><p>{c.about.text}</p><ButtonLink href="#/contact">{c.contact.mail}</ButtonLink></div><InteractiveEye3D compact/></section>
+    <section className="neo-about-pillars">{c.about.pillars.map(([title,text],index)=><article key={title} data-reveal><span>0{index+1}</span><h2>{title}</h2><p>{text}</p></article>)}</section>
+    <section className="neo-about-strip"><span>BOOKS</span><i>×</i><span>COMICS</span><i>×</i><span>GAMES</span></section>
+    <section className="neo-about-projects">{works.map((work)=><SmartLink href={`#/obra/${work.slug}`} key={work.slug} data-reveal><img src={work.image} alt="" loading="lazy"/><ProjectLogo work={work} compact/><Icon name="arrow"/></SmartLink>)}</section>
+  </main>;
 }
 
 function DocumentationPage() {
   const { d, lang } = useSite();
-  return <main><PageHero eyebrow={d.docs.eyebrow} title={d.docs.title} text={d.docs.text} image="./media/banner.webp"/><section className="section-block document-list">{docs.map((doc, index) => { const local = docsTranslations[lang]?.[doc.slug]; return <SmartLink href={`#/documentation/${doc.slug}`} key={doc.slug} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{local?.[0] || doc.title}</h2><p>{local?.[1] || doc.description}</p></div><Icon name="arrow"/></SmartLink>; })}</section></main>;
+  return <main className="neo-docs-page">
+    <section className="neo-simple-hero"><small>{d.docs.eyebrow}</small><h1>{d.docs.title}</h1><p>{d.docs.text}</p></section>
+    <section className="neo-docs-grid">{docs.map((doc,index)=>{const local=docsTranslations[lang]?.[doc.slug];return <SmartLink href={`#/documentation/${doc.slug}`} key={doc.slug} data-reveal><span>{String(index+1).padStart(2,'0')}</span><h2>{local?.[0]||doc.title}</h2><p>{local?.[1]||doc.description}</p><Icon name="arrow"/></SmartLink>})}</section>
+  </main>;
 }
 
 function LegalDocumentPage({ legalDoc }) {
@@ -1112,17 +1416,26 @@ function LegalDocumentPage({ legalDoc }) {
 }
 
 function ContactPage() {
-  const { d } = useSite();
-  return <main className="contact-page"><section className="contact-main"><div data-reveal><small>{d.contact.eyebrow}</small><h1>{d.contact.title}</h1><p>{d.contact.text}</p><ButtonLink href="mailto:contato@twoeyesonyou.com">{d.contact.button}</ButtonLink><strong>contato@twoeyesonyou.com</strong></div><aside>{d.contact.areas.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></div>)}</aside></section><section className="contact-socials">{socials.map(([label, href]) => <SmartLink href={href} key={label}>{label}<Icon name="external"/></SmartLink>)}</section></main>;
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  return <main className="neo-contact-page">
+    <section className="neo-contact-main"><div data-reveal><small>{c.contact.eyebrow}</small><h1>{c.contact.title}</h1><p>{c.contact.text}</p><ButtonLink href="mailto:contato@twoeyesonyou.com">{c.contact.mail}</ButtonLink></div><a href="mailto:contato@twoeyesonyou.com" className="neo-contact-mail">contato<br/>@twoeyesonyou.com</a></section>
+    <section className="neo-contact-socials">{socials.map(([label,href],index)=><SmartLink href={href} key={label} data-reveal><span>0{index+1}</span><strong>{label}</strong><Icon name="external"/></SmartLink>)}</section>
+  </main>;
 }
 
 function PurchasePage() {
-  const { d } = useSite();
-  const devaneios = works.find((work) => work.slug === 'devaneios');
-  const [edition, setEdition] = useState('physical');
-  const physical = edition === 'physical';
-  const store = physical ? 'https://loja.uiclap.com/titulo/ua184114' : 'https://www.amazon.com.br/dp/B0H4YWKJW4';
-  return <main className="purchase-page"><section className="purchase-hero"><div className="purchase-hero__image"><img src="./media/devaneios.webp" alt=""/></div><div className="purchase-hero__shade"/><div className="purchase-hero__copy" data-reveal><small>{d.purchase.eyebrow}</small><ProjectLogo work={devaneios} className="project-logo--purchase" eager/><p>{d.purchase.text}</p><div className="purchase-facts">{d.purchase.facts.map((fact) => <span key={fact}>{fact}</span>)}</div><ButtonLink href={store}>{physical ? d.purchase.physicalButton : d.purchase.digitalButton}</ButtonLink></div><div className="purchase-cover" data-reveal><img src="./media/devaneios.webp" alt="Arcanian: Devaneios"/></div></section><section className="edition-tabs"><button type="button" onClick={() => setEdition('physical')} className={physical ? 'is-active' : ''}><span>01</span><strong>{d.purchase.physical}</strong><small>{d.purchase.physicalMeta}</small></button><button type="button" onClick={() => setEdition('digital')} className={!physical ? 'is-active' : ''}><span>02</span><strong>{d.purchase.digital}</strong><small>{d.purchase.digitalMeta}</small></button></section><section className="section-block purchase-details"><div data-reveal><small>{physical ? d.purchase.physical : d.purchase.digital}</small><h2>{physical ? d.purchase.physicalTitle : d.purchase.digitalTitle}</h2><p>{physical ? d.purchase.physicalText : d.purchase.digitalText}</p><ButtonLink href={store} tone="secondary">{physical ? d.purchase.physicalButton : d.purchase.digitalButton}</ButtonLink></div><aside data-reveal><small>{d.purchase.before}</small>{d.purchase.notices.map((notice, index) => <div key={notice}><span>{String(index + 1).padStart(2, '0')}</span><p>{notice}</p></div>)}</aside></section><section className="section-block purchase-synopsis"><div data-reveal><small>{d.purchase.synopsis}</small><h2>{d.purchase.synopsisTitle}</h2></div><div data-reveal><p>{d.purchase.synopsisP1}</p><p>{d.purchase.synopsisP2}</p><div className="purchase-links"><SmartLink href="#/wiki/ikarius">Ikarius<Icon name="arrow"/></SmartLink><SmartLink href="#/wiki/ciane">C.I.A.N.E.<Icon name="arrow"/></SmartLink><SmartLink href="#/wiki/espiral">Espiral<Icon name="arrow"/></SmartLink></div></div></section><section className="purchase-final"><div><small>{d.purchase.choose}</small><ProjectLogo work={devaneios} className="project-logo--purchase-final"/></div><div><ButtonLink href="https://loja.uiclap.com/titulo/ua184114">{d.purchase.physicalButton}</ButtonLink><ButtonLink href="https://www.amazon.com.br/dp/B0H4YWKJW4" tone="secondary">{d.purchase.digitalButton}</ButtonLink></div></section></main>;
+  const { lang } = useSite();
+  const c = redesignCopy[lang] || redesignCopy.pt;
+  const devaneios = works.find((work)=>work.slug==='devaneios');
+  return <main className="neo-purchase-page">
+    <section className="neo-purchase-hero"><div className="neo-purchase-hero__visual"><img src="./media/devaneios.webp" alt="Arcanian: Devaneios"/><div className="neo-purchase-cover"><img src="./media/devaneios.webp" alt=""/></div></div><div className="neo-purchase-hero__copy" data-reveal><small>{c.purchase.eyebrow}</small><ProjectLogo work={devaneios} className="project-logo--purchase-new" eager/><h1>{c.purchase.title}</h1><p>{c.purchase.text}</p></div></section>
+    <section className="neo-store-grid">
+      <SmartLink href="https://www.amazon.com.br/dp/B0HD5MV8ZG" className="neo-store-card neo-store-card--amazon" data-reveal><span>01</span><div><small>{c.purchase.amazonMeta}</small><h2>Amazon</h2><strong>{c.purchase.amazon}</strong></div><Icon name="external"/></SmartLink>
+      <SmartLink href="https://loja.uiclap.com/titulo/ua184114" className="neo-store-card neo-store-card--uiclap" data-reveal><span>02</span><div><small>{c.purchase.uiclapMeta}</small><h2>Uiclap</h2><strong>{c.purchase.uiclap}</strong></div><Icon name="external"/></SmartLink>
+    </section>
+    <p className="neo-purchase-note">{c.purchase.note}</p>
+  </main>;
 }
 
 function NotFoundPage() {

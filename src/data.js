@@ -5,7 +5,7 @@ export const works = [
     title: 'Devaneios',
     displayTitle: 'Arcanian: Devaneios',
     image: './media/devaneios.webp',
-    logo: './media/logos/devaneios.png',
+    logo: './media/logos-fixed/devaneios.webp',
     accent: '#a92f2b',
     summary: 'A morte de Ezequiel Sant’Anna repete a espiral encontrada no corpo de Mountevoir. Para Ikarius, investigar o novo crime significa reabrir o único caso que nunca conseguiu deixar no passado.',
     long: 'Devaneios começa como uma investigação em Campo Forte, atravessa o C.I.A.N.E., o submundo de Bayrule, o Projeto L.A.C.H.R.Y.M.A. e os arquivos de Koreth, até revelar que a morte de Mountevoir não era um episódio isolado. No centro de tudo permanece Ikarius: um investigador treinado para separar fato, inferência e teste justamente quando cada descoberta oferece a resposta que seu luto deseja ouvir.',
@@ -46,7 +46,7 @@ export const works = [
     title: 'Menos Um',
     displayTitle: 'Arcanian: Menos Um',
     image: './media/menos-um.webp',
-    logo: './media/logos/menos.png',
+    logo: './media/logos-fixed/menos.webp',
     accent: '#8f7355',
     summary: 'Antes de Joel se tornar o homem que atravessaria séculos para tentar corrigir uma perda, havia um apartamento, um casamento, livros por toda parte, uma promessa e Elisabeth.',
     long: 'Menos Um acompanha Joel e Elisabeth como casal, não como explicação retrospectiva para a tragédia. A obra mostra a intimidade dos dois, o trabalho de Elisabeth como escritora, a pesquisa de Joel, as pequenas discussões domésticas e a notícia de que esperavam um filho. Quanto mais concreto se torna o futuro que construíram, mais brutal fica a decisão de Joel de seguir adiante com uma demonstração que ele próprio já não podia afirmar ser segura.',
@@ -83,11 +83,11 @@ export const works = [
   },
   {
     slug: 'a-ultima-danca',
-    eyebrow: 'Livro · Vazio Absoluto · Continuação de Devaneios',
+    eyebrow: 'Livro · Vazio Absoluto · Sequência direta de Devaneios',
     title: 'A Última Dança',
     displayTitle: 'Arcanian: A Última Dança',
     image: './media/ultima-danca.webp',
-    logo: './media/logos/ultima-danca.png',
+    logo: './media/logos-fixed/ultima-danca.webp',
     accent: '#735078',
     summary: 'Depois de Devaneios, Ikarius, Joel e os Arnins enfrentam uma crise que já não pode ser tratada como um caso isolado: um surto violento, decisões políticas e o plano de Hiussen empurram diferentes povos para o mesmo colapso.',
     long: 'A Última Dança continua as consequências abertas em Devaneios e desloca o centro da investigação para uma crise coletiva. Enquanto um vírus transforma medo em violência e pressiona fronteiras, Ikarius tenta separar causa, manipulação e resposta política; Joel encara novamente a memória de Elisabeth; e os Arnins chegam ao limite de sua última oportunidade de impedir que o conflito se espalhe entre realidades.',
@@ -127,7 +127,7 @@ export const works = [
     title: 'Tormenta',
     displayTitle: 'Arcanian: Tormenta',
     image: './media/tormenta.webp',
-    logo: './media/logos/tormenta.png',
+    logo: './media/logos-fixed/tormenta.webp',
     accent: '#426f79',
     summary: 'Antes de se tornarem nomes em memoriais, relatórios e lendas, as figuras do passado de Arcanian ainda precisavam escolher quem proteger — e o que aceitariam fazer para sobreviver.',
     long: 'Tormenta será uma HQ ambientada meses antes do Grande Dia. A obra acompanha as maiores lendas do universo Arcanian quando suas reputações ainda estavam sendo construídas e coloca o Projeto L.A.C.H.R.Y.M.A. no centro do período: crianças implantadas com Fragmentos, promessas usadas como instrumento de controle, reinos disputando resultados e uma crise que transformaria Chinama em parte da história de Bayrule.',
@@ -168,15 +168,16 @@ export const works = [
     title: 'Jogo',
     displayTitle: 'Jogo',
     image: './media/game.webp',
-    logo: './media/logos/arcanian.png',
+    logo: './media/logos-fixed/arcanian.webp',
     accent: '#b48a29',
-    summary: 'Ikarius e Joel conduzem uma história própria que reorganiza acontecimentos de Devaneios, Menos Um e outros períodos de Arcanian para funcionar como experiência interativa.',
-    long: 'O jogo não reproduz um único livro capítulo por capítulo. Ele aproxima personagens que enxergam o mesmo conflito de maneiras incompatíveis: Ikarius procura regras verificáveis; Joel conhece as consequências de quebrá-las. A campanha combina exploração lateral, investigação ambiental, combate, decisões narrativas e cenas desenhadas para uma ou duas pessoas, com arte 2D/2.5D estilizada e sprites feitos à mão — sem pixel art.',
+    summary: 'Ikarius e Joel conduzem uma campanha própria que adapta Devaneios, Menos Um e Tormenta para uma experiência interativa — sem transformar os livros e a HQ em simples cenas jogáveis.',
+    long: 'O jogo adapta Devaneios, Menos Um e Tormenta dentro de uma campanha com ordem própria. Ele aproxima personagens que enxergam o mesmo conflito de maneiras incompatíveis: Ikarius procura regras verificáveis; Joel conhece as consequências de quebrá-las. A campanha combina exploração lateral, investigação ambiental, combate, decisões narrativas e cenas desenhadas para uma ou duas pessoas, com arte 2D/2.5D estilizada e sprites feitos à mão — sem pixel art.',
     primary: { label: 'Ver o jogo', href: '#/obra/arcanian' },
     facts: [
       ['Gênero', 'Aventura narrativa de ação'],
       ['Estrutura', 'Campanha episódica'],
       ['Jogadores', 'Uma ou duas pessoas'],
+      ['Obras adaptadas', 'Devaneios · Menos Um · Tormenta'],
       ['Direção de arte', '2D/2.5D estilizado · sprites desenhados à mão']
     ],
     themes: [
@@ -198,10 +199,9 @@ export const works = [
       { slug: 'merius', name: 'Merius', role: 'Veterano e estrategista', text: 'Depois de viver vinte anos como Rafael Corvino, Merius retorna com arquivos, rotas e conhecimento acumulado. Sua experiência ajuda o grupo, mas a mentira que sustentou também impede que confiança e estratégia sejam a mesma coisa.' }
     ],
     worlds: [
-      { name: 'Bravara', image: './media/game.webp', text: 'Cidades costeiras, regiões industriais, serras e instituições que continuam funcionando ao lado do impossível. É o espaço onde a investigação precisa conviver com ônibus, trabalho, bairros e vida comum.' },
+      { name: 'Bravara', image: './media/bravara2.webp', text: 'Cidades costeiras, regiões industriais, serras e instituições que continuam funcionando ao lado do impossível. É o espaço onde a investigação precisa conviver com ônibus, trabalho, bairros e vida comum.' },
       { name: 'Cidade das Maravilhas', image: './media/banner.webp', text: 'A cidade de Ikarius, comprimida entre morros, túneis, baía, viadutos e rotas públicas. Sua geografia determina como o jogador atravessa bairros e percebe o contraste entre rotina e anomalia.' },
       { name: 'Bayrule', image: './media/tormenta.webp', text: 'Território de fronteiras políticas, rotas clandestinas, submundo e alianças que mudam quando a noite chega. Exploração e conflito ganham outro ritmo fora das estruturas de Bravara.' },
-      { name: 'Koreth', image: './media/welcome.webp', text: 'Território ligado aos Arnins, ao Codéx e ao encerramento de Devaneios. A escala do lugar permite confrontos e descobertas que ameaçam mais do que uma cidade.' }
     ],
     sections: [
       { title: 'Uma campanha, não uma recapitulação', text: 'O jogo adapta personagens, relações e acontecimentos de várias obras, mas constrói uma ordem própria. Quem leu os livros reconhecerá camadas adicionais; quem chega pelo jogo terá uma história completa, sem depender de resumo externo.' },
@@ -210,7 +210,7 @@ export const works = [
       { title: 'Exploração lateral e combate', text: 'A estrutura parte de um side-scroller 2D/2.5D com deslocamento, ação e encontros compostos como cenas ilustradas. Combate e exploração devem manter o jogador ativo sem destruir o ritmo narrativo.' },
       { title: 'Um ou dois jogadores', text: 'A campanha será jogável individualmente e também em dupla. No cooperativo, cada personagem precisa possuir função dramática e mecânica, evitando que o segundo jogador seja apenas uma cópia ou presença sem consequência.' },
       { title: 'Direção de arte', text: 'O processo começa escolhendo quem compõe a cena, quais cores serão usadas e se o traço precisa ser agradável, áspero ou agressivo. Só depois cenário, animação e tecnologia são organizados ao redor da composição.' },
-      { title: 'Episódios e diferentes obras', text: 'O primeiro jogo não adapta apenas Devaneios. Menos Um, o passado de Joel e outras partes de Arcanian aparecem dentro de uma estrutura episódica capaz de mudar período, personagem e tom sem perder continuidade.' }
+      { title: 'Três obras, uma campanha própria', text: 'Devaneios fornece a investigação e o caso Mountevoir; Menos Um dá peso ao passado de Joel e Elisabeth; Tormenta leva o jogador ao período das lendas e ao Projeto L.A.C.H.R.Y.M.A. A adaptação reorganiza esses núcleos sem apagar a identidade de cada obra.' }
     ],
     relatedWiki: ['ikarius', 'joel', 'aphride', 'merius', 'elisabeth', 'mountevoir', 'bravara', 'cidade-maravilhas', 'bayrule', 'koreth', 'codex']
   }
