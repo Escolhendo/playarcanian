@@ -30,6 +30,18 @@ export const wikiCategories = [
   {
     "id": "objects",
     "label": "Objetos"
+  },
+  {
+    "id": "abilities",
+    "label": "Poderes"
+  },
+  {
+    "id": "weapons",
+    "label": "Armas"
+  },
+  {
+    "id": "technology",
+    "label": "Tecnologia"
   }
 ];
 
@@ -1757,17 +1769,6 @@ export const timelineEvents = [
     "links": [
       "montanhas-mountevoir",
       "mountevoir"
-    ]
-  },
-  {
-    "date": "17 AGO 1974",
-    "title": "O Grande Dia",
-    "text": "Um ponto de ruptura reorganiza sobreviventes, alianças e a história de Arcanian.",
-    "spoiler": 2,
-    "links": [
-      "grande-dia",
-      "hiussen",
-      "koreth"
     ]
   }
 ];

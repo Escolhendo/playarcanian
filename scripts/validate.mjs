@@ -1,14 +1,15 @@
-import { access } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import { works, news, docs } from '../src/data.js';
 import { wikiEntries } from '../src/wiki.js';
 import { wikiSupplement } from '../src/wikiSupplement.js';
 import { finalWikiEntries } from '../src/wikiFinal.js';
+import { expandedWikiEntries } from '../src/wikiExpansion.js';
 import { getBookGuide } from '../src/bookGuide.js';
 import { legalDocuments } from '../src/legal.js';
 import { getWikiProfile } from '../src/wikiDetails.js';
 
 const errors = [];
-const allWikiEntries = [...wikiEntries, ...wikiSupplement, ...finalWikiEntries];
+const allWikiEntries = [...wikiEntries, ...wikiSupplement, ...finalWikiEntries, ...expandedWikiEntries];
 const workSlugs = new Set(works.map((item) => item.slug));
 const wikiSlugs = new Set(allWikiEntries.map((item) => item.slug));
 const legalSlugs = new Set(legalDocuments.map((item) => item.slug));
@@ -52,6 +53,28 @@ for (const entry of allWikiEntries) {
     if (relationship.slug && !wikiSlugs.has(relationship.slug)) {
       errors.push(`Wiki ${entry.slug}: relação inexistente ${relationship.slug}`);
     }
+  }
+}
+
+
+async function collectSourceFiles(dir) {
+  const items = await readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const item of items) {
+    const full = `${dir}/${item.name}`;
+    if (item.isDirectory()) files.push(...await collectSourceFiles(full));
+    else if (/\.(?:js|css|html)$/i.test(item.name)) files.push(full);
+  }
+  return files;
+}
+
+for (const file of ['index.html', ...await collectSourceFiles('src')]) {
+  const text = await readFile(file, 'utf8');
+  const refs = [...text.matchAll(/(?:\.\/)?media\/[A-Za-z0-9_./()\-]+\.(?:webp|png|jpe?g|mp4|svg)/gi)].map(match => match[0]);
+  for (const ref of refs) {
+    const normalized = ref.replace(/^\.\//, '');
+    try { await access(`public/${normalized}`); }
+    catch { errors.push(`Referência de mídia ausente em ${file}: public/${normalized}`); }
   }
 }
 

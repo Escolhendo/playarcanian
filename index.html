@@ -1,28 +1,23 @@
 <!doctype html>
-<html lang="pt-BR" data-theme="studio" data-language="pt">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#7b2432" />
-    <meta name="description" content="Two Eyes On You — estúdio responsável por Arcanian: Devaneios, Menos Um, Tormenta e Jogo." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#050505" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content="Two Eyes On You Studios — jogos, livros, HQ, animação e o universo Arcanian." />
+    <meta property="og:title" content="Two Eyes On You Studios" />
+    <meta property="og:description" content="A casa de Arcanian: Devaneios, Menos Um, Tormenta, A Última Dança e do jogo Arcanian." />
+    <meta property="og:image" content="./media/social-preview.jpg" />
     <link rel="icon" href="./favicon.ico" />
-    <script>
-      (function () {
-        try {
-          var version = localStorage.getItem('teoy-theme-version');
-          var theme = version === '12' ? (localStorage.getItem('teoy-theme') || 'studio') : 'studio';
-          var language = localStorage.getItem('teoy-language') || 'pt';
-          var htmlLanguages = { pt: 'pt-BR', en: 'en', es: 'es', it: 'it', ja: 'ja' };
-          document.documentElement.dataset.theme = theme;
-          document.documentElement.dataset.language = language;
-          document.documentElement.lang = htmlLanguages[language] || 'pt-BR';
-        } catch (_) {}
-      }());
-    </script>
+    <link rel="preload" href="./media/logo.webp" as="image" type="image/webp" />
+    <link rel="preload" href="./media/game.webp" as="image" type="image/webp" />
+    <link rel="stylesheet" href="./src/styles.css" />
     <title>Two Eyes On You Studios</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="./src/main.jsx"></script>
+    <noscript>Este site precisa de JavaScript para navegar pela biblioteca, Wiki e páginas do universo Arcanian.</noscript>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
