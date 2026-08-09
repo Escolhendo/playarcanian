@@ -7,7 +7,8 @@ import { expandedWikiEntries, timelineExpansion } from './wikiExpansion.js';
 import { getWikiProfile } from './wikiDetails.js';
 import { getDeepWikiProfile } from './wikiDeepProfiles.js';
 import { getProjectExperience } from './projectExperience.js';
-import { localizedWork, localizedWikiEntry } from './i18n.js';
+import { localizedWork, localizedWikiEntry, localizedNews } from './i18n.js';
+import { localizedLegalDocument } from './legalTranslations.js';
 
 const root = document.querySelector('#root');
 const allWikiEntries = [...wikiEntries, ...wikiSupplement, ...finalWikiEntries, ...expandedWikiEntries];
@@ -18,14 +19,12 @@ const LANGUAGES = [
   { id:'en', label:'English', short:'EN', html:'en' },
   { id:'es', label:'Español', short:'ES', html:'es' },
   { id:'it', label:'Italiano', short:'IT', html:'it' },
-  { id:'fr', label:'Français', short:'FR', html:'fr' },
-  { id:'de', label:'Deutsch', short:'DE', html:'de' },
   { id:'ja', label:'日本語', short:'JA', html:'ja' }
 ];
 
 const TEXT = {
   pt: {
-    projects:'Projetos', universe:'Universo', news:'Notícias', studio:'Estúdio', search:'Buscar', menu:'Menu',
+    projects:'Projetos', universe:'Universo', news:'Notícias', studio:'Estúdio', search:'Buscar', menu:'Menu', home:'Início',
     games:'Jogos', books:'Livros', comics:'HQ', animation:'Animação', wiki:'Wiki', timeline:'Cronologia', purchase:'Comprar Devaneios',
     discover:'Descobrir', explore:'Explorar', learn:'Saiba mais', viewAll:'Ver tudo', viewProject:'Ver projeto', close:'Fechar', back:'Voltar',
     available:'Disponível', development:'Em desenvolvimento', latest:'Últimas notícias', library:'Biblioteca de projetos',
@@ -34,12 +33,36 @@ const TEXT = {
     database:'Base de dados oficial', databaseText:'Personagens, lugares, organizações e acontecimentos reunidos em uma wiki navegável com cronologia própria.',
     formats:'Explore por formato', faq:'Perguntas frequentes', contact:'Contato', docs:'Documentos', support:'Suporte',
     noResults:'Nenhum resultado encontrado.', spoilersOn:'Ocultar spoilers', spoilersOff:'Exibir spoilers', spoiler:'Conteúdo com spoiler',
-    searchPlaceholder:'Busque projetos, personagens, lugares, notícias ou documentos', entries:'entradas',
+    searchPlaceholder:'Busque projetos, personagens, lugares, notícias ou documentos', entries:'entradas', events:'eventos',
     studioTitle:'Two Eyes On You', studioText:'Um estúdio independente construindo histórias para diferentes formatos sem transformar adaptação em repetição.',
-    footer:'© 2026 Two Eyes On You™. Todos os direitos reservados.'
+    footer:'© 2026 Two Eyes On You™. Todos os direitos reservados.', language:'IDIOMA', exploreLabel:'EXPLORAR',
+    featured:'EM DESTAQUE', featuredTitle:'Entre em Arcanian.', featuredText:'Projetos, histórias e arquivos oficiais em um único ponto de entrada.',
+    gameLabel:'JOGO DA ARCANIAN', episodeOne:'EPISÓDIO I', physicalDigital:'Físico · Digital', chooseEdition:'Escolher edição',
+    discoverText:'Escolha a porta de entrada. O site leva você direto ao formato, à obra ou à lore que procura.',
+    projectsText:'Os dois projetos com páginas completas atualmente: o jogo Arcanian e o livro Devaneios.',
+    announced:'ANUNCIADOS', upcomingTitles:'Próximos títulos', announcedText:'Obras já reveladas do universo Arcanian, ainda sem páginas completas de projeto.', announcedBadge:'ANUNCIADO', announcedMore:'Mais informações serão divulgadas futuramente.',
+    lessOneType:'LIVRO · VAZIO ABSOLUTO', lessOneText:'Joel e Elisabeth antes da ruptura. Uma história mais íntima sobre o que existia antes de tudo desmoronar.',
+    tormentaType:'HQ · MITOS E LENDAS', tormentaText:'Uma história ambientada antes do Grande Dia, voltada às lendas de Arcanian e ao Projeto L.A.C.H.R.Y.M.A.',
+    lastDanceType:'LIVRO · SEQUÊNCIA DIRETA', lastDanceText:'A continuação direta de Devaneios, levando Ikarius e Joel para as consequências do que o primeiro episódio deixou em aberto.',
+    formatsText:'Explore a Two Eyes On You por mídia. Cada formato preserva a própria linguagem.', newsText:'Lançamentos, produção, atualizações do site e desenvolvimento do universo.',
+    startGameTitle:'Jogo da Arcanian', startGameText:'Ikarius e Joel conduzem uma campanha própria criada para investigação, ação e escolhas.', startGameTag:'XBOX · STEAM / PC',
+    startBookText:'O Episódio I abre o caso que liga Ezequiel, Mountevoir, as Espirais e o passado de Ikarius.', startBookTag:'LIVRO · DISPONÍVEL',
+    startWikiText:'Personagens, Fragmentos, armas, eventos, organizações, lugares e conexões entre as obras.', entriesUpper:'VERBETES',
+    prev:'Anterior', next:'Próximo', categoryCountOne:'projeto nesta categoria.', categoryCountMany:'projetos nesta categoria.', categoryFuture:'Esta categoria está pronta para projetos futuros, sem misturar formatos.',
+    noAnnounced:'Nenhum projeto anunciado.', categoryFutureLong:'Esta área existe para que futuros projetos entrem na biblioteca sem alterar a arquitetura do site.',
+    overview:'Visão geral', highlights:'Destaques', media:'Mídia', characters:'Personagens', world:'Mundo', spiral:'A Espiral', connections:'Conexões', platformsPlanned:'PLATAFORMAS PLANEJADAS',
+    insideWork:'Dentro da obra.', centralCharacters:'Personagens centrais', centralCharactersText:'Pessoas que sustentam o conflito desta obra.', otherProjects:'Outros projetos', otherProjectsText:'Outras portas de entrada para Arcanian.',
+    wikiContinue:'Continue pela Wiki', wikiContinueText:'Personagens, lugares, eventos e conceitos diretamente ligados a esta obra.',
+    spiralTitle:'Uma marca que cria raízes.', spiralText:'A Espiral aparece como evidência física, memória material e âncora. A apresentação visual mantém textura, profundidade e raízes projetadas para fora da superfície sem transformar a página em um efeito gratuito.',
+    spiralNotes:['Marca','Raízes','Memória material'], defaultClosing:'Explore outras histórias conectadas ao universo Arcanian.',
+    purchaseTitle:'Escolha sua edição.', physicalKindle:'FÍSICO + KINDLE', physicalBook:'LIVRO FÍSICO', physicalDigitalDesc:'Edição física e digital.', printOnDemand:'Impressão sob demanda.', purchaseNote:'Pagamento, preço, frete, estoque e suporte da compra são definidos pela plataforma escolhida.',
+    newsArchive:'Arquivo de notícias', newsPageText:'Atualizações sobre lançamentos, produção, desenvolvimento e o universo Arcanian.',
+    privacy:'Privacidade', terms:'Termos', licenses:'Licenças', skip:'Pular para o conteúdo', backTop:'Voltar ao topo',
+    searchProjects:'PROJETOS', searchNews:'NOTÍCIAS', searchDocs:'DOCUMENTOS', legal:'LEGAL',
+    notFoundTitle:'Página não encontrada.', notFoundText:'O endereço pode ter mudado. Use um dos atalhos abaixo para continuar navegando.', backHome:'Voltar ao início'
   },
   en: {
-    projects:'Projects', universe:'Universe', news:'News', studio:'Studio', search:'Search', menu:'Menu',
+    projects:'Projects', universe:'Universe', news:'News', studio:'Studio', search:'Search', menu:'Menu', home:'Home',
     games:'Games', books:'Books', comics:'Comics', animation:'Animation', wiki:'Wiki', timeline:'Timeline', purchase:'Buy Devaneios',
     discover:'Discover', explore:'Explore', learn:'Learn more', viewAll:'View all', viewProject:'View project', close:'Close', back:'Back',
     available:'Available', development:'In development', latest:'Latest news', library:'Project library',
@@ -48,18 +71,157 @@ const TEXT = {
     database:'Official database', databaseText:'Characters, places, organizations and events gathered in a navigable wiki with its own timeline.',
     formats:'Explore by format', faq:'Frequently asked questions', contact:'Contact', docs:'Documents', support:'Support',
     noResults:'No results found.', spoilersOn:'Hide spoilers', spoilersOff:'Show spoilers', spoiler:'Spoiler content',
-    searchPlaceholder:'Search projects, characters, places, news or documents', entries:'entries',
+    searchPlaceholder:'Search projects, characters, places, news or documents', entries:'entries', events:'events',
     studioTitle:'Two Eyes On You', studioText:'An independent studio building stories for different formats without turning adaptation into repetition.',
-    footer:'© 2026 Two Eyes On You™. All rights reserved.'
+    footer:'© 2026 Two Eyes On You™. All rights reserved.', language:'LANGUAGE', exploreLabel:'EXPLORE',
+    featured:'FEATURED', featuredTitle:'Enter Arcanian.', featuredText:'Projects, stories and official archives in one place.',
+    gameLabel:'ARCANIAN GAME', episodeOne:'EPISODE I', physicalDigital:'Print · Digital', chooseEdition:'Choose edition',
+    discoverText:'Choose your entry point. The site takes you directly to the format, work or lore you want.',
+    projectsText:'The two projects with full pages right now: the Arcanian game and the book Devaneios.',
+    announced:'ANNOUNCED', upcomingTitles:'Upcoming titles', announcedText:'Already revealed works from the Arcanian universe that do not yet have full project pages.', announcedBadge:'ANNOUNCED', announcedMore:'More information will be released in the future.',
+    lessOneType:'BOOK · ABSOLUTE VOID', lessOneText:'Joel and Elisabeth before the rupture. A more intimate story about what existed before everything fell apart.',
+    tormentaType:'COMIC · MYTHS AND LEGENDS', tormentaText:'A story set before the Great Day, focused on Arcanian’s legends and Project L.A.C.H.R.Y.M.A.',
+    lastDanceType:'BOOK · DIRECT SEQUEL', lastDanceText:'The direct sequel to Devaneios, taking Ikarius and Joel into the consequences left open by Episode I.',
+    formatsText:'Explore Two Eyes On You by medium. Each format keeps its own language.', newsText:'Releases, production, site updates and development of the universe.',
+    startGameTitle:'Arcanian Game', startGameText:'Ikarius and Joel lead an original campaign built around investigation, action and choices.', startGameTag:'XBOX · STEAM / PC',
+    startBookText:'Episode I opens the case connecting Ezequiel, Mountevoir, the Spirals and Ikarius’s past.', startBookTag:'BOOK · AVAILABLE',
+    startWikiText:'Characters, Fragments, weapons, events, organizations, places and connections between the works.', entriesUpper:'ENTRIES',
+    prev:'Previous', next:'Next', categoryCountOne:'project in this category.', categoryCountMany:'projects in this category.', categoryFuture:'This category is ready for future projects without mixing formats.',
+    noAnnounced:'No project announced.', categoryFutureLong:'This area exists so future projects can enter the library without changing the site architecture.',
+    overview:'Overview', highlights:'Highlights', media:'Media', characters:'Characters', world:'World', spiral:'The Spiral', connections:'Connections', platformsPlanned:'PLANNED PLATFORMS',
+    insideWork:'Inside the work.', centralCharacters:'Central characters', centralCharactersText:'The people carrying this work’s conflict.', otherProjects:'Other projects', otherProjectsText:'Other entry points into Arcanian.',
+    wikiContinue:'Continue through the Wiki', wikiContinueText:'Characters, places, events and concepts directly connected to this work.',
+    spiralTitle:'A mark that grows roots.', spiralText:'The Spiral appears as physical evidence, material memory and an anchor. Its visual presentation keeps texture, depth and roots extending beyond the surface without turning the page into a gratuitous effect.',
+    spiralNotes:['Mark','Roots','Material memory'], defaultClosing:'Explore other stories connected to the Arcanian universe.',
+    purchaseTitle:'Choose your edition.', physicalKindle:'PRINT + KINDLE', physicalBook:'PRINT BOOK', physicalDigitalDesc:'Print and digital editions.', printOnDemand:'Print on demand.', purchaseNote:'Payment, price, shipping, stock and purchase support are defined by the selected platform.',
+    newsArchive:'News archive', newsPageText:'Updates on releases, production, development and the Arcanian universe.',
+    privacy:'Privacy', terms:'Terms', licenses:'Licences', skip:'Skip to content', backTop:'Back to top',
+    searchProjects:'PROJECTS', searchNews:'NEWS', searchDocs:'DOCUMENTS', legal:'LEGAL',
+    notFoundTitle:'Page not found.', notFoundText:'The address may have changed. Use one of the shortcuts below to keep browsing.', backHome:'Back to home'
   },
-  es: {}, it: {}, fr: {}, de: {}, ja: {}
+  es: {
+    projects:'Proyectos', universe:'Universo', news:'Noticias', studio:'Estudio', search:'Buscar', menu:'Menú', home:'Inicio',
+    games:'Juegos', books:'Libros', comics:'Cómics', animation:'Animación', wiki:'Wiki', timeline:'Cronología', purchase:'Comprar Devaneios',
+    discover:'Descubrir', explore:'Explorar', learn:'Saber más', viewAll:'Ver todo', viewProject:'Ver proyecto', close:'Cerrar', back:'Volver',
+    available:'Disponible', development:'En desarrollo', latest:'Últimas noticias', library:'Biblioteca de proyectos',
+    homeHero:'Historias construidas entre formatos.', homeIntro:'Libros, cómics y juegos conectados por un mismo universo, cada uno con identidad propia.',
+    start:'Por dónde empezar', startText:'Entra en Arcanian por el formato que mejor encaje contigo. No hay un único orden obligatorio.',
+    database:'Base de datos oficial', databaseText:'Personajes, lugares, organizaciones y acontecimientos reunidos en una wiki navegable con cronología propia.',
+    formats:'Explorar por formato', faq:'Preguntas frecuentes', contact:'Contacto', docs:'Documentos', support:'Soporte',
+    noResults:'No se encontraron resultados.', spoilersOn:'Ocultar spoilers', spoilersOff:'Mostrar spoilers', spoiler:'Contenido con spoilers',
+    searchPlaceholder:'Busca proyectos, personajes, lugares, noticias o documentos', entries:'entradas', events:'eventos',
+    studioTitle:'Two Eyes On You', studioText:'Un estudio independiente que crea historias para distintos formatos sin convertir la adaptación en repetición.',
+    footer:'© 2026 Two Eyes On You™. Todos los derechos reservados.', language:'IDIOMA', exploreLabel:'EXPLORAR',
+    featured:'DESTACADO', featuredTitle:'Entra en Arcanian.', featuredText:'Proyectos, historias y archivos oficiales en un solo punto de entrada.',
+    gameLabel:'JUEGO ARCANIAN', episodeOne:'EPISODIO I', physicalDigital:'Físico · Digital', chooseEdition:'Elegir edición',
+    discoverText:'Elige tu puerta de entrada. El sitio te lleva directamente al formato, obra o lore que buscas.',
+    projectsText:'Los dos proyectos con páginas completas actualmente: el juego Arcanian y el libro Devaneios.',
+    announced:'ANUNCIADOS', upcomingTitles:'Próximos títulos', announcedText:'Obras ya reveladas del universo Arcanian que todavía no tienen páginas completas de proyecto.', announcedBadge:'ANUNCIADO', announcedMore:'Se divulgará más información próximamente.',
+    lessOneType:'LIBRO · VACÍO ABSOLUTO', lessOneText:'Joel y Elisabeth antes de la ruptura. Una historia más íntima sobre lo que existía antes de que todo se derrumbara.',
+    tormentaType:'CÓMIC · MITOS Y LEYENDAS', tormentaText:'Una historia ambientada antes del Gran Día, centrada en las leyendas de Arcanian y el Proyecto L.A.C.H.R.Y.M.A.',
+    lastDanceType:'LIBRO · SECUELA DIRECTA', lastDanceText:'La continuación directa de Devaneios, llevando a Ikarius y Joel a las consecuencias que dejó abiertas el Episodio I.',
+    formatsText:'Explora Two Eyes On You por medio. Cada formato conserva su propio lenguaje.', newsText:'Lanzamientos, producción, actualizaciones del sitio y desarrollo del universo.',
+    startGameTitle:'Juego Arcanian', startGameText:'Ikarius y Joel protagonizan una campaña propia creada para investigación, acción y decisiones.', startGameTag:'XBOX · STEAM / PC',
+    startBookText:'El Episodio I abre el caso que conecta a Ezequiel, Mountevoir, las Espirales y el pasado de Ikarius.', startBookTag:'LIBRO · DISPONIBLE',
+    startWikiText:'Personajes, Fragmentos, armas, eventos, organizaciones, lugares y conexiones entre las obras.', entriesUpper:'ENTRADAS',
+    prev:'Anterior', next:'Siguiente', categoryCountOne:'proyecto en esta categoría.', categoryCountMany:'proyectos en esta categoría.', categoryFuture:'Esta categoría está preparada para futuros proyectos sin mezclar formatos.',
+    noAnnounced:'Ningún proyecto anunciado.', categoryFutureLong:'Esta área existe para que futuros proyectos entren en la biblioteca sin cambiar la arquitectura del sitio.',
+    overview:'Visión general', highlights:'Destacados', media:'Multimedia', characters:'Personajes', world:'Mundo', spiral:'La Espiral', connections:'Conexiones', platformsPlanned:'PLATAFORMAS PREVISTAS',
+    insideWork:'Dentro de la obra.', centralCharacters:'Personajes centrales', centralCharactersText:'Las personas que sostienen el conflicto de esta obra.', otherProjects:'Otros proyectos', otherProjectsText:'Otras puertas de entrada a Arcanian.',
+    wikiContinue:'Continúa por la Wiki', wikiContinueText:'Personajes, lugares, eventos y conceptos directamente relacionados con esta obra.',
+    spiralTitle:'Una marca que echa raíces.', spiralText:'La Espiral aparece como evidencia física, memoria material y ancla. Su presentación visual conserva textura, profundidad y raíces proyectadas fuera de la superficie sin convertir la página en un efecto gratuito.',
+    spiralNotes:['Marca','Raíces','Memoria material'], defaultClosing:'Explora otras historias conectadas con el universo Arcanian.',
+    purchaseTitle:'Elige tu edición.', physicalKindle:'FÍSICO + KINDLE', physicalBook:'LIBRO FÍSICO', physicalDigitalDesc:'Edición física y digital.', printOnDemand:'Impresión bajo demanda.', purchaseNote:'El pago, precio, envío, stock y soporte de compra son definidos por la plataforma elegida.',
+    newsArchive:'Archivo de noticias', newsPageText:'Actualizaciones sobre lanzamientos, producción, desarrollo y el universo Arcanian.',
+    privacy:'Privacidad', terms:'Términos', licenses:'Licencias', skip:'Saltar al contenido', backTop:'Volver arriba', searchProjects:'PROYECTOS', searchNews:'NOTICIAS', searchDocs:'DOCUMENTOS', legal:'LEGAL',
+    notFoundTitle:'Página no encontrada.', notFoundText:'La dirección puede haber cambiado. Usa uno de los accesos de abajo para seguir navegando.', backHome:'Volver al inicio'
+  },
+  it: {
+    projects:'Progetti', universe:'Universo', news:'Notizie', studio:'Studio', search:'Cerca', menu:'Menu', home:'Home',
+    games:'Giochi', books:'Libri', comics:'Fumetti', animation:'Animazione', wiki:'Wiki', timeline:'Cronologia', purchase:'Acquista Devaneios',
+    discover:'Scopri', explore:'Esplora', learn:'Scopri di più', viewAll:'Vedi tutto', viewProject:'Vedi progetto', close:'Chiudi', back:'Indietro',
+    available:'Disponibile', development:'In sviluppo', latest:'Ultime notizie', library:'Biblioteca progetti',
+    homeHero:'Storie costruite attraverso formati diversi.', homeIntro:'Libri, fumetti e giochi collegati da un unico universo, ciascuno con una propria identità.',
+    start:'Da dove iniziare', startText:'Entra in Arcanian attraverso il formato che preferisci. Non esiste un unico ordine obbligatorio.',
+    database:'Database ufficiale', databaseText:'Personaggi, luoghi, organizzazioni ed eventi raccolti in una wiki navigabile con una propria cronologia.',
+    formats:'Esplora per formato', faq:'Domande frequenti', contact:'Contatti', docs:'Documenti', support:'Supporto',
+    noResults:'Nessun risultato trovato.', spoilersOn:'Nascondi spoiler', spoilersOff:'Mostra spoiler', spoiler:'Contenuto con spoiler',
+    searchPlaceholder:'Cerca progetti, personaggi, luoghi, notizie o documenti', entries:'voci', events:'eventi',
+    studioTitle:'Two Eyes On You', studioText:'Uno studio indipendente che crea storie per formati diversi senza trasformare l’adattamento in ripetizione.',
+    footer:'© 2026 Two Eyes On You™. Tutti i diritti riservati.', language:'LINGUA', exploreLabel:'ESPLORA',
+    featured:'IN EVIDENZA', featuredTitle:'Entra in Arcanian.', featuredText:'Progetti, storie e archivi ufficiali in un unico punto di accesso.',
+    gameLabel:'GIOCO ARCANIAN', episodeOne:'EPISODIO I', physicalDigital:'Cartaceo · Digitale', chooseEdition:'Scegli edizione',
+    discoverText:'Scegli il tuo punto di ingresso. Il sito ti porta direttamente al formato, all’opera o alla lore che cerchi.',
+    projectsText:'I due progetti con pagine complete al momento: il gioco Arcanian e il libro Devaneios.',
+    announced:'ANNUNCIATI', upcomingTitles:'Prossimi titoli', announcedText:'Opere dell’universo Arcanian già rivelate ma senza ancora una pagina progetto completa.', announcedBadge:'ANNUNCIATO', announcedMore:'Ulteriori informazioni saranno pubblicate in futuro.',
+    lessOneType:'LIBRO · VUOTO ASSOLUTO', lessOneText:'Joel ed Elisabeth prima della frattura. Una storia più intima su ciò che esisteva prima che tutto crollasse.',
+    tormentaType:'FUMETTO · MITI E LEGGENDE', tormentaText:'Una storia ambientata prima del Grande Giorno, dedicata alle leggende di Arcanian e al Progetto L.A.C.H.R.Y.M.A.',
+    lastDanceType:'LIBRO · SEGUITO DIRETTO', lastDanceText:'Il seguito diretto di Devaneios, che porta Ikarius e Joel nelle conseguenze lasciate aperte dall’Episodio I.',
+    formatsText:'Esplora Two Eyes On You per mezzo. Ogni formato mantiene il proprio linguaggio.', newsText:'Uscite, produzione, aggiornamenti del sito e sviluppo dell’universo.',
+    startGameTitle:'Gioco Arcanian', startGameText:'Ikarius e Joel guidano una campagna originale costruita su indagine, azione e scelte.', startGameTag:'XBOX · STEAM / PC',
+    startBookText:'L’Episodio I apre il caso che collega Ezequiel, Mountevoir, le Spirali e il passato di Ikarius.', startBookTag:'LIBRO · DISPONIBILE',
+    startWikiText:'Personaggi, Frammenti, armi, eventi, organizzazioni, luoghi e collegamenti tra le opere.', entriesUpper:'VOCI',
+    prev:'Precedente', next:'Successivo', categoryCountOne:'progetto in questa categoria.', categoryCountMany:'progetti in questa categoria.', categoryFuture:'Questa categoria è pronta per progetti futuri senza mescolare formati.',
+    noAnnounced:'Nessun progetto annunciato.', categoryFutureLong:'Quest’area esiste per accogliere progetti futuri senza modificare l’architettura del sito.',
+    overview:'Panoramica', highlights:'In evidenza', media:'Media', characters:'Personaggi', world:'Mondo', spiral:'La Spirale', connections:'Collegamenti', platformsPlanned:'PIATTAFORME PREVISTE',
+    insideWork:'Dentro l’opera.', centralCharacters:'Personaggi centrali', centralCharactersText:'Le persone che sostengono il conflitto di quest’opera.', otherProjects:'Altri progetti', otherProjectsText:'Altri punti di ingresso in Arcanian.',
+    wikiContinue:'Continua nella Wiki', wikiContinueText:'Personaggi, luoghi, eventi e concetti direttamente collegati a quest’opera.',
+    spiralTitle:'Un segno che mette radici.', spiralText:'La Spirale appare come prova fisica, memoria materiale e ancora. La presentazione visiva mantiene texture, profondità e radici che si estendono oltre la superficie senza trasformare la pagina in un effetto gratuito.',
+    spiralNotes:['Segno','Radici','Memoria materiale'], defaultClosing:'Esplora altre storie collegate all’universo Arcanian.',
+    purchaseTitle:'Scegli la tua edizione.', physicalKindle:'CARTACEO + KINDLE', physicalBook:'LIBRO CARTACEO', physicalDigitalDesc:'Edizione cartacea e digitale.', printOnDemand:'Stampa su richiesta.', purchaseNote:'Pagamento, prezzo, spedizione, disponibilità e assistenza all’acquisto sono definiti dalla piattaforma scelta.',
+    newsArchive:'Archivio notizie', newsPageText:'Aggiornamenti su uscite, produzione, sviluppo e universo Arcanian.',
+    privacy:'Privacy', terms:'Termini', licenses:'Licenze', skip:'Vai al contenuto', backTop:'Torna su', searchProjects:'PROGETTI', searchNews:'NOTIZIE', searchDocs:'DOCUMENTI', legal:'LEGALE',
+    notFoundTitle:'Pagina non trovata.', notFoundText:'L’indirizzo potrebbe essere cambiato. Usa uno dei collegamenti qui sotto per continuare.', backHome:'Torna alla home'
+  },
+  ja: {
+    projects:'プロジェクト', universe:'世界観', news:'ニュース', studio:'スタジオ', search:'検索', menu:'メニュー', home:'ホーム',
+    games:'ゲーム', books:'書籍', comics:'コミック', animation:'アニメーション', wiki:'Wiki', timeline:'年表', purchase:'Devaneiosを購入',
+    discover:'見る', explore:'探索', learn:'詳しく見る', viewAll:'すべて見る', viewProject:'プロジェクトを見る', close:'閉じる', back:'戻る',
+    available:'発売中', development:'開発中', latest:'最新ニュース', library:'プロジェクト一覧',
+    homeHero:'形式を越えてつながる物語。', homeIntro:'一つの世界でつながる書籍、コミック、ゲーム。それぞれが独自の表現を持ちます。',
+    start:'どこから始める？', startText:'好きな形式からArcanianに入れます。始めるための唯一の順番はありません。',
+    database:'公式データベース', databaseText:'人物、場所、組織、出来事を独自の年表とともに閲覧できるWikiにまとめています。',
+    formats:'形式から探す', faq:'よくある質問', contact:'お問い合わせ', docs:'文書', support:'サポート',
+    noResults:'結果が見つかりません。', spoilersOn:'ネタバレを隠す', spoilersOff:'ネタバレを表示', spoiler:'ネタバレ内容',
+    searchPlaceholder:'プロジェクト、人物、場所、ニュース、文書を検索', entries:'項目', events:'出来事',
+    studioTitle:'Two Eyes On You', studioText:'異なる形式の物語を、単なる反復的な翻案にせず制作するインディペンデントスタジオ。',
+    footer:'© 2026 Two Eyes On You™. All rights reserved.', language:'言語', exploreLabel:'探索',
+    featured:'注目', featuredTitle:'Arcanianへ。', featuredText:'プロジェクト、物語、公式アーカイブへの入口。',
+    gameLabel:'ARCANIAN ゲーム', episodeOne:'エピソードI', physicalDigital:'紙版 · デジタル', chooseEdition:'版を選ぶ',
+    discoverText:'入口を選んでください。形式、作品、設定資料へ直接進めます。',
+    projectsText:'現在フルページがあるのは、Arcanianゲームと書籍Devaneiosの2プロジェクトです。',
+    announced:'発表済み', upcomingTitles:'今後のタイトル', announcedText:'すでに発表されているArcanian作品で、まだ個別のフルプロジェクトページがないものです。', announcedBadge:'発表済み', announcedMore:'詳細は今後公開されます。',
+    lessOneType:'書籍 · 絶対の虚無', lessOneText:'亀裂の前のJoelとElisabeth。すべてが崩れる前に存在していたものを描く、より親密な物語。',
+    tormentaType:'コミック · 神話と伝説', tormentaText:'「大いなる日」以前を舞台に、Arcanianの伝説とL.A.C.H.R.Y.M.A.計画を描く物語。',
+    lastDanceType:'書籍 · 直接続編', lastDanceText:'Devaneiosの直接続編。IkariusとJoelがエピソードIで残された結果に向き合います。',
+    formatsText:'媒体別にTwo Eyes On Youを探索。それぞれの形式が独自の表現を保ちます。', newsText:'発売、制作、サイト更新、世界観開発の情報。',
+    startGameTitle:'Arcanian ゲーム', startGameText:'IkariusとJoelが、捜査、アクション、選択のために作られた独自キャンペーンを進みます。', startGameTag:'XBOX · STEAM / PC',
+    startBookText:'エピソードIはEzequiel、Mountevoir、螺旋、Ikariusの過去を結ぶ事件を開きます。', startBookTag:'書籍 · 発売中',
+    startWikiText:'人物、Fragment、武器、出来事、組織、場所、作品間のつながり。', entriesUpper:'項目',
+    prev:'前へ', next:'次へ', categoryCountOne:'件のプロジェクト。', categoryCountMany:'件のプロジェクト。', categoryFuture:'このカテゴリは形式を混在させず、将来のプロジェクトを追加できる構成です。',
+    noAnnounced:'発表済みプロジェクトはありません。', categoryFutureLong:'将来のプロジェクトをサイト構造を変えずに追加できる領域です。',
+    overview:'概要', highlights:'特徴', media:'メディア', characters:'登場人物', world:'世界', spiral:'螺旋', connections:'つながり', platformsPlanned:'予定プラットフォーム',
+    insideWork:'作品の内側。', centralCharacters:'主要人物', centralCharactersText:'この作品の対立を支える人物たち。', otherProjects:'他のプロジェクト', otherProjectsText:'Arcanianへの別の入口。',
+    wikiContinue:'Wikiで続きを見る', wikiContinueText:'この作品に直接関係する人物、場所、出来事、概念。',
+    spiralTitle:'根を張る印。', spiralText:'螺旋は物理的証拠、物質に残る記憶、アンカーとして現れます。質感、奥行き、表面から伸びる根を保ちつつ、ページを不要な演出にはしません。',
+    spiralNotes:['印','根','物質の記憶'], defaultClosing:'Arcanian世界につながる他の物語を探索してください。',
+    purchaseTitle:'版を選んでください。', physicalKindle:'紙版 + KINDLE', physicalBook:'紙の書籍', physicalDigitalDesc:'紙版とデジタル版。', printOnDemand:'オンデマンド印刷。', purchaseNote:'支払い、価格、送料、在庫、購入サポートは選択したプラットフォームが管理します。',
+    newsArchive:'ニュースアーカイブ', newsPageText:'発売、制作、開発、Arcanian世界の最新情報。',
+    privacy:'プライバシー', terms:'利用規約', licenses:'ライセンス', skip:'本文へ移動', backTop:'トップへ戻る', searchProjects:'プロジェクト', searchNews:'ニュース', searchDocs:'文書', legal:'法務',
+    notFoundTitle:'ページが見つかりません。', notFoundText:'URLが変更された可能性があります。下のリンクから閲覧を続けてください。', backHome:'ホームへ戻る'
+  }
 };
-for (const lang of ['es','it','fr','de','ja']) TEXT[lang] = { ...TEXT.en };
+
+const PRIMARY_PROJECT_SLUGS = ['arcanian','devaneios'];
+const ANNOUNCED_PROJECT_SLUGS = ['menos-um','tormenta','a-ultima-danca'];
+const primaryWorks = PRIMARY_PROJECT_SLUGS.map(slug => works.find(w => w.slug === slug)).filter(Boolean);
+const announcedWorks = ANNOUNCED_PROJECT_SLUGS.map(slug => works.find(w => w.slug === slug)).filter(Boolean);
+const PROJECT_CATEGORY_KEYS = ['games','books'];
 
 const CATEGORY_MAP = {
-  games: works.filter(w => w.slug === 'arcanian'),
-  books: works.filter(w => ['devaneios','menos-um','a-ultima-danca'].includes(w.slug)),
-  comics: works.filter(w => w.slug === 'tormenta'),
+  games: primaryWorks.filter(w => w.slug === 'arcanian'),
+  books: primaryWorks.filter(w => w.slug === 'devaneios'),
+  comics: [],
   animation: []
 };
 const CATEGORY_META = {
@@ -90,6 +252,7 @@ function esc(v=''){ return String(v).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':
 function localWork(w){ return localizedWork(w, contentLang()); }
 function localWiki(e){ return localizedWikiEntry(e, contentLang()); }
 function getWork(slug){ return works.find(w => w.slug === slug); }
+function isPrimaryProject(slug){ return PRIMARY_PROJECT_SLUGS.includes(slug); }
 function currentRoute(){ return normalizeRoute(window.location.hash.replace(/^#/, '') || '/'); }
 function normalizeRoute(value){
   let route = decodeURIComponent(String(value || '/').split('?')[0]);
@@ -167,7 +330,7 @@ function header(route){
       <div class="quick-nav__inner">
         <a href="#/" class="quick-nav__brand">ARCANIAN</a>
         <nav aria-label="Atalhos Arcanian">
-          <a href="#/obra/arcanian">${esc(t().games)}</a><a href="#/categoria/livros">${esc(t().books)}</a><a href="#/categoria/hq">${esc(t().comics)}</a><a href="#/wiki">${esc(t().wiki)}</a><a href="#/timeline">${esc(t().timeline)}</a>
+          <a href="#/obra/arcanian">${esc(t().games)}</a><a href="#/obra/devaneios">Devaneios</a><a href="#/wiki">${esc(t().wiki)}</a><a href="#/timeline">${esc(t().timeline)}</a>
         </nav>
         <a href="#/purchase" class="quick-nav__cta">${esc(t().purchase)}</a>
       </div>
@@ -176,13 +339,13 @@ function header(route){
 }
 
 function megaMenus(){
-  const projects=works.map(w=>{const x=localWork(w);return `<a href="#/obra/${w.slug}" class="mega-card"><img src="${esc(w.image)}" alt="" loading="lazy"><div><span>${esc(typeOf(w))}</span><strong>${esc(x.displayTitle)}</strong></div></a>`}).join('');
-  const latest=news.slice(0,2).map(n=>`<a href="${esc(n.href)}" class="mega-news"><img src="${esc(n.image)}" alt="" loading="lazy"><div><span>${esc(n.category)} · ${esc(n.date)}</span><strong>${esc(n.title)}</strong></div></a>`).join('');
+  const projects=primaryWorks.map(w=>{const x=localWork(w);return `<a href="#/obra/${w.slug}" class="mega-card"><img src="${esc(w.image)}" alt="" loading="lazy"><div><span>${esc(typeOf(w))}</span><strong>${esc(x.displayTitle)}</strong></div></a>`}).join('');
+  const latest=localizedNews(news,contentLang()).slice(0,2).map(n=>`<a href="${esc(n.href)}" class="mega-news"><img src="${esc(n.image)}" alt="" loading="lazy"><div><span>${esc(n.category)} · ${esc(n.date)}</span><strong>${esc(n.title)}</strong></div></a>`).join('');
   return `<div class="mega-layer" aria-hidden="true">
     <section class="mega-panel" data-mega-panel="projects">
       <div class="mega-panel__head"><span>LIBRARY</span><h2>${esc(t().projects)}</h2></div>
       <div class="mega-projects">${projects}</div>
-      <nav class="mega-links"><a href="#/categoria/jogos">${t().games}${icon('arrow',16)}</a><a href="#/categoria/livros">${t().books}${icon('arrow',16)}</a><a href="#/categoria/hq">${t().comics}${icon('arrow',16)}</a><a href="#/categoria/animacao">${t().animation}${icon('arrow',16)}</a></nav>
+      <nav class="mega-links"><a href="#/obra/arcanian">${t().games}${icon('arrow',16)}</a><a href="#/obra/devaneios">Devaneios${icon('arrow',16)}</a></nav>
     </section>
     <section class="mega-panel" data-mega-panel="universe">
       <div class="mega-split"><div class="mega-universe-art"><img src="./media/banner.webp" alt="" loading="lazy"></div><div class="mega-universe-copy"><span>ARCANIAN DATABASE</span><h2>${esc(t().database)}</h2><p>${esc(t().databaseText)}</p><div class="mega-metrics"><b>${allWikiEntries.length}</b><span>${esc(t().entries)}</span></div><div class="button-row">${button('#/wiki',t().wiki,'light')}${button('#/timeline',t().timeline,'outline')}</div></div></div>
@@ -193,14 +356,14 @@ function megaMenus(){
 }
 
 function languagePopover(){
-  return `<div class="language-popover" hidden><div class="language-popover__panel"><span>LANGUAGE</span>${LANGUAGES.map(l=>`<button data-lang="${l.id}" class="${l.id===state.lang?'active':''}"><span>${esc(l.label)}</span><b>${l.short}</b></button>`).join('')}</div></div>`;
+  return `<div class="language-popover" hidden><div class="language-popover__panel"><span>${esc(t().language)}</span>${LANGUAGES.map(l=>`<button data-lang="${l.id}" class="${l.id===state.lang?'active':''}"><span>${esc(l.label)}</span><b>${l.short}</b></button>`).join('')}</div></div>`;
 }
 
 function mobileDrawer(){
   return `<aside class="mobile-drawer ${state.menuOpen?'open':''}" aria-hidden="${state.menuOpen?'false':'true'}">
     <div class="mobile-drawer__head">${logo('brand-logo brand-logo--drawer')}<button class="drawer-close" aria-label="${esc(t().close)}">${icon('close',24)}</button></div>
     <div class="mobile-drawer__body">
-      <section><span>EXPLORE</span><a href="#/">Início${icon('arrow')}</a><a href="#/categoria/jogos">${t().games}${icon('arrow')}</a><a href="#/categoria/livros">${t().books}${icon('arrow')}</a><a href="#/categoria/hq">${t().comics}${icon('arrow')}</a><a href="#/categoria/animacao">${t().animation}${icon('arrow')}</a></section>
+      <section><span>${esc(t().exploreLabel)}</span><a href="#/">${esc(t().home)}${icon('arrow')}</a><a href="#/obra/arcanian">${t().games}${icon('arrow')}</a><a href="#/obra/devaneios">Devaneios${icon('arrow')}</a></section>
       <section><span>ARCANIAN</span><a href="#/obra/arcanian">Arcanian${icon('arrow')}</a><a href="#/wiki">${t().wiki}${icon('arrow')}</a><a href="#/timeline">${t().timeline}${icon('arrow')}</a><a href="#/purchase">${t().purchase}${icon('arrow')}</a></section>
       <section><span>TWO EYES ON YOU</span><a href="#/news">${t().news}${icon('arrow')}</a><a href="#/about">${t().studio}${icon('arrow')}</a><a href="#/contact">${t().contact}${icon('arrow')}</a><a href="#/faq">FAQ${icon('arrow')}</a><a href="#/documentation">${t().docs}${icon('arrow')}</a></section>
     </div>
@@ -213,7 +376,7 @@ function searchOverlay(){
     <div class="search-overlay__top"><span>GLOBAL SEARCH</span><button class="search-close" aria-label="${esc(t().close)}">${icon('close',25)}</button></div>
     <div class="search-shell">
       <div class="search-box">${icon('search',28)}<input id="site-search" autocomplete="off" spellcheck="false" placeholder="${esc(t().searchPlaceholder)}"><kbd>/</kbd></div>
-      <div class="search-hints"><span>PROJETOS</span><span>WIKI</span><span>NOTÍCIAS</span><span>DOCUMENTOS</span></div>
+      <div class="search-hints"><span>${esc(t().searchProjects)}</span><span>WIKI</span><span>${esc(t().searchNews)}</span><span>${esc(t().searchDocs)}</span></div>
       <div id="search-results" class="search-results"></div>
     </div>
   </div>`;
@@ -224,10 +387,10 @@ function footer(){
     <div class="footer-top">
       <div class="footer-brand-block">${logo('footer-logo')}<div><strong>Two Eyes On You</strong><p>${esc(t().studioText)}</p></div></div>
       <div class="footer-columns">
-        <nav><span>PROJETOS</span><a href="#/categoria/jogos">${t().games}</a><a href="#/categoria/livros">${t().books}</a><a href="#/categoria/hq">${t().comics}</a><a href="#/categoria/animacao">${t().animation}</a></nav>
+        <nav><span>${esc(t().searchProjects)}</span><a href="#/obra/arcanian">Arcanian</a><a href="#/obra/devaneios">Devaneios</a></nav>
         <nav><span>ARCANIAN</span><a href="#/wiki">${t().wiki}</a><a href="#/timeline">${t().timeline}</a><a href="#/purchase">${t().purchase}</a></nav>
-        <nav><span>ESTÚDIO</span><a href="#/about">${t().studio}</a><a href="#/news">${t().news}</a><a href="#/contact">${t().contact}</a><a href="#/faq">FAQ</a></nav>
-        <nav><span>LEGAL</span><a href="#/documentation">${t().docs}</a><a href="#/documentation/privacy">Privacidade</a><a href="#/documentation/terms">Termos</a><a href="#/documentation/licenses">Licenças</a></nav>
+        <nav><span>${esc(t().studio.toUpperCase())}</span><a href="#/about">${t().studio}</a><a href="#/news">${t().news}</a><a href="#/contact">${t().contact}</a><a href="#/faq">FAQ</a></nav>
+        <nav><span>${esc(t().legal)}</span><a href="#/documentation">${t().docs}</a><a href="#/documentation/privacy">${esc(t().privacy)}</a><a href="#/documentation/terms">${esc(t().terms)}</a><a href="#/documentation/licenses">${esc(t().licenses)}</a></nav>
       </div>
     </div>
     <div class="footer-social-row"><a href="https://instagram.com/twoeyesonyou" target="_blank" rel="noreferrer">Instagram</a><a href="https://youtube.com/@twoeyesonyou" target="_blank" rel="noreferrer">YouTube</a><a href="https://x.com/twoeyeson_you" target="_blank" rel="noreferrer">X</a><a href="https://discord.gg/Ftu5mcXhcX" target="_blank" rel="noreferrer">Discord</a></div>
@@ -237,15 +400,15 @@ function footer(){
 
 function shell(route,content){
   const landing=route==='/';
-  return `<button type="button" class="skip-link" data-scroll-to="site-content">Pular para o conteúdo</button>${header(route)}${megaMenus()}${languagePopover()}${mobileDrawer()}${searchOverlay()}<div class="scroll-progress ${landing?'scroll-progress--landing':''}" aria-hidden="true"><i></i></div><div id="site-content" class="site-stage ${landing?'site-stage--landing':''}" tabindex="-1">${content}${footer()}</div><button class="back-top" aria-label="Voltar ao topo">${icon('top',20)}</button>`;
+  return `<button type="button" class="skip-link" data-scroll-to="site-content">${esc(t().skip)}</button>${header(route)}${megaMenus()}${languagePopover()}${mobileDrawer()}${searchOverlay()}<div class="scroll-progress ${landing?'scroll-progress--landing':''}" aria-hidden="true"><i></i></div><div id="site-content" class="site-stage ${landing?'site-stage--landing':''}" tabindex="-1">${content}${footer()}</div><button class="back-top" aria-label="${esc(t().backTop)}">${icon('top',20)}</button>`;
 }
 
 function heroSlide(work,index){
   const item=localWork(work);
+  const exp=getProjectExperience(work.slug,contentLang());
   const landingMeta={
-    arcanian:{media:'./media/banner.webp',kicker:'JOGO DA ARCANIAN · EM DESENVOLVIMENTO',headline:'A investigação continua.',primary:'#/obra/arcanian',primaryLabel:'Saiba mais',secondary:'#/wiki',secondaryLabel:'Explorar universo',position:'center'},
-    devaneios:{media:'./media/welcome.webp',kicker:'ARCANIAN · EPISÓDIO I',headline:'O primeiro caso começa aqui.',primary:'#/purchase',primaryLabel:t().purchase,secondary:'#/obra/devaneios',secondaryLabel:'Conhecer a obra',position:'center'},
-    'a-ultima-danca':{media:'./media/ultima-danca.webp',kicker:'SEQUÊNCIA DIRETA DE DEVANEIOS',headline:'Algumas histórias só terminam quando a música para.',primary:'#/obra/a-ultima-danca',primaryLabel:t().discover,secondary:'#/categoria/livros',secondaryLabel:t().books,position:'center'}
+    arcanian:{media:'./media/banner.webp',kicker:exp?.heroLabel||`${t().gameLabel} · ${t().development.toUpperCase()}`,headline:{pt:'A investigação continua.',en:'The investigation continues.',es:'La investigación continúa.',it:'L’indagine continua.',ja:'捜査は続く。'}[contentLang()],primary:'#/obra/arcanian',primaryLabel:t().learn,secondary:'#/wiki',secondaryLabel:t().universe,position:'center'},
+    devaneios:{media:'./media/welcome.webp',kicker:`ARCANIAN · ${t().episodeOne}`,headline:{pt:'O primeiro caso começa aqui.',en:'The first case begins here.',es:'El primer caso comienza aquí.',it:'Il primo caso comincia qui.',ja:'最初の事件はここから始まる。'}[contentLang()],primary:'#/purchase',primaryLabel:t().purchase,secondary:'#/obra/devaneios',secondaryLabel:t().viewProject,position:'center'},
   };
   const meta=landingMeta[work.slug]||{media:work.image,kicker:`${typeOf(work)} · ${statusOf(work)}`,headline:item.displayTitle,primary:`#/obra/${work.slug}`,primaryLabel:t().discover,secondary:'#/wiki',secondaryLabel:t().universe,position:'center'};
   const platforms=work.slug==='arcanian'?`<div class="hero-platforms"><span>Xbox</span><span>Steam / PC</span></div>`:'';
@@ -285,54 +448,67 @@ function startCard({num,title,text,href,image,tag}){
   return `<a href="${href}" class="start-card" data-reveal><img src="${image}" alt="" loading="lazy"><div class="start-card__shade"></div><span class="start-card__num">${num}</span><div class="start-card__copy"><small>${esc(tag)}</small><h3>${esc(title)}</h3><p>${esc(text)}</p><em>${esc(t().discover)} ${icon('arrow',16)}</em></div></a>`;
 }
 
+function announcedCard(work,index){
+  const item=localWork(work);
+  const meta={
+    'menos-um':{type:t().lessOneType,text:t().lessOneText},
+    tormenta:{type:t().tormentaType,text:t().tormentaText},
+    'a-ultima-danca':{type:t().lastDanceType,text:t().lastDanceText}
+  }[work.slug] || {type:typeOf(work),text:item.summary};
+  return `<article class="announced-card" data-reveal><div class="announced-card__media"><img src="${esc(work.image)}" alt="" loading="lazy"><span>${String(index+1).padStart(2,'0')}</span><b>${esc(t().announcedBadge)}</b></div><div class="announced-card__copy"><small>${esc(meta.type)}</small><h3>${esc(item.displayTitle)}</h3><p>${esc(meta.text)}</p><em>${esc(t().announcedMore)}</em></div></article>`;
+}
+
 function renderHome(){
-  const featured=['arcanian','devaneios','a-ultima-danca'].map(getWork).filter(Boolean);
+  const featured=primaryWorks;
+  const siteNews=localizedNews(news,contentLang());
   const starts=[
-    {num:'01',title:'Jogo da Arcanian',text:'Ikarius e Joel conduzem uma campanha própria criada para investigação, ação e escolhas.',href:'#/obra/arcanian',image:'./media/game.webp',tag:'XBOX · STEAM / PC'},
-    {num:'02',title:'Arcanian: Devaneios',text:'O Episódio I abre o caso que liga Ezequiel, Mountevoir, as Espirais e o passado de Ikarius.',href:'#/obra/devaneios',image:'./media/welcome.webp',tag:'LIVRO · DISPONÍVEL'},
-    {num:'03',title:'Wiki Arcanian',text:'Personagens, Fragmentos, armas, eventos, organizações, lugares e conexões entre as obras.',href:'#/wiki',image:'./media/banner.webp',tag:`${allWikiEntries.length} VERBETES`},
-    {num:'04',title:'Arcanian: Tormenta',text:'A HQ retorna ao período das lendas e às origens do Projeto L.A.C.H.R.Y.M.A.',href:'#/obra/tormenta',image:'./media/tormenta.webp',tag:'HQ · MITOS E LENDAS'}
+    {num:'01',title:t().startGameTitle,text:t().startGameText,href:'#/obra/arcanian',image:'./media/game.webp',tag:t().startGameTag},
+    {num:'02',title:'Arcanian: Devaneios',text:t().startBookText,href:'#/obra/devaneios',image:'./media/welcome.webp',tag:t().startBookTag},
+    {num:'03',title:'Wiki Arcanian',text:t().startWikiText,href:'#/wiki',image:'./media/banner.webp',tag:`${allWikiEntries.length} ${t().entriesUpper}`},
   ];
   return `<main class="home-page home-page--landing">
-    <section class="home-hero home-hero--landing" aria-label="Destaques">
+    <section class="home-hero home-hero--landing" aria-label="${esc(t().featured)}">
       <div class="home-hero__slides">${featured.map(heroSlide).join('')}</div>
-      <div class="hero-controls hero-controls--landing wrap"><div class="hero-dots">${featured.map((w,i)=>`<button data-hero-dot="${i}" class="${i===state.hero?'active':''}" aria-label="Abrir destaque ${i+1}"><span></span><b>${String(i+1).padStart(2,'0')}</b><em>${esc(localWork(w).displayTitle)}</em></button>`).join('')}</div><button class="hero-pause" aria-label="Pausar destaques">${state.heroPaused?icon('resume',18):icon('pause',18)}</button></div>
-      <a href="#/obra/${featured[state.hero]?.slug||'arcanian'}" class="landing-scroll-cue" data-hero-explore aria-label="Explorar projeto em destaque"><span>EXPLORE</span>${icon('chevron',16)}</a>
+      <div class="hero-controls hero-controls--landing wrap"><div class="hero-dots">${featured.map((w,i)=>`<button data-hero-dot="${i}" class="${i===state.hero?'active':''}" aria-label="${esc(t().featured)} ${i+1}"><span></span><b>${String(i+1).padStart(2,'0')}</b><em>${esc(localWork(w).displayTitle)}</em></button>`).join('')}</div><button class="hero-pause" aria-label="${esc(t().featured)}">${state.heroPaused?icon('resume',18):icon('pause',18)}</button></div>
+      <a href="#/obra/${featured[state.hero]?.slug||'arcanian'}" class="landing-scroll-cue" data-hero-explore aria-label="${esc(t().explore)}"><span>${esc(t().exploreLabel)}</span>${icon('chevron',16)}</a>
     </section>
 
     <section id="landing-featured" class="landing-featured dark-section"><div class="wrap">
-      ${sectionTitle('EM DESTAQUE','Entre em Arcanian.','Projetos, histórias e arquivos oficiais em um único ponto de entrada.',`<a class="section-action" href="#/categoria/jogos">${t().viewAll}${icon('arrow',17)}</a>`)}
+      ${sectionTitle(t().featured,t().featuredTitle,t().featuredText,`<a class="section-action" href="#/categoria/jogos">${t().viewAll}${icon('arrow',17)}</a>`)}
       <div class="landing-feature-grid">
-        <a href="#/obra/arcanian" class="landing-feature landing-feature--lead" data-reveal><img src="./media/game.webp" alt="" loading="lazy"><div class="landing-feature__shade"></div><div class="landing-feature__copy"><span>JOGO DA ARCANIAN</span><img src="./media/logos-fixed/arcanian.webp" alt="Arcanian"><strong>Xbox · Steam / PC</strong><em>Descobrir ${icon('arrow',17)}</em></div></a>
-        <a href="#/purchase" class="landing-feature landing-feature--side" data-reveal><img src="./media/devaneios.webp" alt="" loading="lazy"><div class="landing-feature__shade"></div><div class="landing-feature__copy"><span>EPISÓDIO I</span><img src="./media/logos-fixed/devaneios.webp" alt="Arcanian: Devaneios"><strong>Físico · Digital</strong><em>Escolher edição ${icon('arrow',17)}</em></div></a>
+        <a href="#/obra/arcanian" class="landing-feature landing-feature--lead" data-reveal><img src="./media/game.webp" alt="" loading="lazy"><div class="landing-feature__shade"></div><div class="landing-feature__copy"><span>${esc(t().gameLabel)}</span><img src="./media/logos-fixed/arcanian.webp" alt="Arcanian"><strong>Xbox · Steam / PC</strong><em>${esc(t().discover)} ${icon('arrow',17)}</em></div></a>
+        <a href="#/purchase" class="landing-feature landing-feature--side" data-reveal><img src="./media/devaneios.webp" alt="" loading="lazy"><div class="landing-feature__shade"></div><div class="landing-feature__copy"><span>${esc(t().episodeOne)}</span><img src="./media/logos-fixed/devaneios.webp" alt="Arcanian: Devaneios"><strong>${esc(t().physicalDigital)}</strong><em>${esc(t().chooseEdition)} ${icon('arrow',17)}</em></div></a>
       </div>
     </div></section>
 
-    <section class="home-start light-section"><div class="wrap">${sectionTitle('DESCUBRA',t().start,'Escolha a porta de entrada. O site leva você direto ao formato, à obra ou à lore que procura.')}<div class="start-grid">${starts.map(startCard).join('')}</div></div></section>
+    <section class="home-start light-section"><div class="wrap">${sectionTitle(t().discover.toUpperCase(),t().start,t().discoverText)}<div class="start-grid">${starts.map(startCard).join('')}</div></div></section>
 
-    <section class="project-library dark-section"><div class="wrap">${sectionTitle('LIBRARY',t().library,'Jogos, livros e HQs com páginas próprias, identidade visual própria e ligação direta com a Wiki.',`<a class="section-action" href="#/categoria/jogos">${t().viewAll}${icon('arrow',17)}</a>`)}<div class="media-rail" data-media-rail>${works.map(mediaRailCard).join('')}</div><div class="rail-controls"><button data-rail-prev aria-label="Anterior">${icon('arrow',18)}</button><button data-rail-next aria-label="Próximo">${icon('arrow',18)}</button></div></div></section>
+    <section class="project-library dark-section"><div class="wrap">${sectionTitle(t().projects.toUpperCase(),t().projects,t().projectsText)}<div class="media-rail media-rail--primary" data-media-rail>${primaryWorks.map(mediaRailCard).join('')}</div><div class="rail-controls"><button data-rail-prev aria-label="${esc(t().prev)}">${icon('arrow',18)}</button><button data-rail-next aria-label="${esc(t().next)}">${icon('arrow',18)}</button></div></div></section>
+
+    <section id="announced" class="announced-projects light-section"><div class="wrap">${sectionTitle(t().announced,t().upcomingTitles,t().announcedText)}<div class="announced-grid">${announcedWorks.map(announcedCard).join('')}</div></div></section>
 
     <section class="database-feature dark-section">
       <div class="database-feature__media"><img src="./media/banner.webp" alt="" loading="lazy"><div></div></div>
-      <div class="wrap database-feature__inner"><div class="database-feature__copy" data-reveal><span class="kicker">ARCANIAN DATABASE</span><h2>${esc(t().database)}</h2><p>${esc(t().databaseText)}</p><div class="database-stats"><div><b>${allWikiEntries.length}</b><span>${esc(t().entries)}</span></div><div><b>${allTimelineEvents.length}</b><span>eventos</span></div><div><b>${works.length}</b><span>projetos</span></div></div><div class="button-row">${button('#/wiki',t().wiki,'light')}${button('#/timeline',t().timeline,'outline')}</div></div></div>
+      <div class="wrap database-feature__inner"><div class="database-feature__copy" data-reveal><span class="kicker">ARCANIAN DATABASE</span><h2>${esc(t().database)}</h2><p>${esc(t().databaseText)}</p><div class="database-stats"><div><b>${allWikiEntries.length}</b><span>${esc(t().entries)}</span></div><div><b>${allTimelineEvents.length}</b><span>${esc(t().events)}</span></div><div><b>${primaryWorks.length}</b><span>${esc(t().projects.toLowerCase())}</span></div></div><div class="button-row">${button('#/wiki',t().wiki,'light')}${button('#/timeline',t().timeline,'outline')}</div></div></div>
     </section>
 
-    <section class="newswire light-section"><div class="wrap">${sectionTitle('NEWSWIRE',t().latest,'Lançamentos, produção, atualizações do site e desenvolvimento do universo.',`<a class="section-action" href="#/news">${t().viewAll}${icon('arrow',17)}</a>`)}<div class="news-grid">${news.map(newsCard).join('')}</div></div></section>
+    <section class="newswire light-section"><div class="wrap">${sectionTitle('NEWSWIRE',t().latest,t().newsText,`<a class="section-action" href="#/news">${t().viewAll}${icon('arrow',17)}</a>`)}<div class="news-grid">${siteNews.map(newsCard).join('')}</div></div></section>
 
-    <section class="formats dark-section"><div class="wrap">${sectionTitle('FORMATS',t().formats,'Explore a Two Eyes On You por mídia. Cada formato preserva a própria linguagem.')}<div class="format-grid">${['games','books','comics','animation'].map(formatTile).join('')}</div></div></section>
+    <section class="formats dark-section"><div class="wrap">${sectionTitle('FORMATS',t().formats,t().formatsText)}<div class="format-grid format-grid--primary">${PROJECT_CATEGORY_KEYS.map(formatTile).join('')}</div></div></section>
 
     <section class="studio-feature light-section"><div class="studio-feature__art"><img src="./media/eye-ink.webp" alt="" loading="lazy"></div><div class="studio-feature__copy" data-reveal><span class="kicker">TWO EYES ON YOU STUDIOS</span><h2>${esc(t().studioTitle)}</h2><p>${esc(t().studioText)}</p><div class="button-row">${button('#/about',t().studio,'dark')}${button('#/contact',t().contact,'outline-dark')}</div></div></section>
 
-    <section class="faq-preview light-section"><div class="wrap">${sectionTitle('SUPPORT',t().faq,'Plataformas, privacidade, obras, disponibilidade e funcionamento do universo.',`<a class="section-action" href="#/faq">${t().viewAll}${icon('arrow',17)}</a>`)}<div class="faq-list">${faqItems().slice(0,4).map(faqItem).join('')}</div></div></section>
+    <section class="faq-preview light-section"><div class="wrap">${sectionTitle('SUPPORT',t().faq,{pt:'Plataformas, privacidade, obras, disponibilidade e funcionamento do universo.',en:'Platforms, privacy, works, availability and how the universe works.',es:'Plataformas, privacidad, obras, disponibilidad y funcionamiento del universo.',it:'Piattaforme, privacy, opere, disponibilità e funzionamento dell’universo.',ja:'プラットフォーム、プライバシー、作品、提供状況、世界観について。'}[contentLang()],`<a class="section-action" href="#/faq">${t().viewAll}${icon('arrow',17)}</a>`)}<div class="faq-list">${faqItems().slice(0,4).map(faqItem).join('')}</div></div></section>
   </main>`;
 }
 
 function renderCategory(key){
   const list=CATEGORY_MAP[key]||[], meta=CATEGORY_META[key], label={games:t().games,books:t().books,comics:t().comics,animation:t().animation}[key];
+  const countText=list.length?`${list.length} ${list.length===1?t().categoryCountOne:t().categoryCountMany}`:t().categoryFuture;
   return `<main class="category-page">
-    <section class="page-hero page-hero--split dark-section"><div class="page-hero__visual"><img src="${meta.image}" alt="" fetchpriority="high"><div></div></div><div class="wrap page-hero__inner"><div class="page-hero__copy">${breadcrumb([{label:'Início',href:'#/'},{label:t().projects,href:'#/categoria/jogos'},{label}])}<span class="kicker">TWO EYES ON YOU / LIBRARY</span><h1>${esc(label)}</h1><p>${list.length?`${list.length} ${list.length===1?'projeto':'projetos'} nesta categoria.`:'Esta categoria está pronta para projetos futuros, sem misturar formatos.'}</p></div></div></section>
-    <section class="category-browser light-section"><div class="wrap"><nav class="category-tabs">${['games','books','comics','animation'].map(k=>`<a href="${CATEGORY_META[k].href}" class="${k===key?'active':''}"><span>${esc({games:t().games,books:t().books,comics:t().comics,animation:t().animation}[k])}</span><b>${String(CATEGORY_MAP[k].length).padStart(2,'0')}</b></a>`).join('')}</nav>
-    ${list.length?`<div class="catalog-grid">${list.map(mediaRailCard).join('')}</div>`:`<div class="empty-category" data-reveal>${icon(meta.icon,42)}<h2>Nenhum projeto anunciado.</h2><p>A área de ${esc(label.toLowerCase())} existe para que futuros projetos entrem na biblioteca sem alterar a arquitetura do site.</p>${button('#/',t().back,'dark')}</div>`}</div></section>
+    <section class="page-hero page-hero--split dark-section"><div class="page-hero__visual"><img src="${meta.image}" alt="" fetchpriority="high"><div></div></div><div class="wrap page-hero__inner"><div class="page-hero__copy">${breadcrumb([{label:t().home,href:'#/'},{label:t().projects,href:'#/categoria/jogos'},{label}])}<span class="kicker">TWO EYES ON YOU / LIBRARY</span><h1>${esc(label)}</h1><p>${esc(countText)}</p></div></div></section>
+    <section class="category-browser light-section"><div class="wrap"><nav class="category-tabs">${PROJECT_CATEGORY_KEYS.map(k=>`<a href="${CATEGORY_META[k].href}" class="${k===key?'active':''}"><span>${esc({games:t().games,books:t().books}[k])}</span><b>${String(CATEGORY_MAP[k].length).padStart(2,'0')}</b></a>`).join('')}</nav>
+    ${list.length?`<div class="catalog-grid">${list.map(mediaRailCard).join('')}</div>`:`<div class="empty-category" data-reveal>${icon(meta.icon,42)}<h2>${esc(t().noAnnounced)}</h2><p>${esc(t().categoryFutureLong)}</p>${button('#/',t().back,'dark')}</div>`}</div></section>
   </main>`;
 }
 
@@ -345,7 +521,7 @@ function workRelatedWiki(work){
 }
 
 function renderProjectMediaGallery(exp){
-  return `<section class="project-gallery dark-section"><div class="wrap"><div class="project-gallery__head" data-reveal><span class="kicker">MEDIA</span><h2>Dentro da obra.</h2></div><div class="project-gallery__grid">${(exp.gallery||[]).map((src,i)=>`<figure class="project-gallery__item project-gallery__item--${i+1}" data-reveal><img src="${esc(src)}" alt="" loading="lazy"></figure>`).join('')}</div></div></section>`;
+  return `<section class="project-gallery dark-section"><div class="wrap"><div class="project-gallery__head" data-reveal><span class="kicker">MEDIA</span><h2>${esc(t().insideWork)}</h2></div><div class="project-gallery__grid">${(exp.gallery||[]).map((src,i)=>`<figure class="project-gallery__item project-gallery__item--${i+1}" data-reveal><img src="${esc(src)}" alt="" loading="lazy"></figure>`).join('')}</div></div></section>`;
 }
 
 function renderProjectFeatures(exp){
@@ -353,46 +529,48 @@ function renderProjectFeatures(exp){
 }
 
 function renderWork(slug){
-  const work=getWork(slug); if(!work)return renderNotFound();
-  const item=localWork(work), exp=getProjectExperience(slug), related=works.filter(w=>w.slug!==slug).slice(0,4), relatedWiki=workRelatedWiki(work);
+  const work=getWork(slug); if(!work || !isPrimaryProject(slug))return renderNotFound();
+  const item=localWork(work), exp=getProjectExperience(slug,contentLang()), related=primaryWorks.filter(w=>w.slug!==slug), relatedWiki=workRelatedWiki(work);
   const meta=exp?.meta || (item.facts||work.facts||[]).slice(0,4);
   const heroButton=work.slug==='devaneios'?button('#/purchase',t().purchase,'light'):`<button type="button" class="btn btn--light" data-scroll-to="overview"><span>${esc(t().explore)}</span>${icon('arrow',18)}</button>`;
+  const spiralNotes=t().spiralNotes.map(x=>`<span>${esc(x)}</span>`).join('');
   return `<main class="work-page project-page project--${esc(slug)}" style="--work:#c7a24a">
-    <section class="project-product-hero dark-section"><img class="project-product-hero__media" src="${esc(work.image)}" alt="" fetchpriority="high"><div class="project-product-hero__shade"></div><div class="wrap project-product-hero__inner"><div class="project-product-hero__copy" data-reveal>${breadcrumb([{label:'Início',href:'#/'},{label:typeOf(work),href:'#'+categoryRouteForWork(slug)},{label:item.displayTitle}])}<span class="project-product-hero__label">${esc(exp?.heroLabel || work.eyebrow)}</span><img class="project-product-hero__logo" src="${esc(work.logo)}" alt="${esc(item.displayTitle)}"><div class="button-row">${heroButton}${button('#/wiki',t().wiki,'glass')}</div></div></div></section>
+    <section class="project-product-hero dark-section"><img class="project-product-hero__media" src="${esc(work.image)}" alt="" fetchpriority="high"><div class="project-product-hero__shade"></div><div class="wrap project-product-hero__inner"><div class="project-product-hero__copy" data-reveal>${breadcrumb([{label:t().home,href:'#/'},{label:typeOf(work),href:'#'+categoryRouteForWork(slug)},{label:item.displayTitle}])}<span class="project-product-hero__label">${esc(exp?.heroLabel || item.eyebrow || work.eyebrow)}</span><img class="project-product-hero__logo" src="${esc(work.logo)}" alt="${esc(item.displayTitle)}"><div class="button-row">${heroButton}${button('#/wiki',t().wiki,'glass')}</div></div></div></section>
     <section class="project-meta-bar light-section"><div class="wrap project-meta-bar__grid">${meta.map(([k,v])=>`<div><small>${esc(k)}</small><strong>${esc(v)}</strong></div>`).join('')}</div></section>
-    <nav class="work-subnav" aria-label="Navegação da obra"><div class="wrap"><a class="work-subnav__identity" href="#/obra/${esc(work.slug)}" aria-label="${esc(item.displayTitle)}"><img src="${esc(work.logo)}" alt=""></a><button type="button" data-scroll-to="overview">Visão geral</button><button type="button" data-scroll-to="details">Destaques</button><button type="button" data-scroll-to="media">Mídia</button>${work.characters?.length?'<button type="button" data-scroll-to="cast">Personagens</button>':''}${work.worlds?.length?'<button type="button" data-scroll-to="worlds">Mundo</button>':''}${work.slug==='devaneios'?'<button type="button" data-scroll-to="spiral">A Espiral</button>':''}<button type="button" data-scroll-to="connections">Conexões</button></div></nav>
+    <nav class="work-subnav" aria-label="${esc(t().overview)}"><div class="wrap"><a class="work-subnav__identity" href="#/obra/${esc(work.slug)}" aria-label="${esc(item.displayTitle)}"><img src="${esc(work.logo)}" alt=""></a><button type="button" data-scroll-to="overview">${esc(t().overview)}</button><button type="button" data-scroll-to="details">${esc(t().highlights)}</button><button type="button" data-scroll-to="media">${esc(t().media)}</button>${item.characters?.length?`<button type="button" data-scroll-to="cast">${esc(t().characters)}</button>`:''}${item.worlds?.length?`<button type="button" data-scroll-to="worlds">${esc(t().world)}</button>`:''}${work.slug==='devaneios'?`<button type="button" data-scroll-to="spiral">${esc(t().spiral)}</button>`:''}<button type="button" data-scroll-to="connections">${esc(t().connections)}</button></div></nav>
 
-    <section id="overview" class="project-intro light-section"><div class="wrap project-intro__grid"><div data-reveal><span class="kicker">${esc(exp?.introKicker || 'ARCANIAN')}</span><h1>${esc(exp?.introTitle || item.displayTitle)}</h1></div><div data-reveal><p>${esc(exp?.introText || item.long)}</p>${work.slug==='arcanian'?`<div class="platform-line"><span>PLATAFORMAS PLANEJADAS</span><strong>Xbox</strong><strong>Steam / PC</strong></div>`:''}</div></div></section>
+    <section id="overview" class="project-intro light-section"><div class="wrap project-intro__grid"><div data-reveal><span class="kicker">${esc(exp?.introKicker || 'ARCANIAN')}</span><h1>${esc(exp?.introTitle || item.displayTitle)}</h1></div><div data-reveal><p>${esc(exp?.introText || item.long)}</p>${work.slug==='arcanian'?`<div class="platform-line"><span>${esc(t().platformsPlanned)}</span><strong>Xbox</strong><strong>Steam / PC</strong></div>`:''}</div></div></section>
 
     ${renderProjectFeatures(exp||{features:[]})}
     <div id="media">${renderProjectMediaGallery(exp||{gallery:[work.image]})}</div>
 
-    ${work.slug==='devaneios'?`<section id="spiral" class="spiral-feature dark-section"><div class="wrap spiral-feature__grid"><div class="spiral-copy" data-reveal><span class="kicker">DEVANEIOS / A MARCA</span><h2>Uma marca que cria raízes.</h2><p>A Espiral aparece como evidência física, memória material e âncora. A apresentação visual mantém textura, profundidade e raízes projetadas para fora da superfície sem transformar a página em um efeito gratuito.</p><div class="spiral-notes"><span>Marca</span><span>Raízes</span><span>Memória material</span></div></div>${spiralStage()}</div></section>`:''}
+    ${work.slug==='devaneios'?`<section id="spiral" class="spiral-feature dark-section"><div class="wrap spiral-feature__grid"><div class="spiral-copy" data-reveal><span class="kicker">DEVANEIOS / ${esc(t().spiralNotes[0].toUpperCase())}</span><h2>${esc(t().spiralTitle)}</h2><p>${esc(t().spiralText)}</p><div class="spiral-notes">${spiralNotes}</div></div>${spiralStage()}</div></section>`:''}
 
-    ${renderWorkSpecific(work)}
+    ${renderWorkSpecific(item)}
 
-    ${relatedWiki.length?`<section class="related-wiki dark-section"><div class="wrap">${sectionTitle('ARCANIAN DATABASE','Continue pela Wiki','Personagens, lugares, eventos e conceitos diretamente ligados a esta obra.')}<div class="related-wiki-grid">${relatedWiki.map(e=>`<a href="#/wiki/${e.slug}" data-reveal><span>${esc(e.category)}</span><strong>${esc(localWiki(e).name)}</strong><p>${esc(localWiki(e).summary||'')}</p>${icon('arrow',18)}</a>`).join('')}</div></div></section>`:''}
+    ${relatedWiki.length?`<section class="related-wiki dark-section"><div class="wrap">${sectionTitle('ARCANIAN DATABASE',t().wikiContinue,t().wikiContinueText)}<div class="related-wiki-grid">${relatedWiki.map(e=>`<a href="#/wiki/${e.slug}" data-reveal><span>${esc(e.category)}</span><strong>${esc(localWiki(e).name)}</strong><p>${esc(localWiki(e).summary||'')}</p>${icon('arrow',18)}</a>`).join('')}</div></div></section>`:''}
 
-    <section class="project-closing dark-section"><div class="wrap" data-reveal><img src="${esc(work.logo)}" alt="${esc(item.displayTitle)}"><p>${esc(exp?.closing||'Explore outras histórias conectadas ao universo Arcanian.')}</p></div></section>
-    <section id="connections" class="more-projects light-section"><div class="wrap">${sectionTitle('MORE','Outros projetos','Outras portas de entrada para Arcanian.')}<div class="catalog-grid">${related.map(mediaRailCard).join('')}</div></div></section>
+    <section class="project-closing dark-section"><div class="wrap" data-reveal><img src="${esc(work.logo)}" alt="${esc(item.displayTitle)}"><p>${esc(exp?.closing||t().defaultClosing)}</p></div></section>
+    <section id="connections" class="more-projects light-section"><div class="wrap">${sectionTitle('MORE',t().otherProjects,t().otherProjectsText)}<div class="catalog-grid">${related.map(mediaRailCard).join('')}</div></div></section>
   </main>`;
 }
 
 function renderWorkSpecific(work){
   let html='';
-  if(work.characters?.length){html+=`<section id="cast" class="cast-section dark-section"><div class="wrap">${sectionTitle('CAST','Personagens centrais','Pessoas que sustentam o conflito desta obra.')}<div class="cast-grid">${work.characters.map((c,i)=>`<a href="#/wiki/${c.slug}" class="cast-card" data-reveal><span>${String(i+1).padStart(2,'0')} · ${esc(c.role)}</span><h3>${esc(c.name)}</h3><p>${esc(c.text)}</p><em>Wiki ${icon('arrow',16)}</em></a>`).join('')}</div></div></section>`;}
-  if(work.worlds?.length){html+=`<section id="worlds" class="world-section dark-section"><div class="world-grid">${work.worlds.map((w,i)=>`<article class="world-card" data-reveal><img src="${esc(w.image)}" alt="" loading="lazy"><div class="world-card__shade"></div><div><span>LOCATION ${String(i+1).padStart(2,'0')}</span><h3>${esc(w.name)}</h3><p>${esc(w.text)}</p></div></article>`).join('')}</div></section>`;}
+  if(work.characters?.length){html+=`<section id="cast" class="cast-section dark-section"><div class="wrap">${sectionTitle('CAST',t().centralCharacters,t().centralCharactersText)}<div class="cast-grid">${work.characters.map((c,i)=>`<a href="#/wiki/${c.slug}" class="cast-card" data-reveal><span>${String(i+1).padStart(2,'0')} · ${esc(c.role)}</span><h3>${esc(c.name)}</h3><p>${esc(c.text)}</p><em>Wiki ${icon('arrow',16)}</em></a>`).join('')}</div></div></section>`;}
+  if(work.worlds?.length){html+=`<section id="worlds" class="world-section dark-section"><div class="world-grid">${work.worlds.map((w,i)=>`<article class="world-card" data-reveal><img src="${esc(w.image)}" alt="" loading="lazy"><div class="world-card__shade"></div><div><span>${esc(t().world.toUpperCase())} ${String(i+1).padStart(2,'0')}</span><h3>${esc(w.name)}</h3><p>${esc(w.text)}</p></div></article>`).join('')}</div></section>`;}
   return html;
 }
 
 function renderPurchase(){
   const dev=localWork(getWork('devaneios'));
-  return `<main class="purchase-page"><section class="purchase-hero dark-section"><div class="purchase-hero__art"><img src="./media/devaneios.webp" alt="Arcanian: Devaneios" fetchpriority="high"></div><div class="purchase-hero__copy">${breadcrumb([{label:'Início',href:'#/'},{label:'Devaneios',href:'#/obra/devaneios'},{label:'Comprar'}])}<span class="kicker">ARCANIAN · EPISÓDIO I</span><img src="./media/logos-fixed/devaneios.webp" alt="Arcanian: Devaneios"><h1>Escolha sua edição.</h1><p>${esc(dev.summary)}</p></div></section>
-  <section class="store-section light-section"><div class="wrap"><div class="store-grid"><a class="store-card" href="https://www.amazon.com.br/dp/B0HD5MV8ZG" target="_blank" rel="noreferrer" data-reveal><span>01</span><div><small>FÍSICO + KINDLE</small><h2>Amazon</h2><p>Edição física e digital.</p></div>${icon('external')}</a><a class="store-card" href="https://loja.uiclap.com/titulo/ua184114" target="_blank" rel="noreferrer" data-reveal><span>02</span><div><small>LIVRO FÍSICO</small><h2>UICLAP</h2><p>Impressão sob demanda.</p></div>${icon('external')}</a></div><p class="purchase-note">Pagamento, preço, frete, estoque e suporte da compra são definidos pela plataforma escolhida.</p></div></section></main>`;
+  return `<main class="purchase-page"><section class="purchase-hero dark-section"><div class="purchase-hero__art"><img src="./media/devaneios.webp" alt="Arcanian: Devaneios" fetchpriority="high"></div><div class="purchase-hero__copy">${breadcrumb([{label:t().home,href:'#/'},{label:'Devaneios',href:'#/obra/devaneios'},{label:t().purchase}])}<span class="kicker">ARCANIAN · ${esc(t().episodeOne)}</span><img src="./media/logos-fixed/devaneios.webp" alt="Arcanian: Devaneios"><h1>${esc(t().purchaseTitle)}</h1><p>${esc(dev.summary)}</p></div></section>
+  <section class="store-section light-section"><div class="wrap"><div class="store-grid"><a class="store-card" href="https://www.amazon.com.br/dp/B0HD5MV8ZG" target="_blank" rel="noreferrer" data-reveal><span>01</span><div><small>${esc(t().physicalKindle)}</small><h2>Amazon</h2><p>${esc(t().physicalDigitalDesc)}</p></div>${icon('external')}</a><a class="store-card" href="https://loja.uiclap.com/titulo/ua184114" target="_blank" rel="noreferrer" data-reveal><span>02</span><div><small>${esc(t().physicalBook)}</small><h2>UICLAP</h2><p>${esc(t().printOnDemand)}</p></div>${icon('external')}</a></div><p class="purchase-note">${esc(t().purchaseNote)}</p></div></section></main>`;
 }
 
 function renderNews(){
-  return `<main class="news-page"><section class="page-hero page-hero--editorial dark-section"><div class="page-hero__visual"><img src="./media/welcome.webp" alt="" fetchpriority="high"><div></div></div><div class="wrap page-hero__inner"><div class="page-hero__copy">${breadcrumb([{label:'Início',href:'#/'},{label:t().news}])}<span class="kicker">NEWSWIRE</span><h1>${esc(t().news)}</h1><p>Atualizações sobre lançamentos, produção, desenvolvimento e o universo Arcanian.</p></div></div></section><section class="news-archive light-section"><div class="wrap">${sectionTitle('LATEST','Arquivo de notícias')}<div class="news-grid news-grid--archive">${news.map(newsCard).join('')}</div></div></section></main>`;
+  const siteNews=localizedNews(news,contentLang());
+  return `<main class="news-page"><section class="page-hero page-hero--editorial dark-section"><div class="page-hero__visual"><img src="./media/welcome.webp" alt="" fetchpriority="high"><div></div></div><div class="wrap page-hero__inner"><div class="page-hero__copy">${breadcrumb([{label:t().home,href:'#/'},{label:t().news}])}<span class="kicker">NEWSWIRE</span><h1>${esc(t().news)}</h1><p>${esc(t().newsPageText)}</p></div></div></section><section class="news-archive light-section"><div class="wrap">${sectionTitle('LATEST',t().newsArchive)}<div class="news-grid news-grid--archive">${siteNews.map(newsCard).join('')}</div></div></section></main>`;
 }
 
 function wikiCard(entry,labels={}){
@@ -476,7 +654,7 @@ function renderTimeline(){
 function renderAbout(){
   return `<main class="about-page"><section class="about-hero light-section"><div class="wrap about-hero__grid"><div data-reveal>${breadcrumb([{label:'Início',href:'#/'},{label:t().studio}])}<span class="kicker">INDEPENDENT STUDIO</span><h1>Two Eyes<br>On You.</h1><p>${esc(t().studioText)}</p>${button('#/contact',t().contact,'dark')}</div><div class="about-hero__art"><img src="./media/eye-ink.webp" alt="" fetchpriority="high"></div></div></section>
   <section class="about-manifesto dark-section"><div class="wrap"><span class="kicker">DIRECTION</span><h2 data-reveal>História primeiro.<br>Formato depois.</h2><div class="manifesto-grid"><article data-reveal><span>01</span><h3>História antes da plataforma.</h3><p>O formato precisa acrescentar alguma coisa à obra. Se só repete o que já existe, não justifica a adaptação.</p></article><article data-reveal><span>02</span><h3>Identidade por projeto.</h3><p>Devaneios, Menos Um, Tormenta e o jogo da Arcanian compartilham um universo, não uma obrigação estética.</p></article><article data-reveal><span>03</span><h3>Tecnologia como ferramenta.</h3><p>Engine, efeitos e recursos técnicos entram para sustentar direção artística, narrativa e gameplay.</p></article><article data-reveal><span>04</span><h3>Navegação sem ruído.</h3><p>O site foi organizado para alguém descobrir um projeto, mergulhar no universo ou resolver uma dúvida sem atravessar menus desnecessários.</p></article></div></div></section>
-  <section class="about-formats light-section"><div class="wrap">${sectionTitle('WHAT WE MAKE',t().formats)}<div class="format-grid">${['games','books','comics','animation'].map(formatTile).join('')}</div></div></section>
+  <section class="about-formats light-section"><div class="wrap">${sectionTitle('WHAT WE MAKE',t().formats)}<div class="format-grid format-grid--primary">${PROJECT_CATEGORY_KEYS.map(formatTile).join('')}</div></div></section>
   <section class="contact-cta dark-section"><div class="wrap"><div><span class="kicker">CONTACT & PARTNERSHIPS</span><h2>Vamos conversar.</h2><p>Imprensa, parcerias, suporte, licenciamento e oportunidades relacionadas ao estúdio.</p></div>${button('mailto:contact@twoeyesonyou.com','contact@twoeyesonyou.com','light')}</div></section></main>`;
 }
 
@@ -515,21 +693,16 @@ function faqItems(){
 function faqItem([q,a],i){return `<details class="faq-item" data-reveal><summary><span>${String(i+1).padStart(2,'0')}</span><strong>${esc(q)}</strong><b>+</b></summary><div><p>${esc(a)}</p></div></details>`;}
 function renderFaq(){return `<main class="faq-page"><section class="page-hero page-hero--support dark-section"><div class="page-hero__visual contain"><img src="./media/eye-iris.webp" alt="" fetchpriority="high"><div></div></div><div class="wrap page-hero__inner"><div class="page-hero__copy">${breadcrumb([{label:'Início',href:'#/'},{label:'FAQ'}])}<span class="kicker">SUPPORT</span><h1>FAQ</h1><p>As respostas mais rápidas sobre o universo, as obras e o site.</p></div></div></section><section class="faq-full light-section"><div class="wrap faq-layout"><aside><span>PRECISA DE MAIS?</span><h2>Não encontrou a resposta?</h2><p>Entre em contato diretamente com o estúdio.</p>${button('#/contact',t().contact,'dark')}</aside><div class="faq-list">${faqItems().map(faqItem).join('')}</div></div></section></main>`;}
 
-function renderDocs(){return `<main class="docs-page"><section class="page-hero page-hero--support dark-section"><div class="page-hero__visual contain"><img src="./media/eye-ink.webp" alt="" fetchpriority="high"><div></div></div><div class="wrap page-hero__inner"><div class="page-hero__copy">${breadcrumb([{label:'Início',href:'#/'},{label:t().docs}])}<span class="kicker">LEGAL & INFORMATION</span><h1>${esc(t().docs)}</h1><p>Políticas, termos de uso, licenças e diretrizes oficiais da marca.</p></div></div></section><section class="docs-list light-section"><div class="wrap"><div class="doc-grid">${docs.map((d,i)=>`<a href="#/documentation/${d.slug}" class="doc-card" data-reveal><span>${String(i+1).padStart(2,'0')}</span><div><small>OFFICIAL DOCUMENT</small><h3>${esc(d.title)}</h3><p>${esc(d.description)}</p></div>${icon('arrow',20)}</a>`).join('')}</div></div></section></main>`;}
+function renderDocs(){const items=docs.map(d=>{const source=legalDocuments.find(x=>x.slug===d.slug);const local=source?localizedLegalDocument(source,contentLang()):null;return {...d,title:local?.title||d.title,description:local?.subtitle||d.description};});const intro={pt:'Políticas, termos de uso, licenças e diretrizes oficiais da marca.',en:'Policies, terms of use, licences and official brand guidelines.',es:'Políticas, términos de uso, licencias y directrices oficiales de marca.',it:'Politiche, termini di utilizzo, licenze e linee guida ufficiali del marchio.',ja:'ポリシー、利用規約、ライセンス、公式ブランドガイドライン。'}[contentLang()];return `<main class="docs-page"><section class="page-hero page-hero--support dark-section"><div class="page-hero__visual contain"><img src="./media/eye-ink.webp" alt="" fetchpriority="high"><div></div></div><div class="wrap page-hero__inner"><div class="page-hero__copy">${breadcrumb([{label:t().home,href:'#/'},{label:t().docs}])}<span class="kicker">LEGAL & INFORMATION</span><h1>${esc(t().docs)}</h1><p>${esc(intro)}</p></div></div></section><section class="docs-list light-section"><div class="wrap"><div class="doc-grid">${items.map((d,i)=>`<a href="#/documentation/${d.slug}" class="doc-card" data-reveal><span>${String(i+1).padStart(2,'0')}</span><div><small>OFFICIAL DOCUMENT</small><h3>${esc(d.title)}</h3><p>${esc(d.description)}</p></div>${icon('arrow',20)}</a>`).join('')}</div></div></section></main>`;}
 
 function legalItem(item){if(item.type==='list')return`<ul>${item.items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;return`<p>${esc(item.text||'')}</p>`;}
-function renderLegal(slug){const doc=legalDocuments.find(d=>d.slug===slug);if(!doc)return renderNotFound();return `<main class="legal-page"><section class="legal-hero dark-section"><div class="wrap">${breadcrumb([{label:'Início',href:'#/'},{label:t().docs,href:'#/documentation'},{label:doc.title}])}<span class="kicker">OFFICIAL DOCUMENT</span><h1>${esc(doc.title)}</h1><p>${esc(doc.subtitle)}</p><small>Atualizado em ${esc(doc.updated)}</small></div></section><section class="legal-content light-section"><div class="wrap legal-layout"><aside><span>ÍNDICE</span>${doc.sections.map((s,i)=>`<button type="button" data-scroll-to="legal-${i+1}">${String(i+1).padStart(2,'0')} ${esc(s.title)}</button>`).join('')}</aside><article>${doc.sections.map((s,i)=>`<section id="legal-${i+1}"><span>${String(i+1).padStart(2,'0')}</span><h2>${esc(s.title)}</h2>${s.items.map(legalItem).join('')}</section>`).join('')}</article></div></section></main>`;}
-
-function renderContact(){return `<main class="contact-page"><section class="contact-hero dark-section"><img src="./media/contact.jpg" alt="" fetchpriority="high"><div class="contact-hero__shade"></div><div class="wrap contact-hero__grid"><div class="contact-hero__copy" data-reveal>${breadcrumb([{label:'Início',href:'#/'},{label:t().contact}])}<span class="kicker">CONTACT</span><h1>Fale com a<br>Two Eyes On You.</h1><p>Suporte, imprensa, parcerias, licenciamento e propriedade intelectual.</p>${button('mailto:contact@twoeyesonyou.com','contact@twoeyesonyou.com','light')}</div><aside data-reveal><span>ASSUNTOS</span><a href="mailto:contact@twoeyesonyou.com?subject=Suporte">Suporte e falhas técnicas${icon('arrow',16)}</a><a href="mailto:contact@twoeyesonyou.com?subject=Parceria">Parcerias e colaborações${icon('arrow',16)}</a><a href="mailto:contact@twoeyesonyou.com?subject=Imprensa">Imprensa e criadores${icon('arrow',16)}</a><a href="mailto:contact@twoeyesonyou.com?subject=Licenciamento">Licenciamento e direitos${icon('arrow',16)}</a></aside></div></section></main>`;}
-
-function renderNotFound(){return `<main><section class="not-found dark-section"><div><span class="kicker">404</span><h1>Página não encontrada.</h1><p>O endereço pode ter mudado. Use um dos atalhos abaixo para continuar navegando.</p><div class="button-row">${button('#/','Voltar ao início','light')}${button('#/categoria/jogos',t().projects,'outline')}${button('#/wiki',t().wiki,'outline')}</div></div></section></main>`;}
-
+function renderLegal(slug){const source=legalDocuments.find(d=>d.slug===slug);if(!source)return renderNotFound();const doc=localizedLegalDocument(source,contentLang());const updated={pt:'Atualizado em',en:'Updated',es:'Actualizado',it:'Aggiornato',ja:'更新'}[contentLang()];const indexLabel={pt:'ÍNDICE',en:'CONTENTS',es:'ÍNDICE',it:'INDICE',ja:'目次'}[contentLang()];return `<main class="legal-page"><section class="legal-hero dark-section"><div class="wrap">${breadcrumb([{label:t().home,href:'#/'},{label:t().docs,href:'#/documentation'},{label:doc.title}])}<span class="kicker">OFFICIAL DOCUMENT</span><h1>${esc(doc.title)}</h1><p>${esc(doc.subtitle)}</p><small>${esc(updated)} ${esc(doc.updated)}</small></div></section><section class="legal-content light-section"><div class="wrap legal-layout"><aside><span>${esc(indexLabel)}</span>${doc.sections.map((sec,i)=>`<button type="button" data-scroll-to="legal-${i+1}">${String(i+1).padStart(2,'0')} ${esc(sec.title)}</button>`).join('')}</aside><article>${doc.sections.map((sec,i)=>`<section id="legal-${i+1}"><span>${String(i+1).padStart(2,'0')}</span><h2>${esc(sec.title)}</h2>${sec.items.map(legalItem).join('')}</section>`).join('')}</article></div></section></main>`;}
+function renderContact(){const copy={pt:['Fale com a','Suporte, imprensa, parcerias, licenciamento e propriedade intelectual.','ASSUNTOS',['Suporte e falhas técnicas','Parcerias e colaborações','Imprensa e criadores','Licenciamento e direitos']],en:['Talk to','Support, press, partnerships, licensing and intellectual property.','TOPICS',['Support and technical issues','Partnerships and collaborations','Press and creators','Licensing and rights']],es:['Habla con','Soporte, prensa, alianzas, licencias y propiedad intelectual.','TEMAS',['Soporte y fallos técnicos','Alianzas y colaboraciones','Prensa y creadores','Licencias y derechos']],it:['Parla con','Supporto, stampa, partnership, licenze e proprietà intellettuale.','ARGOMENTI',['Supporto e problemi tecnici','Partnership e collaborazioni','Stampa e creator','Licenze e diritti']],ja:['お問い合わせ','サポート、プレス、提携、ライセンス、知的財産。','お問い合わせ内容',['サポート・技術的な問題','提携・コラボレーション','プレス・クリエイター','ライセンス・権利']]}[contentLang()];return `<main class="contact-page"><section class="contact-hero dark-section"><img src="./media/contact.jpg" alt="" fetchpriority="high"><div class="contact-hero__shade"></div><div class="wrap contact-hero__grid"><div class="contact-hero__copy" data-reveal>${breadcrumb([{label:t().home,href:'#/'},{label:t().contact}])}<span class="kicker">CONTACT</span><h1>${esc(copy[0])}<br>Two Eyes On You.</h1><p>${esc(copy[1])}</p>${button('mailto:contact@twoeyesonyou.com','contact@twoeyesonyou.com','light')}</div><aside data-reveal><span>${esc(copy[2])}</span>${copy[3].map((x,i)=>`<a href="mailto:contact@twoeyesonyou.com?subject=${encodeURIComponent(['Suporte','Parceria','Imprensa','Licenciamento'][i])}">${esc(x)}${icon('arrow',16)}</a>`).join('')}</aside></div></section></main>`;}
+function renderNotFound(){return `<main><section class="not-found dark-section"><div><span class="kicker">404</span><h1>${esc(t().notFoundTitle)}</h1><p>${esc(t().notFoundText)}</p><div class="button-row">${button('#/',t().backHome,'light')}${button('#/categoria/jogos',t().projects,'outline')}${button('#/wiki',t().wiki,'outline')}</div></div></section></main>`;}
 function routeContent(route){
   if(route==='/')return renderHome();
   if(route==='/categoria/jogos')return renderCategory('games');
   if(route==='/categoria/livros')return renderCategory('books');
-  if(route==='/categoria/hq')return renderCategory('comics');
-  if(route==='/categoria/animacao')return renderCategory('animation');
   if(route==='/purchase')return renderPurchase();
   if(route==='/news')return renderNews();
   if(route==='/wiki')return renderWiki();
@@ -547,7 +720,7 @@ function routeContent(route){
 function updateTitle(route){
   let title='Two Eyes On You Studios';
   let description=t().studioText;
-  if(route.startsWith('/obra/')){const w=getWork(route.split('/')[2]);if(w){const x=localWork(w);title=`${x.displayTitle} — Two Eyes On You`;description=x.summary;}}
+  if(route.startsWith('/obra/')){const slug=route.split('/')[2],w=getWork(slug);if(w&&isPrimaryProject(slug)){const x=localWork(w);title=`${x.displayTitle} — Two Eyes On You`;description=x.summary;}}
   else if(route==='/wiki'){title='Wiki Arcanian — Two Eyes On You';description=t().databaseText;}
   else if(route.startsWith('/wiki/')){const e=allWikiEntries.find(x=>x.slug===route.split('/')[2]);if(e){const x=localWiki(e);title=`${x.name} — Wiki Arcanian`;description=x.summary||t().databaseText;}}
   else if(route==='/timeline'){title='Cronologia Arcanian — Two Eyes On You';description='A cronologia oficial de acontecimentos do universo Arcanian.';}
@@ -656,10 +829,10 @@ function renderWikiResultsOnly(){
 function renderSearchResults(query=''){
   const holder=document.querySelector('#search-results');if(!holder)return;
   const q=query.trim().toLowerCase(), items=[];
-  works.forEach(w=>{const x=localWork(w);items.push({group:'PROJETOS',type:typeOf(w),title:x.displayTitle,text:x.summary,href:`#/obra/${w.slug}`,image:w.image});});
-  news.forEach(n=>items.push({group:'NOTÍCIAS',type:n.category,title:n.title,text:n.text,href:n.href,image:n.image}));
+  primaryWorks.forEach(w=>{const x=localWork(w);items.push({group:t().searchProjects,type:typeOf(w),title:x.displayTitle,text:x.summary,href:`#/obra/${w.slug}`,image:w.image});});
+  localizedNews(news,contentLang()).forEach(n=>items.push({group:t().searchNews,type:n.category,title:n.title,text:n.text,href:n.href,image:n.image}));
   allWikiEntries.forEach(e=>{if(!e.spoiler||state.spoilers){const x=localWiki(e);items.push({group:'WIKI',type:e.category,title:x.name,text:x.summary,href:`#/wiki/${e.slug}`});}});
-  docs.forEach(d=>items.push({group:'DOCUMENTOS',type:'LEGAL',title:d.title,text:d.description,href:`#/documentation/${d.slug}`}));
+  docs.forEach(d=>items.push({group:t().searchDocs,type:'LEGAL',title:d.title,text:d.description,href:`#/documentation/${d.slug}`}));
   const results=(q?items.filter(x=>`${x.title} ${x.text||''} ${x.type} ${x.group}`.toLowerCase().includes(q)):items.slice(0,10)).slice(0,18);
   const groups=[...new Set(results.map(x=>x.group))];
   holder.innerHTML=results.length?groups.map(g=>`<section class="search-group"><span>${g}</span>${results.filter(x=>x.group===g).map(x=>`<a href="${esc(x.href)}">${x.image?`<img src="${esc(x.image)}" alt="" loading="lazy">`:'<i></i>'}<div><small>${esc(x.type)}</small><strong>${esc(x.title)}</strong><p>${esc(x.text||'')}</p></div>${icon('arrow',17)}</a>`).join('')}</section>`).join(''):`<p class="empty-inline">${esc(t().noResults)}</p>`;

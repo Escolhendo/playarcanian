@@ -200,8 +200,7 @@ export const works = [
       { slug: 'merius', name: 'Merius', role: 'Veterano e estrategista', text: 'Depois de viver vinte anos como Rafael Corvino, Merius retorna com arquivos, rotas e conhecimento acumulado. Sua experiência ajuda o grupo, mas a mentira que sustentou também impede que confiança e estratégia sejam a mesma coisa.' }
     ],
     worlds: [
-      { name: 'Bravara', image: './media/bravara2.webp', text: 'Cidades costeiras, regiões industriais, serras e instituições que continuam funcionando ao lado do impossível. É o espaço onde a investigação precisa conviver com ônibus, trabalho, bairros e vida comum.' },
-      { name: 'Cidade das Maravilhas', image: './media/banner.webp', text: 'A cidade de Ikarius, comprimida entre morros, túneis, baía, viadutos e rotas públicas. Sua geografia determina como o jogador atravessa bairros e percebe o contraste entre rotina e anomalia.' },
+{ name: 'Bravara', image: './media/bravara2.webp', text: 'Terra de antigas histórias, guerreiros e tradições que sobreviveram ao tempo. Em Bravara, lendas deixaram marcas reais — e algumas delas ainda estão longe de terminar.' },      { name: 'Cidade das Maravilhas', image: './media/banner.webp', text: 'A cidade de Ikarius, comprimida entre morros, túneis, baía, viadutos e rotas públicas. Sua geografia determina como o jogador atravessa bairros e percebe o contraste entre rotina e anomalia.' },
       { name: 'Bayrule', image: './media/tormenta.webp', text: 'Território de fronteiras políticas, rotas clandestinas, submundo e alianças que mudam quando a noite chega. Exploração e conflito ganham outro ritmo fora das estruturas de Bravara.' },
     ],
     sections: [

@@ -406,7 +406,7 @@ const game = {
       {slug:'merius',name:'Merius',role:'Veteran and strategist',text:'After living twenty years as Rafael Corvino, Merius returns with files, routes and accumulated knowledge. His experience helps the group, but the lie sustaining it prevents trust and strategy from becoming the same thing.'}
     ],
     worlds:[
-      {name:'Bravara',image:'./media/bravara2.webp',text:'Coastal cities, industrial regions, mountains and institutions that continue functioning beside the impossible. Investigation must coexist with buses, work, neighborhoods and ordinary life.'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'A region shaped by ancient traditions and stories passed down through generations. In Bravara, the past never truly disappeared — and its traces still interfere with the present.'},
       {name:'City of Wonders',image:'./media/banner.webp',text:'Ikarius’s city, compressed between hills, tunnels, bay, viaducts and public routes. Its geography determines how the player crosses districts and reads the contrast between routine and anomaly.'},
       {name:'Bayrule',image:'./media/tormenta.webp',text:'A territory of political borders, clandestine routes, underworld networks and alliances that change after dark. Exploration and conflict gain another rhythm outside Bravara’s institutions.'},
       {name:'Koreth',image:'./media/welcome.webp',text:'A territory tied to the Arnins, the Codex and the conclusion of Devaneios. Its scale allows confrontations and discoveries threatening more than one city.'}
@@ -440,7 +440,7 @@ const game = {
       {slug:'merius',name:'Merius',role:'Veterano y estratega',text:'Después de vivir veinte años como Rafael Corvino, Merius regresa con archivos, rutas y conocimiento. Su experiencia ayuda, pero la mentira que la sostuvo impide confundir confianza con estrategia.'}
     ],
     worlds:[
-      {name:'Bravara',image:'./media/bravara2.webp',text:'Ciudades costeras, regiones industriales, sierras e instituciones que siguen funcionando junto a lo imposible. La investigación convive con autobuses, trabajo, barrios y vida común.'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'Una región marcada por antiguas tradiciones e historias transmitidas de generación en generación. En Bravara, el pasado nunca desapareció por completo — y sus vestigios aún interfieren en el presente.'},
       {name:'Ciudad de las Maravillas',image:'./media/banner.webp',text:'La ciudad de Ikarius, comprimida entre montes, túneles, bahía, viaductos y rutas públicas. Su geografía determina cómo se recorren los barrios y se percibe el contraste entre rutina y anomalía.'},
       {name:'Bayrule',image:'./media/tormenta.webp',text:'Territorio de fronteras políticas, rutas clandestinas, submundo y alianzas que cambian con la noche. La exploración gana otro ritmo fuera de Bravara.'},
       {name:'Koreth',image:'./media/welcome.webp',text:'Territorio ligado a los Arnins, el Codex y el final de Devaneios. Su escala permite enfrentamientos y descubrimientos que amenazan más que una ciudad.'}
@@ -474,7 +474,7 @@ const game = {
       {slug:'merius',name:'Merius',role:'Veterano e stratega',text:'Dopo vent’anni come Rafael Corvino, Merius torna con archivi, rotte e conoscenza. L’esperienza aiuta il gruppo, ma la menzogna che l’ha sostenuta separa fiducia e strategia.'}
     ],
     worlds:[
-      {name:'Bravara',image:'./media/bravara2.webp',text:'Città costiere, regioni industriali, montagne e istituzioni che continuano a funzionare accanto all’impossibile. L’indagine convive con autobus, lavoro, quartieri e vita comune.'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'Una regione plasmata da antiche tradizioni e storie tramandate di generazione in generazione. A Bravara, il passato non è mai scomparso del tutto — e le sue tracce continuano a interferire con il presente.'},
       {name:'Città delle Meraviglie',image:'./media/banner.webp',text:'La città di Ikarius, stretta tra colline, gallerie, baia, viadotti e percorsi pubblici. La geografia determina il movimento e il contrasto tra routine e anomalia.'},
       {name:'Bayrule',image:'./media/tormenta.webp',text:'Territorio di confini politici, rotte clandestine, sottosuolo e alleanze che cambiano di notte. Esplorazione e conflitto hanno un ritmo diverso da Bravara.'},
       {name:'Koreth',image:'./media/welcome.webp',text:'Territorio legato agli Arnins, al Codex e alla conclusione di Devaneios. La sua scala permette scontri e scoperte che minacciano più di una città.'}
@@ -510,7 +510,7 @@ const game = {
     worlds:[
       {name:'Bravara',image:'./media/bravara2.webp',text:'沿岸都市、工業地域、山岳、そして不可能な出来事の隣で機能を続ける制度。捜査はバス、仕事、住宅地、日常と共存します。'},
       {name:'驚異の街',image:'./media/banner.webp',text:'丘、トンネル、湾、高架道路、公共交通に挟まれたIkariusの街。地形が地区の移動と日常・異常の対比を決めます。'},
-      {name:'Bayrule',image:'./media/tormenta.webp',text:'政治的境界、秘密経路、地下社会、夜に変わる同盟の地域。Bravaraの制度外では探索と対立のリズムが変わります。'},
+      {name:'Bravara',image:'./media/bravara2.webp',text:'古くからの伝統と、世代を超えて語り継がれてきた物語によって形作られた地、ブラヴァラ。ここでは過去が完全に消え去ることはなく、その痕跡は今なお現在に影響を与え続けている。'},
       {name:'Koreth',image:'./media/welcome.webp',text:'Arnins、Codex、Devaneiosの終盤につながる地域。一つの都市を越える脅威を描ける規模があります。'}
     ],
     sections:[
