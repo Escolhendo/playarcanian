@@ -288,6 +288,23 @@ function icon(name,size=22){
 }
 
 function logo(className='brand-logo'){ return `<a href="#/" class="${className}" aria-label="Two Eyes On You"><img src="./media/logo.webp" alt="Two Eyes On You"></a>`; }
+function platformMark(type,label,compact=false){
+  const src=type==='steam'?'./media/steam-symbol.webp':'./media/xbox-symbol.webp';
+  return `<span class="platform-mark platform-mark--${esc(type)} ${compact?'platform-mark--compact':''}"><span class="platform-mark__icon"><img src="${src}" alt="" aria-hidden="true"></span><b>${esc(label)}</b></span>`;
+}
+function gamePlatformSet(className='platform-set',compact=false){
+  return `<div class="${className}">${platformMark('xbox','Xbox',compact)}${platformMark('steam','Steam / PC',compact)}</div>`;
+}
+function studioSignature(){
+  const copy={
+    pt:[['ESTÚDIO','Independente · Brasil'],['FOCO','Propriedades originais'],['FORMATOS','Games · Livros · HQ'],['EM PRODUÇÃO','Arcanian']],
+    en:[['STUDIO','Independent · Brazil'],['FOCUS','Original properties'],['FORMATS','Games · Books · Comics'],['IN PRODUCTION','Arcanian']],
+    es:[['ESTUDIO','Independiente · Brasil'],['ENFOQUE','Propiedades originales'],['FORMATOS','Juegos · Libros · Cómics'],['EN PRODUCCIÓN','Arcanian']],
+    it:[['STUDIO','Indipendente · Brasile'],['FOCUS','Proprietà originali'],['FORMATI','Giochi · Libri · Fumetti'],['IN PRODUZIONE','Arcanian']],
+    ja:[['スタジオ','インディー · ブラジル'],['FOCUS','オリジナルIP'],['FORMATS','ゲーム · 書籍 · コミック'],['IN PRODUCTION','Arcanian']]
+  }[contentLang()]||[];
+  return `<section class="studio-signature dark-section" aria-label="Two Eyes On You Studio"><div class="wrap studio-signature__grid">${copy.map(([key,value],i)=>`<div data-reveal><small>${esc(key)}</small><strong>${esc(value)}</strong>${i===0?'<i aria-hidden="true"></i>':''}</div>`).join('')}</div></section>`;
+}
 function button(href,label,tone='primary',extra=''){
   const external=/^https?:|^mailto:/.test(href);
   return `<a href="${esc(href)}" class="btn btn--${tone} ${extra}" ${external?'target="_blank" rel="noreferrer"':''}><span>${esc(label)}</span>${icon(external?'external':'arrow',18)}</a>`;
@@ -306,35 +323,25 @@ function activeFor(route, href){
 function categoryRouteForWork(slug){ if(slug==='arcanian')return'/categoria/jogos'; if(slug==='tormenta')return'/categoria/hq'; return'/categoria/livros'; }
 
 function header(route){
-  const landing=route==='/';
   const primary=[
     ['projects',t().projects,'#/categoria/jogos'],
     ['universe',t().universe,'#/wiki'],
     ['news',t().news,'#/news'],
     ['studio',t().studio,'#/about']
   ];
-  return `<header class="global-header ${landing?'global-header--landing':''}" data-header>
+  return `<header class="global-header" data-header>
     <div class="global-header__bar">
-      ${logo()}
+      <div class="header-brand header-brand--solo">${logo()}</div>
       <nav class="main-nav" aria-label="Principal">
         ${primary.map(([key,label,href])=>{const active=key==='projects'?(route.startsWith('/categoria/')||route.startsWith('/obra/')||route==='/purchase'):key==='universe'?(route==='/wiki'||route==='/timeline'||route.startsWith('/wiki/')):key==='studio'?(route==='/about'||route==='/contact'||route==='/faq'||route.startsWith('/documentation')):route===stripHash(href);return `<button class="main-nav__item ${active?'active':''}" data-mega-trigger="${key}" aria-expanded="false">${esc(label)}${key==='projects'||key==='universe'?icon('chevron',14):''}</button>`;}).join('')}
       </nav>
       <div class="header-tools">
-        ${landing?`<a class="header-landing-cta" href="#/purchase">${esc(t().purchase)}</a>`:''}
+        <a class="header-purchase" href="#/purchase">${esc(t().purchase)}</a>
         <button class="header-tool search-trigger" aria-label="${esc(t().search)}">${icon('search',20)}<span>${esc(t().search)}</span></button>
         <button class="header-tool language-trigger" aria-label="Idioma">${icon('globe',18)}<span>${state.lang.toUpperCase()}</span></button>
         <button class="header-tool menu-trigger" aria-label="${esc(t().menu)}">${icon('menu',22)}</button>
       </div>
     </div>
-    ${landing?'':`<div class="quick-nav">
-      <div class="quick-nav__inner">
-        <a href="#/" class="quick-nav__brand">ARCANIAN</a>
-        <nav aria-label="Atalhos Arcanian">
-          <a href="#/obra/arcanian">${esc(t().games)}</a><a href="#/obra/devaneios">Devaneios</a><a href="#/wiki">${esc(t().wiki)}</a><a href="#/timeline">${esc(t().timeline)}</a>
-        </nav>
-        <a href="#/purchase" class="quick-nav__cta">${esc(t().purchase)}</a>
-      </div>
-    </div>`}
   </header>`;
 }
 
@@ -382,6 +389,35 @@ function searchOverlay(){
   </div>`;
 }
 
+function imageLightbox(){
+  return `<div class="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="${esc(zoomImageLabel())}">
+    <button type="button" class="image-lightbox__backdrop" aria-label="${esc(t().close)}"></button>
+    <div class="image-lightbox__stage">
+      <div class="image-lightbox__top"><span class="image-lightbox__count">01 / 01</span><button type="button" class="image-lightbox__close" aria-label="${esc(t().close)}">${icon('close',24)}</button></div>
+      <button type="button" class="image-lightbox__nav image-lightbox__nav--prev" aria-label="${esc(t().prev)}">${icon('chevron',24)}</button>
+      <figure><img class="image-lightbox__image" src="" alt=""><figcaption class="image-lightbox__caption"></figcaption></figure>
+      <button type="button" class="image-lightbox__nav image-lightbox__nav--next" aria-label="${esc(t().next)}">${icon('chevron',24)}</button>
+    </div>
+  </div>`;
+}
+
+function thirdPartyTrademarkNotice(){
+  return {
+    pt:'Xbox, Steam e demais nomes, logotipos e marcas de terceiros exibidos neste site pertencem aos seus respectivos titulares. O uso é apenas informativo e não implica afiliação, patrocínio ou endosso.',
+    en:'Xbox, Steam and all other third-party names, logos and trademarks displayed on this site belong to their respective owners. Their use is informational only and does not imply affiliation, sponsorship or endorsement.',
+    es:'Xbox, Steam y los demás nombres, logotipos y marcas de terceros mostrados en este sitio pertenecen a sus respectivos titulares. Su uso es únicamente informativo y no implica afiliación, patrocinio ni respaldo.',
+    it:'Xbox, Steam e tutti gli altri nomi, loghi e marchi di terze parti mostrati su questo sito appartengono ai rispettivi titolari. Il loro utilizzo è esclusivamente informativo e non implica affiliazione, sponsorizzazione o approvazione.',
+    ja:'このサイトに表示されるXbox、Steam、その他の第三者の名称・ロゴ・商標は、それぞれの権利者に帰属します。これらの表示は情報提供のみを目的としており、提携、スポンサーシップ、推奨を意味するものではありません。'
+  }[contentLang()] || '';
+}
+
+function projectMeta(meta,work){
+  return meta.map(([k,v],i)=>{
+    const isPlatforms=work.slug==='arcanian' && i===0;
+    return `<div class="${isPlatforms?'project-meta-bar__platform-cell':''}"><small>${esc(k)}</small>${isPlatforms?gamePlatformSet('project-meta-platforms',true):`<strong>${esc(v)}</strong>`}</div>`;
+  }).join('');
+}
+
 function footer(){
   return `<footer class="site-footer">
     <div class="footer-top">
@@ -394,13 +430,14 @@ function footer(){
       </div>
     </div>
     <div class="footer-social-row"><a href="https://instagram.com/twoeyesonyou" target="_blank" rel="noreferrer">Instagram</a><a href="https://youtube.com/@twoeyesonyou" target="_blank" rel="noreferrer">YouTube</a><a href="https://x.com/twoeyeson_you" target="_blank" rel="noreferrer">X</a><a href="https://discord.gg/Ftu5mcXhcX" target="_blank" rel="noreferrer">Discord</a></div>
+    <div class="footer-trademark-note"><p>${esc(thirdPartyTrademarkNotice())}</p></div>
     <div class="footer-bottom"><span>${esc(t().footer)}</span><span>Santos · São Paulo · Brasil</span></div>
   </footer>`;
 }
 
 function shell(route,content){
   const landing=route==='/';
-  return `<button type="button" class="skip-link" data-scroll-to="site-content">${esc(t().skip)}</button>${header(route)}${megaMenus()}${languagePopover()}${mobileDrawer()}${searchOverlay()}<div class="scroll-progress ${landing?'scroll-progress--landing':''}" aria-hidden="true"><i></i></div><div id="site-content" class="site-stage ${landing?'site-stage--landing':''}" tabindex="-1">${content}${footer()}</div><button class="back-top" aria-label="${esc(t().backTop)}">${icon('top',20)}</button>`;
+  return `<button type="button" class="skip-link" data-scroll-to="site-content">${esc(t().skip)}</button>${header(route)}${megaMenus()}${languagePopover()}${mobileDrawer()}${searchOverlay()}${imageLightbox()}<div class="scroll-progress ${landing?'scroll-progress--landing':''}" aria-hidden="true"><i></i></div><div id="site-content" class="site-stage ${landing?'site-stage--landing':''}" tabindex="-1">${content}${footer()}</div><button class="back-top" aria-label="${esc(t().backTop)}">${icon('top',20)}</button>`;
 }
 
 function heroSlide(work,index){
@@ -411,7 +448,7 @@ function heroSlide(work,index){
     devaneios:{media:'./media/welcome.webp',kicker:`ARCANIAN · ${t().episodeOne}`,headline:{pt:'O primeiro caso começa aqui.',en:'The first case begins here.',es:'El primer caso comienza aquí.',it:'Il primo caso comincia qui.',ja:'最初の事件はここから始まる。'}[contentLang()],primary:'#/purchase',primaryLabel:t().purchase,secondary:'#/obra/devaneios',secondaryLabel:t().viewProject,position:'center'},
   };
   const meta=landingMeta[work.slug]||{media:work.image,kicker:`${typeOf(work)} · ${statusOf(work)}`,headline:item.displayTitle,primary:`#/obra/${work.slug}`,primaryLabel:t().discover,secondary:'#/wiki',secondaryLabel:t().universe,position:'center'};
-  const platforms=work.slug==='arcanian'?`<div class="hero-platforms"><span>Xbox</span><span>Steam / PC</span></div>`:'';
+  const platforms=work.slug==='arcanian'?gamePlatformSet('hero-platforms',true):'';
   return `<article class="home-hero__slide ${index===state.hero?'active':''}" data-hero-slide="${index}" data-hero-route="#/obra/${work.slug}">
     <div class="home-hero__media"><img class="hero-media" src="${esc(meta.media)}" alt="" ${index===0?'fetchpriority="high"':'loading="lazy"'} style="object-position:${esc(meta.position)}"><div class="home-hero__scrim"></div></div>
     <div class="home-hero__content wrap"><div class="home-hero__copy home-hero__copy--landing" data-reveal>
@@ -476,7 +513,7 @@ function renderHome(){
     <section id="landing-featured" class="landing-featured dark-section"><div class="wrap">
       ${sectionTitle(t().featured,t().featuredTitle,t().featuredText,`<a class="section-action" href="#/categoria/jogos">${t().viewAll}${icon('arrow',17)}</a>`)}
       <div class="landing-feature-grid">
-        <a href="#/obra/arcanian" class="landing-feature landing-feature--lead" data-reveal><img src="./media/game.webp" alt="" loading="lazy"><div class="landing-feature__shade"></div><div class="landing-feature__copy"><span>${esc(t().gameLabel)}</span><img src="./media/logos-fixed/arcanian.webp" alt="Arcanian"><strong>Xbox · Steam / PC</strong><em>${esc(t().discover)} ${icon('arrow',17)}</em></div></a>
+        <a href="#/obra/arcanian" class="landing-feature landing-feature--lead" data-reveal><img src="./media/game.webp" alt="" loading="lazy"><div class="landing-feature__shade"></div><div class="landing-feature__copy"><span>${esc(t().gameLabel)}</span><img src="./media/logos-fixed/arcanian.webp" alt="Arcanian">${gamePlatformSet('landing-platforms',true)}<em>${esc(t().discover)} ${icon('arrow',17)}</em></div></a>
         <a href="#/purchase" class="landing-feature landing-feature--side" data-reveal><img src="./media/devaneios.webp" alt="" loading="lazy"><div class="landing-feature__shade"></div><div class="landing-feature__copy"><span>${esc(t().episodeOne)}</span><img src="./media/logos-fixed/devaneios.webp" alt="Arcanian: Devaneios"><strong>${esc(t().physicalDigital)}</strong><em>${esc(t().chooseEdition)} ${icon('arrow',17)}</em></div></a>
       </div>
     </div></section>
@@ -520,8 +557,13 @@ function workRelatedWiki(work){
   return (work.relatedWiki||[]).map(slug=>allWikiEntries.find(e=>e.slug===slug)).filter(Boolean).slice(0,8);
 }
 
-function renderProjectMediaGallery(exp){
-  return `<section class="project-gallery dark-section"><div class="wrap"><div class="project-gallery__head" data-reveal><span class="kicker">MEDIA</span><h2>${esc(t().insideWork)}</h2></div><div class="project-gallery__grid">${(exp.gallery||[]).map((src,i)=>`<figure class="project-gallery__item project-gallery__item--${i+1}" data-reveal><img src="${esc(src)}" alt="" loading="lazy"></figure>`).join('')}</div></div></section>`;
+function zoomImageLabel(){
+  return {pt:'Ampliar imagem',en:'Enlarge image',es:'Ampliar imagen',it:'Ingrandisci immagine',ja:'画像を拡大'}[contentLang()]||'Enlarge image';
+}
+function renderProjectMediaGallery(exp,slug=''){
+  const gallery=exp.gallery||[];
+  const count=gallery.length;
+  return `<section class="project-gallery project-gallery--${esc(slug)} dark-section"><div class="wrap"><div class="project-gallery__head" data-reveal><span class="kicker">MEDIA / ${String(count).padStart(2,'0')}</span><h2>${esc(t().insideWork)}</h2></div><div class="project-gallery__grid">${gallery.map((src,i)=>`<figure class="project-gallery__item project-gallery__item--${i+1}" data-reveal><button type="button" class="project-gallery__zoom" data-lightbox-src="${esc(src)}" data-lightbox-index="${i}" aria-label="${esc(zoomImageLabel())}"><img src="${esc(src)}" alt="" loading="lazy"><span class="project-gallery__zoom-icon" aria-hidden="true">${icon('search',18)}</span></button></figure>`).join('')}</div></div></section>`;
 }
 
 function renderProjectFeatures(exp){
@@ -536,13 +578,13 @@ function renderWork(slug){
   const spiralNotes=t().spiralNotes.map(x=>`<span>${esc(x)}</span>`).join('');
   return `<main class="work-page project-page project--${esc(slug)}" style="--work:#c7a24a">
     <section class="project-product-hero dark-section"><img class="project-product-hero__media" src="${esc(work.image)}" alt="" fetchpriority="high"><div class="project-product-hero__shade"></div><div class="wrap project-product-hero__inner"><div class="project-product-hero__copy" data-reveal>${breadcrumb([{label:t().home,href:'#/'},{label:typeOf(work),href:'#'+categoryRouteForWork(slug)},{label:item.displayTitle}])}<span class="project-product-hero__label">${esc(exp?.heroLabel || item.eyebrow || work.eyebrow)}</span><img class="project-product-hero__logo" src="${esc(work.logo)}" alt="${esc(item.displayTitle)}"><div class="button-row">${heroButton}${button('#/wiki',t().wiki,'glass')}</div></div></div></section>
-    <section class="project-meta-bar light-section"><div class="wrap project-meta-bar__grid">${meta.map(([k,v])=>`<div><small>${esc(k)}</small><strong>${esc(v)}</strong></div>`).join('')}</div></section>
+    <section class="project-meta-bar light-section"><div class="wrap project-meta-bar__grid">${projectMeta(meta,work)}</div></section>
     <nav class="work-subnav" aria-label="${esc(t().overview)}"><div class="wrap"><a class="work-subnav__identity" href="#/obra/${esc(work.slug)}" aria-label="${esc(item.displayTitle)}"><img src="${esc(work.logo)}" alt=""></a><button type="button" data-scroll-to="overview">${esc(t().overview)}</button><button type="button" data-scroll-to="details">${esc(t().highlights)}</button><button type="button" data-scroll-to="media">${esc(t().media)}</button>${item.characters?.length?`<button type="button" data-scroll-to="cast">${esc(t().characters)}</button>`:''}${item.worlds?.length?`<button type="button" data-scroll-to="worlds">${esc(t().world)}</button>`:''}${work.slug==='devaneios'?`<button type="button" data-scroll-to="spiral">${esc(t().spiral)}</button>`:''}<button type="button" data-scroll-to="connections">${esc(t().connections)}</button></div></nav>
 
-    <section id="overview" class="project-intro light-section"><div class="wrap project-intro__grid"><div data-reveal><span class="kicker">${esc(exp?.introKicker || 'ARCANIAN')}</span><h1>${esc(exp?.introTitle || item.displayTitle)}</h1></div><div data-reveal><p>${esc(exp?.introText || item.long)}</p>${work.slug==='arcanian'?`<div class="platform-line"><span>${esc(t().platformsPlanned)}</span><strong>Xbox</strong><strong>Steam / PC</strong></div>`:''}</div></div></section>
+    <section id="overview" class="project-intro light-section"><div class="wrap project-intro__grid"><div data-reveal><span class="kicker">${esc(exp?.introKicker || 'ARCANIAN')}</span><h1>${esc(exp?.introTitle || item.displayTitle)}</h1></div><div data-reveal><p>${esc(exp?.introText || item.long)}</p>${work.slug==='arcanian'?`<div class="platform-line"><span>${esc(t().platformsPlanned)}</span>${platformMark('xbox','Xbox')}${platformMark('steam','Steam / PC')}</div>`:''}</div></div></section>
 
     ${renderProjectFeatures(exp||{features:[]})}
-    <div id="media">${renderProjectMediaGallery(exp||{gallery:[work.image]})}</div>
+    <div id="media">${renderProjectMediaGallery(exp||{gallery:[work.image]},work.slug)}</div>
 
     ${work.slug==='devaneios'?`<section id="spiral" class="spiral-feature dark-section"><div class="wrap spiral-feature__grid"><div class="spiral-copy" data-reveal><span class="kicker">DEVANEIOS / ${esc(t().spiralNotes[0].toUpperCase())}</span><h2>${esc(t().spiralTitle)}</h2><p>${esc(t().spiralText)}</p><div class="spiral-notes">${spiralNotes}</div></div>${spiralStage()}</div></section>`:''}
 
@@ -747,7 +789,7 @@ function render(){
 }
 
 function bind(){
-  bindHeader(); bindHero(); bindRail(); bindWiki(); bindTilt(); bindSectionNav();
+  bindHeader(); bindHero(); bindRail(); bindWiki(); bindTilt(); bindSectionNav(); bindLightbox();
   document.querySelectorAll('a[href^="#/"]').forEach(a=>a.addEventListener('click',()=>{state.menuOpen=false;state.searchOpen=false;state.megaOpen=null;}));
   document.querySelectorAll('[data-scroll-to]').forEach(control=>control.addEventListener('click',()=>{
     const target=document.getElementById(control.dataset.scrollTo);
@@ -836,6 +878,53 @@ function renderSearchResults(query=''){
   const results=(q?items.filter(x=>`${x.title} ${x.text||''} ${x.type} ${x.group}`.toLowerCase().includes(q)):items.slice(0,10)).slice(0,18);
   const groups=[...new Set(results.map(x=>x.group))];
   holder.innerHTML=results.length?groups.map(g=>`<section class="search-group"><span>${g}</span>${results.filter(x=>x.group===g).map(x=>`<a href="${esc(x.href)}">${x.image?`<img src="${esc(x.image)}" alt="" loading="lazy">`:'<i></i>'}<div><small>${esc(x.type)}</small><strong>${esc(x.title)}</strong><p>${esc(x.text||'')}</p></div>${icon('arrow',17)}</a>`).join('')}</section>`).join(''):`<p class="empty-inline">${esc(t().noResults)}</p>`;
+}
+
+function bindLightbox(){
+  const lightbox=document.querySelector('.image-lightbox');
+  if(!lightbox)return;
+  const image=lightbox.querySelector('.image-lightbox__image');
+  const count=lightbox.querySelector('.image-lightbox__count');
+  const prev=lightbox.querySelector('.image-lightbox__nav--prev');
+  const next=lightbox.querySelector('.image-lightbox__nav--next');
+  const triggers=[...document.querySelectorAll('[data-lightbox-src]')];
+  let index=0;
+  const show=(nextIndex)=>{
+    if(!triggers.length)return;
+    index=(nextIndex+triggers.length)%triggers.length;
+    const trigger=triggers[index];
+    image.src=trigger.dataset.lightboxSrc;
+    image.alt=trigger.querySelector('img')?.alt||'';
+    count.textContent=`${String(index+1).padStart(2,'0')} / ${String(triggers.length).padStart(2,'0')}`;
+    prev.hidden=next.hidden=triggers.length<2;
+  };
+  const open=(nextIndex)=>{
+    show(nextIndex);
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden','false');
+    document.body.classList.add('lightbox-open');
+    requestAnimationFrame(()=>lightbox.querySelector('.image-lightbox__close')?.focus());
+  };
+  const close=()=>{
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden','true');
+    document.body.classList.remove('lightbox-open');
+    image.removeAttribute('src');
+  };
+  triggers.forEach((trigger,i)=>trigger.addEventListener('click',()=>open(i)));
+  lightbox.querySelector('.image-lightbox__close')?.addEventListener('click',close);
+  lightbox.querySelector('.image-lightbox__backdrop')?.addEventListener('click',close);
+  prev?.addEventListener('click',()=>show(index-1));
+  next?.addEventListener('click',()=>show(index+1));
+  const figure=lightbox.querySelector('figure');
+  let touchStartX=0;
+  figure?.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0]?.clientX||0;},{passive:true});
+  figure?.addEventListener('touchend',e=>{const x=e.changedTouches[0]?.clientX||0;const delta=x-touchStartX;if(Math.abs(delta)>48)show(index+(delta<0?1:-1));},{passive:true});
+  lightbox.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.stopPropagation();close();}
+    if(e.key==='ArrowLeft')show(index-1);
+    if(e.key==='ArrowRight')show(index+1);
+  });
 }
 
 function bindTilt(){

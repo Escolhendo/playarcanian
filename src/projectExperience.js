@@ -5,7 +5,7 @@ const projectExperience = {
       meta:[['Plataformas','Xbox · Steam / PC'],['Jogadores','1–2'],['Formato','Campanha episódica'],['Status','Em desenvolvimento']],
       introKicker:'O JOGO DA ARCANIAN', introTitle:'A história não vira cutscene. Vira espaço, decisão e consequência.',
       introText:'Arcanian adapta núcleos de Devaneios, Menos Um e Tormenta dentro de uma campanha própria. Ikarius e Joel não repetem os livros: eles atravessam conflitos reorganizados para investigação ambiental, combate, exploração e cooperação.',
-      gallery:['./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
+      gallery:['./media/arcanian-still-01.webp','./media/arcanian-still-02.webp','./media/arcanian-still-03.webp','./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
       features:[
         ['INVESTIGAÇÃO','Investigue antes de acreditar.','Cenas, resíduos, posição de objetos e comportamento anômalo produzem hipóteses que o jogador pode testar. O método de Ikarius deixa de ser texto e vira interação.','./media/banner.webp'],
         ['COMBATE','Cada personagem luta como pensa.','Cartas e passagens para Ikarius, tempo e espada para Joel, mobilidade para Aphride e manifestações próprias para o restante do elenco. Combate não é um sistema genérico aplicado a todos.','./media/game.webp'],
@@ -33,7 +33,7 @@ const projectExperience = {
       meta:[['Platforms','Xbox · Steam / PC'],['Players','1–2'],['Format','Episodic campaign'],['Status','In development']],
       introKicker:'THE ARCANIAN GAME', introTitle:'The story does not become a cutscene. It becomes space, choice and consequence.',
       introText:'Arcanian adapts storylines from Devaneios, Menos Um and Tormenta into an original campaign. Ikarius and Joel do not simply repeat the books: their conflicts are reorganized for environmental investigation, combat, exploration and cooperation.',
-      gallery:['./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
+      gallery:['./media/arcanian-still-01.webp','./media/arcanian-still-02.webp','./media/arcanian-still-03.webp','./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
       features:[
         ['INVESTIGATION','Investigate before you believe.','Scenes, residue, object placement and anomalous behavior create hypotheses the player can test. Ikarius’s method stops being text and becomes interaction.','./media/banner.webp'],
         ['COMBAT','Each character fights the way they think.','Cards and passages for Ikarius, time and swordplay for Joel, mobility for Aphride and unique manifestations for the rest of the cast. Combat is not one generic system applied to everyone.','./media/game.webp'],
@@ -61,7 +61,7 @@ const projectExperience = {
       meta:[['Plataformas','Xbox · Steam / PC'],['Jugadores','1–2'],['Formato','Campaña episódica'],['Estado','En desarrollo']],
       introKicker:'EL JUEGO ARCANIAN', introTitle:'La historia no se convierte en cinemática. Se convierte en espacio, decisión y consecuencia.',
       introText:'Arcanian adapta núcleos de Devaneios, Menos Um y Tormenta dentro de una campaña propia. Ikarius y Joel no repiten los libros: atraviesan conflictos reorganizados para investigación ambiental, combate, exploración y cooperación.',
-      gallery:['./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
+      gallery:['./media/arcanian-still-01.webp','./media/arcanian-still-02.webp','./media/arcanian-still-03.webp','./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
       features:[
         ['INVESTIGACIÓN','Investiga antes de creer.','Escenas, residuos, posición de objetos y comportamiento anómalo generan hipótesis que el jugador puede poner a prueba. El método de Ikarius deja de ser texto y se vuelve interacción.','./media/banner.webp'],
         ['COMBATE','Cada personaje lucha como piensa.','Cartas y pasajes para Ikarius, tiempo y espada para Joel, movilidad para Aphride y manifestaciones propias para el resto del elenco. El combate no es un sistema genérico aplicado a todos.','./media/game.webp'],
@@ -89,7 +89,7 @@ const projectExperience = {
       meta:[['Piattaforme','Xbox · Steam / PC'],['Giocatori','1–2'],['Formato','Campagna episodica'],['Stato','In sviluppo']],
       introKicker:'IL GIOCO ARCANIAN', introTitle:'La storia non diventa una cutscene. Diventa spazio, scelta e conseguenza.',
       introText:'Arcanian adatta nuclei di Devaneios, Menos Um e Tormenta in una campagna originale. Ikarius e Joel non ripetono i libri: attraversano conflitti riorganizzati per indagine ambientale, combattimento, esplorazione e cooperazione.',
-      gallery:['./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
+      gallery:['./media/arcanian-still-01.webp','./media/arcanian-still-02.webp','./media/arcanian-still-03.webp','./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
       features:[
         ['INDAGINE','Indaga prima di credere.','Scene, residui, posizione degli oggetti e comportamenti anomali producono ipotesi che il giocatore può verificare. Il metodo di Ikarius smette di essere testo e diventa interazione.','./media/banner.webp'],
         ['COMBATTIMENTO','Ogni personaggio combatte come pensa.','Carte e passaggi per Ikarius, tempo e spada per Joel, mobilità per Aphride e manifestazioni proprie per il resto del cast. Il combattimento non è un sistema generico applicato a tutti.','./media/game.webp'],
@@ -117,7 +117,7 @@ const projectExperience = {
       meta:[['予定プラットフォーム','Xbox · Steam / PC'],['プレイヤー','1–2'],['形式','エピソード制キャンペーン'],['状態','開発中']],
       introKicker:'ARCANIAN ゲーム', introTitle:'物語はカットシーンになるのではない。空間、選択、結果になる。',
       introText:'ArcanianはDevaneios、Menos Um、Tormentaの物語要素を独自のキャンペーンとして再構成します。IkariusとJoelは本の出来事をそのまま繰り返すのではなく、環境捜査、戦闘、探索、協力のために組み替えられた対立を進みます。',
-      gallery:['./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
+      gallery:['./media/arcanian-still-01.webp','./media/arcanian-still-02.webp','./media/arcanian-still-03.webp','./media/game.webp','./media/banner.webp','./media/bravara2.webp'],
       features:[
         ['捜査','信じる前に調べる。','現場、残留物、物体の位置、異常な挙動から仮説が生まれ、プレイヤーはそれを検証できます。Ikariusの方法論が文章から操作へ変わります。','./media/banner.webp'],
         ['戦闘','思考の違いが戦い方になる。','Ikariusはカードと通路、Joelは時間と剣、Aphrideは機動力、ほかの人物も固有の発現を使います。全員に同じ汎用戦闘システムを当てはめません。','./media/game.webp'],
