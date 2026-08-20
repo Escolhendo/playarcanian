@@ -242,6 +242,12 @@ svg{display:block}
   .home-start{padding:35px 0 80px}.start-grid{grid-template-columns:1fr}.start-card{aspect-ratio:16/11}.start-card__copy p{font-size:12px}
   .project-library,.newswire,.formats,.faq-preview,.work-pillars,.threads-section,.longform,.cast-section,.related-wiki,.more-projects{padding:78px 0 85px}
   .media-rail{grid-auto-columns:84vw}.media-rail-card{min-height:490px}
+
+  .announced-card__copy{min-height:235px;padding:22px 20px 24px}
+  .announced-card__logo-wrap{height:78px;margin:14px 0 16px}
+  .announced-card__logo{max-height:66px}
+  .announced-card__logo--tormenta{max-height:54px}
+  .announced-card__logo--a-ultima-danca{max-height:70px}
   .database-feature,.database-feature__inner{min-height:650px}.database-feature__media div{background:linear-gradient(0deg,rgba(0,0,0,.95),rgba(0,0,0,.65) 50%,rgba(0,0,0,.08) 82%)}.database-feature__inner{align-items:flex-end;padding-bottom:60px}.database-feature__copy{width:100%}.database-feature h2{font-size:55px}.database-feature p{font-size:14px}.database-stats{gap:18px}.database-stats b{font-size:28px}
   .news-grid{grid-template-columns:1fr}.news-card--lead{grid-column:auto}.news-card,.news-card:not(.news-card--lead),.news-card--lead{grid-template-columns:1fr;grid-template-rows:240px auto}.news-card__copy{padding:20px}.news-card h3,.news-card--lead h3{font-size:28px}
   .format-grid{grid-template-columns:1fr}.format-tile{aspect-ratio:16/10}.format-tile h3{font-size:42px}
@@ -649,17 +655,22 @@ svg{display:block}
 .media-rail--primary{grid-auto-columns:minmax(360px,48%)}
 .announced-projects{padding:105px 0 120px;background:#f1f0eb;color:#111}
 .announced-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.announced-card{background:#fff;border:1px solid #d8d6ce;min-width:0}
+.announced-card{background:#0b0b0b;border:1px solid #262626;min-width:0;color:#fff}
 .announced-card__media{height:280px;position:relative;overflow:hidden;background:#111}
 .announced-card__media:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.72),rgba(0,0,0,.03) 62%)}
 .announced-card__media img{width:100%;height:100%;object-fit:cover;filter:saturate(.78);transition:transform .45s ease}
 .announced-card__media>span{position:absolute;z-index:2;left:18px;top:18px;font-size:10px;letter-spacing:.16em;color:#fff;font-weight:900}
 .announced-card__media>b{position:absolute;z-index:2;right:16px;top:16px;background:var(--gold);color:#090909;padding:7px 9px;font-size:9px;letter-spacing:.14em;font-weight:950}
-.announced-card__copy{padding:24px 24px 26px}
-.announced-card__copy small{font-size:9px;letter-spacing:.16em;font-weight:900;color:#777}
-.announced-card__copy h3{font-size:clamp(26px,2.4vw,38px);line-height:1;letter-spacing:-.045em;margin:12px 0 14px}
-.announced-card__copy p{color:#5f6064;font-size:14px;line-height:1.62;margin:0 0 22px}
-.announced-card__copy em{display:block;border-top:1px solid #dedcd5;padding-top:15px;font-size:10px;font-style:normal;font-weight:850;letter-spacing:.06em;color:#8b7640;text-transform:uppercase}
+.announced-card__copy{padding:26px 24px 28px;background:#0b0b0b;min-height:260px;display:flex;flex-direction:column}
+.announced-card__copy small{font-size:9px;letter-spacing:.16em;font-weight:900;color:#aaa}
+.announced-card__copy p{color:#c6c6c6;font-size:14px;line-height:1.62;margin:0 0 22px}
+.announced-card__copy em{display:block;border-top:1px solid #2e2e2e;padding-top:15px;margin-top:auto;font-size:10px;font-style:normal;font-weight:850;letter-spacing:.06em;color:var(--gold-2);text-transform:uppercase}
+
+.announced-card__logo-wrap{height:92px;margin:16px 0 18px;display:flex;align-items:center;justify-content:flex-start}
+.announced-card__logo{display:block;width:auto;max-width:92%;max-height:76px;object-fit:contain;object-position:left center;filter:none}
+.announced-card__logo--menos-um{max-width:88%;max-height:70px}
+.announced-card__logo--tormenta{max-width:90%;max-height:62px}
+.announced-card__logo--a-ultima-danca{max-width:78%;max-height:82px}
 .announced-card:hover .announced-card__media img{transform:scale(1.025)}
 .format-grid--primary{grid-template-columns:repeat(2,minmax(0,1fr))}
 
@@ -989,4 +1000,104 @@ body.lightbox-open{overflow:hidden}
   .image-lightbox__nav{top:auto;bottom:calc(14px + env(safe-area-inset-bottom));margin-top:0;width:42px;height:42px}
   .image-lightbox__nav--prev{left:calc(50% - 50px)}
   .image-lightbox__nav--next{right:calc(50% - 50px)}
+}
+
+/* V31 — mobile typography/layout hardening */
+@media (max-width: 760px){
+  /* Project introductions must become a true single-column flow on phones. */
+  .project-intro,
+  .project--arcanian .project-intro,
+  .project--devaneios .project-intro,
+  .project--menos-um .project-intro,
+  .project--a-ultima-danca .project-intro,
+  .project--tormenta .project-intro{
+    padding:64px 0 72px;
+    overflow:hidden;
+  }
+  .project-intro__grid,
+  .project--arcanian .project-intro__grid,
+  .project--devaneios .project-intro__grid,
+  .project--menos-um .project-intro__grid,
+  .project--a-ultima-danca .project-intro__grid,
+  .project--tormenta .project-intro__grid{
+    display:flex;
+    flex-direction:column;
+    grid-template-columns:none;
+    gap:28px;
+    width:100%;
+    min-width:0;
+  }
+  .project-intro__grid > *{width:100%;min-width:0;max-width:none}
+  .project-intro h1,
+  .project--arcanian .project-intro h1,
+  .project--devaneios .project-intro h1,
+  .project--menos-um .project-intro h1,
+  .project--a-ultima-danca .project-intro h1,
+  .project--tormenta .project-intro h1{
+    width:100%;
+    max-width:100%;
+    margin:0;
+    font-size:clamp(42px,12.2vw,64px);
+    line-height:.94;
+    letter-spacing:-.055em;
+    overflow-wrap:normal;
+    word-break:normal;
+    hyphens:none;
+    text-wrap:balance;
+  }
+  .project-intro p{
+    width:100%;
+    max-width:100%;
+    margin:0;
+    font-size:16px;
+    line-height:1.65;
+    overflow-wrap:break-word;
+    word-break:normal;
+    hyphens:auto;
+  }
+  .project-intro .kicker{display:block;margin-bottom:18px;max-width:100%}
+  .project-intro .platform-line{
+    width:100%;
+    margin-top:26px;
+    padding-top:18px;
+    grid-template-columns:1fr;
+  }
+  .project-intro .platform-line>span{grid-column:auto}
+  .project-intro .platform-line>.platform-mark{width:100%;min-width:0}
+
+  /* Keep large editorial headings readable across the rest of the site. */
+  :is(.section-head,.project-gallery__head,.about-hero,.studio-feature,.home-start,.landing-featured) h2,
+  .project-gallery__head h2{
+    max-width:100%;
+    overflow-wrap:normal;
+    word-break:normal;
+    hyphens:none;
+    text-wrap:balance;
+  }
+  .project-gallery__head h2{font-size:clamp(38px,11vw,52px);line-height:.98}
+
+  /* Any two-column project/story grids that survive legacy selectors collapse here. */
+  .project--arcanian :is(.story-grid,.world-grid,.project-feature-grid),
+  .project--devaneios :is(.story-grid,.world-grid,.project-feature-grid),
+  .project--menos-um :is(.story-grid,.world-grid,.project-feature-grid),
+  .project--a-ultima-danca :is(.story-grid,.world-grid,.project-feature-grid),
+  .project--tormenta :is(.story-grid,.world-grid,.project-feature-grid){
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width: 430px){
+  .project-intro,
+  .project--arcanian .project-intro,
+  .project--devaneios .project-intro,
+  .project--menos-um .project-intro,
+  .project--a-ultima-danca .project-intro,
+  .project--tormenta .project-intro{padding:52px 0 62px}
+  .project-intro h1,
+  .project--arcanian .project-intro h1,
+  .project--devaneios .project-intro h1,
+  .project--menos-um .project-intro h1,
+  .project--a-ultima-danca .project-intro h1,
+  .project--tormenta .project-intro h1{font-size:clamp(38px,12.7vw,54px);line-height:.96}
+  .project-intro p{font-size:15.5px;line-height:1.62}
 }

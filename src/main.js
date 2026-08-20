@@ -492,7 +492,7 @@ function announcedCard(work,index){
     tormenta:{type:t().tormentaType,text:t().tormentaText},
     'a-ultima-danca':{type:t().lastDanceType,text:t().lastDanceText}
   }[work.slug] || {type:typeOf(work),text:item.summary};
-  return `<article class="announced-card" data-reveal><div class="announced-card__media"><img src="${esc(work.image)}" alt="" loading="lazy"><span>${String(index+1).padStart(2,'0')}</span><b>${esc(t().announcedBadge)}</b></div><div class="announced-card__copy"><small>${esc(meta.type)}</small><h3>${esc(item.displayTitle)}</h3><p>${esc(meta.text)}</p><em>${esc(t().announcedMore)}</em></div></article>`;
+  return `<article class="announced-card" data-reveal><div class="announced-card__media"><img src="${esc(work.image)}" alt="" loading="lazy"><span>${String(index+1).padStart(2,'0')}</span><b>${esc(t().announcedBadge)}</b></div><div class="announced-card__copy"><small>${esc(meta.type)}</small><div class="announced-card__logo-wrap"><img class="announced-card__logo announced-card__logo--${esc(work.slug)}" src="${esc(work.logo)}" alt="${esc(item.displayTitle)}" loading="lazy"></div><p>${esc(meta.text)}</p><em>${esc(t().announcedMore)}</em></div></article>`;
 }
 
 function renderHome(){
