@@ -38,7 +38,6 @@ const navPrimary = [
   ['home', '#/', 'home'],
   ['projects', '#/arcanian', 'grid'],
   ['news', '#/news', 'news'],
-  ['wiki', '#/wiki', 'wiki'],
   ['studio', '#/about', 'studio']
 ];
 
@@ -487,7 +486,6 @@ function TopBar({ route, onSearch, onSettings }) {
       </nav>
       <nav className="global-mobile-menu__secondary">
         <SmartLink href="#/arcanian">{formats.all}</SmartLink>
-        <SmartLink href="#/wiki">{d.nav.wiki}</SmartLink>
         <SmartLink href="#/media">{d.nav.media}</SmartLink>
         <SmartLink href="#/about">{d.nav.studio}</SmartLink>
         <SmartLink href="#/documentation">{d.nav.documents}</SmartLink>
@@ -573,7 +571,6 @@ function CommandPalette({ open, close }) {
   const commands = useMemo(() => [
     ...[...navPrimary, ...navSecondary].map(([key, href, icon]) => ({ title: d.nav[key], href, icon, meta: d.search.navigation })),
     ...works.map((work) => ({ title: localizedWork(work, lang).displayTitle, href: `#/obra/${work.slug}`, icon: 'book', meta: d.search.work })),
-    ...allWikiEntries.map((entry) => ({ title: entry.name, href: `#/wiki/${entry.slug}`, icon: 'wiki', meta: d.search.wiki })),
     ...docs.map((doc) => ({ title: doc.title, href: `#/documentation/${doc.slug}`, icon: 'document', meta: d.search.document }))
   ], [d, lang]);
   const results = commands.filter((item) => `${item.title} ${item.meta}`.toLowerCase().includes(query.toLowerCase())).slice(0, 14);
@@ -926,38 +923,61 @@ function HomePage() {
   const { lang } = useSite();
   const c = redesignCopy[lang] || redesignCopy.en;
   const lines = shortProjectCopy[lang] || shortProjectCopy.en;
-  return <main className="neo-home">
-    <section className="neo-home__hero">
-      <div className="neo-home__hero-copy" data-reveal>
-        <h1><span>{c.home.titleA}</span><em>{c.home.titleB}</em></h1>
-        <p>{c.home.text}</p>
-        <div className="hero-actions"><ButtonLink href="#/arcanian">{c.home.projects}</ButtonLink><ButtonLink href="#/about" tone="secondary">{c.home.studio}</ButtonLink></div>
+  const game = works.find((work) => work.slug === 'arcanian');
+  const devaneios = works.find((work) => work.slug === 'devaneios');
+  const editorial = works.filter((work) => work.slug !== 'arcanian');
+  const labels = {
+    pt:{featured:'Em destaque',game:'Jogo em desenvolvimento',gameTitle:'Entre na investigação.',gameText:'Uma aventura narrativa de ação para um ou dois jogadores. Investigue, explore e encare as consequências de uma realidade que não deveria ter sido aberta.',discover:'Conhecer Arcanian',projects:'Todos os projetos',catalog:'Universo Two Eyes On You',catalogTitle:'Histórias para jogar, ler e descobrir.',catalogText:'Cada projeto nasce para o formato que melhor serve sua história. Conheça os títulos publicados e os próximos capítulos do estúdio.',available:'Já disponível',buy:'Comprar Devaneios',bookText:'O primeiro episódio publicado de Arcanian.',news:'Novidades',newsTitle:'O que está acontecendo no estúdio.',allNews:'Ver todas',studio:'Two Eyes On You',studioTitle:'Criamos universos, não apenas produtos.',studioText:'Um estúdio independente brasileiro trabalhando entre literatura, quadrinhos e jogos. A mesma obsessão por personagens, atmosfera e consequência em formatos diferentes.',about:'Conheça o estúdio',media:'Ver mídia',coming:'Próximos capítulos',platforms:'Steam · Xbox · PC',explore:'Explorar projeto'},
+    en:{featured:'Featured',game:'Game in development',gameTitle:'Enter the investigation.',gameText:'A narrative action adventure for one or two players. Investigate, explore and face the consequences of a reality that should never have been opened.',discover:'Discover Arcanian',projects:'All projects',catalog:'Two Eyes On You universe',catalogTitle:'Stories to play, read and discover.',catalogText:'Each project is built for the format that serves its story best. Explore published titles and what comes next from the studio.',available:'Available now',buy:'Buy Devaneios',bookText:'The first published episode of Arcanian.',news:'News',newsTitle:'What is happening at the studio.',allNews:'View all',studio:'Two Eyes On You',studioTitle:'We build universes, not just products.',studioText:'An independent Brazilian studio working across books, comics and games, with the same focus on characters, atmosphere and consequence in every format.',about:'Meet the studio',media:'View media',coming:'What comes next',platforms:'Steam · Xbox · PC',explore:'Explore project'}
+  };
+  const t = labels[lang] || labels.en;
+  const cleanNews = news.filter((item) => item.href !== '#/wiki');
+
+  return <main className="portal-home">
+    <section className="portal-hero">
+      <div className="portal-hero__media"><img src="./media/game.webp" alt=""/><div className="portal-hero__veil"/></div>
+      <div className="portal-hero__content" data-reveal>
+        <span className="portal-kicker"><i/> {t.game}</span>
+        <ProjectLogo work={game} className="portal-hero__logo" eager/>
+        <h1>{t.gameTitle}</h1>
+        <p>{t.gameText}</p>
+        <div className="portal-actions"><ButtonLink href="#/obra/arcanian">{t.discover}</ButtonLink><ButtonLink href="#/arcanian" tone="secondary">{t.projects}</ButtonLink></div>
       </div>
-      <InteractiveEye3D/>
+      <div className="portal-hero__meta" aria-label={t.platforms}><span>{t.platforms}</span><span>2D / 2.5D</span><span>1–2 PLAYERS</span></div>
     </section>
 
-    <section className="neo-home__projects">
-      <header data-reveal><small>{c.home.selected}</small><h2>{c.home.selectedTitle}</h2></header>
-      <div className="project-mosaic">
-        {works.map((work, index) => <SmartLink href={`#/obra/${work.slug}`} key={work.slug} className={`project-mosaic__card project-mosaic__card--${work.slug}`} style={{'--project-accent':work.accent}} data-reveal>
-          <img src={work.image} alt="" loading={index < 2 ? 'eager' : 'lazy'}/><span className="project-mosaic__shade"/>
-          <div><small>{String(index + 1).padStart(2,'0')}</small><ProjectLogo work={work} className="project-logo--mosaic"/><p>{lines[work.slug]}</p><b><Icon name="arrow"/></b></div>
+    <section className="portal-section portal-featured">
+      <div className="portal-section__head" data-reveal><div><small>{t.featured}</small><h2>{t.catalogTitle}</h2></div><SmartLink href="#/arcanian" className="portal-text-link">{t.projects}<Icon name="arrow"/></SmartLink></div>
+      <div className="portal-featured__grid">
+        {editorial.map((work,index)=> <SmartLink href={`#/obra/${work.slug}`} className={`portal-card portal-card--${work.slug}`} style={{'--project-accent':work.accent}} key={work.slug} data-reveal>
+          <div className="portal-card__image"><img src={work.image} alt="" loading={index < 2 ? 'eager' : 'lazy'}/><span/></div>
+          <div className="portal-card__body"><small>{localizedWork(work,lang).eyebrow}</small><ProjectLogo work={work} className="portal-card__logo"/><p>{lines[work.slug]}</p><span className="portal-card__cta">{t.explore}<Icon name="arrow"/></span></div>
         </SmartLink>)}
       </div>
     </section>
 
-    <FormatDirectory/>
-
-    <section className="neo-home__film">
-      <div className="neo-film__copy" data-reveal><small>{c.home.film}</small><h2>{c.home.filmTitle}</h2><p>{c.home.filmText}</p><ButtonLink href="#/purchase" tone="outline">{c.work.stores}</ButtonLink></div>
-      <div className="neo-film__screen" data-reveal><video autoPlay loop muted playsInline preload="auto" poster="./media/devaneios.webp" aria-label={c.home.filmTitle}><source src="./media/arcanian.mp4" type="video/mp4"/></video><span>{c.work.devaneiosEpisode.toUpperCase()}</span></div>
+    <section className="portal-promo" data-reveal>
+      <div className="portal-promo__art"><img src="./media/welcome.webp" alt=""/><span/></div>
+      <div className="portal-promo__copy"><small>{t.available}</small><ProjectLogo work={devaneios} className="portal-promo__logo"/><p>{t.bookText}</p><ButtonLink href="#/purchase">{t.buy}</ButtonLink></div>
     </section>
 
-    <FAQSection/>
+    <section className="portal-section portal-news">
+      <div className="portal-section__head" data-reveal><div><small>{t.news}</small><h2>{t.newsTitle}</h2></div><SmartLink href="#/news" className="portal-text-link">{t.allNews}<Icon name="arrow"/></SmartLink></div>
+      <div className="portal-news__grid">
+        {cleanNews.map((item,index)=><SmartLink href={item.href} className="portal-news-card" key={`${item.title}-${index}`} data-reveal>
+          <div className="portal-news-card__media"><img src={item.image} alt="" loading="lazy"/></div>
+          <div className="portal-news-card__copy"><span>{item.date}</span><small>{item.category}</small><h3>{item.title}</h3><p>{item.text}</p><b>{t.explore}<Icon name="arrow"/></b></div>
+        </SmartLink>)}
+        <SmartLink href="#/media" className="portal-news-card portal-news-card--media" data-reveal>
+          <div className="portal-news-card__media"><video autoPlay loop muted playsInline preload="metadata" poster="./media/devaneios.webp"><source src="./media/arcanian.mp4" type="video/mp4"/></video></div>
+          <div className="portal-news-card__copy"><span>ARCANIAN</span><small>MEDIA</small><h3>{c.home.filmTitle}</h3><p>{c.home.filmText}</p><b>{t.media}<Icon name="arrow"/></b></div>
+        </SmartLink>
+      </div>
+    </section>
 
-    <section className="neo-home__wiki">
-      <div data-reveal><small>{c.home.wiki}</small><h2>{c.home.wikiTitle}</h2><p>{c.home.wikiText}</p><ButtonLink href="#/wiki">{c.home.openWiki}</ButtonLink></div>
-      <div className="neo-home__wiki-number" aria-hidden="true"><strong>{allWikiEntries.length}</strong><span>ENTRIES</span></div>
+    <section className="portal-studio" data-reveal>
+      <div className="portal-studio__visual"><img src="./media/eye-ink.webp" alt=""/></div>
+      <div className="portal-studio__copy"><small>{t.studio}</small><h2>{t.studioTitle}</h2><p>{t.studioText}</p><div className="portal-actions"><ButtonLink href="#/about">{t.about}</ButtonLink><ButtonLink href="#/contact" tone="secondary">Contato</ButtonLink></div></div>
     </section>
   </main>;
 }
@@ -1203,14 +1223,14 @@ function DevaneiosPage({ work, item }) {
     <section className="case-hero">
       <div className="case-hero__media"><img src={work.image} alt=""/></div><div className="case-hero__veil"/>
       <div className="case-file-tabs" aria-hidden="true"><span>CASE 01</span><span>MNT-04</span><span>08.08.1974</span></div>
-      <div className="case-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--case" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><div className="hero-actions"><ButtonLink href="#/purchase">{c.work.stores}</ButtonLink><ButtonLink href="#/wiki" tone="secondary">{c.work.openWiki}</ButtonLink></div></div>
+      <div className="case-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--case" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><div className="hero-actions"><ButtonLink href="#/purchase">{c.work.stores}</ButtonLink><ButtonLink href="#/arcanian" tone="secondary">{c.home.projects}</ButtonLink></div></div>
       <div className="case-hero__stamp" aria-hidden="true"><b>EVIDÊNCIA</b><span>CAMPO FORTE</span></div>
       <CaseSpiral3D/>
       <div className="case-hero__facts">{item.facts.slice(0,4).map(([label,value])=><div key={label}><small>{label}</small><strong>{value}</strong></div>)}</div>
     </section>
     <section className="case-film"><div data-reveal><small>{c.work.watch}</small><h2>{c.work.devaneiosEpisode}</h2></div><video autoPlay loop muted playsInline preload="auto" poster="./media/devaneios.webp" data-reveal aria-label={c.work.devaneiosEpisode}><source src="./media/arcanian.mp4" type="video/mp4"/></video></section>
     <section className="case-ledger"><header data-reveal><small>{c.work.evidence}</small><h2>{workIdentityCopy[lang]?.devaneios?.title || workIdentityCopy.en.devaneios.title}</h2></header><div>{item.threads.slice(0,4).map((thread,index)=><article key={thread.title} data-reveal><span>{String(index+1).padStart(2,'0')}</span><h3>{thread.title}</h3><p>{thread.text}</p></article>)}</div></section>
-    <section className="project-endcap"><span aria-hidden="true">CASE / 01</span><div><h2>{c.home.wikiTitle}</h2><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></div></section>
+    <section className="project-endcap"><span aria-hidden="true">CASE / 01</span><div><h2>{c.projects.title}</h2><ButtonLink href="#/arcanian">{c.home.projects}</ButtonLink></div></section>
   </main>;
 }
 
@@ -1222,13 +1242,13 @@ function MenosUmPage({ work, item }) {
     <section className="minus-hero">
       <div className="minus-hero__number" aria-hidden="true">−1</div>
       <div className="minus-hero__thread" aria-hidden="true"><i/><i/><i/><span>J + E</span></div>
-      <div className="minus-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--minus" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><div className="hero-actions"><ButtonLink href="#/wiki/joel">Joel</ButtonLink><ButtonLink href="#/wiki/elisabeth" tone="secondary">Elisabeth</ButtonLink></div></div>
+      <div className="minus-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--minus" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><div className="hero-actions"><ButtonLink href="#/arcanian">{c.home.projects}</ButtonLink></div></div>
       <figure data-reveal><img src={work.image} alt=""/><figcaption>JOEL × ELISABETH</figcaption><span className="minus-photo-date">ANTES DA RUPTURA</span></figure>
       <div className="minus-margin-note" aria-hidden="true"><span>promessa</span><i/><span>casa</span><i/><span>futuro</span></div>
     </section>
     <section className="minus-manifesto" data-reveal><small>{identity.label}</small><h2>{identity.title}</h2><p>{identity.text}</p></section>
     <section className="minus-moments"><header data-reveal><small>{c.work.chapter}</small><h2>{c.work.beforeRupture}</h2></header><div>{item.sections.slice(0,3).map((section,index)=><article key={section.title} data-reveal><span>0{index+1}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}</div></section>
-    <section className="minus-end"><div aria-hidden="true"><span>J</span><i/><span>E</span></div><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></section>
+    <section className="minus-end"><div aria-hidden="true"><span>J</span><i/><span>E</span></div><ButtonLink href="#/arcanian">{c.home.projects}</ButtonLink></section>
   </main>;
 }
 
@@ -1237,7 +1257,7 @@ function UltimaDancaPage({ work, item }) {
   const c = redesignCopy[lang] || redesignCopy.en;
   const identity = workIdentityCopy[lang]?.['a-ultima-danca'] || workIdentityCopy.en['a-ultima-danca'];
   return <main className="project-page project-page--dance" style={{'--work-accent':work.accent}}>
-    <section className="dance-hero"><div className="dance-hero__curtain"/><div className="dance-hero__spotlight"/><img src={work.image} alt=""/><div className="dance-program" aria-hidden="true"><span>ATO I</span><span>ATO II</span><span>ATO III</span></div><div className="dance-hero__copy" data-reveal><div className="dance-sequel-tag"><span>{c.work.directContinuation}</span><ProjectLogo work={works.find((candidate)=>candidate.slug==='devaneios')} compact/></div><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--dance" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></div><div className="dance-hero__infinity" aria-hidden="true">∞</div><div className="dance-heartline" aria-hidden="true"><i/><i/><i/></div></section>
+    <section className="dance-hero"><div className="dance-hero__curtain"/><div className="dance-hero__spotlight"/><img src={work.image} alt=""/><div className="dance-program" aria-hidden="true"><span>ATO I</span><span>ATO II</span><span>ATO III</span></div><div className="dance-hero__copy" data-reveal><div className="dance-sequel-tag"><span>{c.work.directContinuation}</span><ProjectLogo work={works.find((candidate)=>candidate.slug==='devaneios')} compact/></div><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--dance" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><ButtonLink href="#/arcanian">{c.home.projects}</ButtonLink></div><div className="dance-hero__infinity" aria-hidden="true">∞</div><div className="dance-heartline" aria-hidden="true"><i/><i/><i/></div></section>
     <section className="dance-statement" data-reveal><small>{identity.label}</small><h2>{identity.title}</h2><p>{identity.text}</p></section>
     <section className="dance-acts"><header data-reveal><small>{c.work.acts}</small><span>I — II — III</span></header>{item.sections.slice(0,3).map((section,index)=><article key={section.title} data-reveal><div><span>{c.work.act} {index+1}</span><h2>{section.title}</h2></div><p>{section.text}</p></article>)}</section>
     <section className="dance-final"><div className="dance-final__line"/><strong>{c.work.lastChance}</strong><div className="dance-final__line"/></section>
@@ -1250,7 +1270,7 @@ function TormentaPage({ work, item }) {
   const identity = workIdentityCopy[lang]?.tormenta || workIdentityCopy.en.tormenta;
   const panels = [work.image,'./media/welcome.webp','./media/game.webp'];
   return <main className="project-page project-page--tormenta" style={{'--work-accent':work.accent}}>
-    <section className="storm-hero"><div className="storm-hero__sky"><img src={work.image} alt=""/></div><div className="storm-lightning" aria-hidden="true"><i/><i/><i/></div><div className="storm-issue" aria-hidden="true"><span>ISSUE 01</span><b>{c.work.beforeGreatDay}</b></div><div className="storm-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--storm" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><ButtonLink href="#/wiki">{c.work.openWiki}</ButtonLink></div><div className="storm-hero__mark" aria-hidden="true"><i/><i/><i/></div></section>
+    <section className="storm-hero"><div className="storm-hero__sky"><img src={work.image} alt=""/></div><div className="storm-lightning" aria-hidden="true"><i/><i/><i/></div><div className="storm-issue" aria-hidden="true"><span>ISSUE 01</span><b>{c.work.beforeGreatDay}</b></div><div className="storm-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--storm" eager/><p>{(shortProjectCopy[lang]||shortProjectCopy.en)[work.slug]}</p><ButtonLink href="#/arcanian">{c.home.projects}</ButtonLink></div><div className="storm-hero__mark" aria-hidden="true"><i/><i/><i/></div></section>
     <section className="storm-layers"><header data-reveal><small>{c.work.layers}</small><h2>{identity.title}</h2></header><div>{identity.layers.map((layer,index)=><span key={layer} data-reveal><b>0{index+1}</b>{layer}</span>)}</div></section>
     <section className="storm-panels">{item.sections.slice(0,3).map((section,index)=><article key={section.title} data-reveal><img src={panels[index]} alt="" loading="lazy"/><div><span>{c.work.chapterLabel} / 0{index+1}</span><h2>{section.title}</h2><p>{section.text}</p></div></article>)}</section>
     <section className="storm-end"><span>{c.work.beforeGreatDay}</span><ButtonLink href="#/timeline" tone="secondary">Timeline</ButtonLink></section>
@@ -1277,7 +1297,7 @@ function GamePage({ work }) {
   return <main className="neo-game-page" style={{'--work-accent':work.accent}}>
     <section className="neo-game-hero">
       <div className="neo-game-hero__media"><img src={work.image} alt=""/></div><div className="neo-game-hero__veil"/><div className="game-scanlines" aria-hidden="true"/>
-      <div className="neo-game-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--game-new" eager/><p>{lines.arcanian}</p><PlatformBadge/><div className="hero-actions"><ButtonLink href="#/news">{c.work.gameStatus}</ButtonLink><ButtonLink href="#/wiki" tone="secondary">{c.work.openWiki}</ButtonLink></div></div>
+      <div className="neo-game-hero__copy" data-reveal><small>{item.eyebrow}</small><ProjectLogo work={work} className="project-logo--game-new" eager/><p>{lines.arcanian}</p><PlatformBadge/><div className="hero-actions"><ButtonLink href="#/news">{c.work.gameStatus}</ButtonLink><ButtonLink href="#/arcanian" tone="secondary">{c.home.projects}</ButtonLink></div></div>
       <div className="neo-game-hero__object" aria-hidden="true"><div><i/><i/><i/></div><span>PLAY</span></div>
     </section>
     <section className="game-adaptation">
@@ -1286,7 +1306,7 @@ function GamePage({ work }) {
     </section>
     <section className="neo-game-platform"><header><small>{c.work.gamePlatforms}</small><strong>{c.work.platformPlan}</strong></header><div className="game-platform-list"><span><SteamMark size={46}/><b>Steam</b></span><span><XboxMark size={46}/><b>Xbox</b></span></div></section>
     <section className="neo-game-features"><header data-reveal><small>{c.work.gameFeatures}</small><h2>{c.work.playStoryTitle}</h2></header><div>{item.sections.slice(0,4).map((section,index)=><article key={section.title} data-reveal><span>0{index+1}</span><h3>{section.title}</h3><p>{section.text}</p></article>)}</div></section>
-    <section className="neo-game-cast"><header data-reveal><small>{c.work.gameCast}</small><h2>Ikarius. Joel.<br/>Aphride. Merius.</h2></header><div>{item.characters.map((character,index)=><SmartLink href={`#/wiki/${character.slug}`} key={character.slug} data-reveal><span>{String(index+1).padStart(2,'0')}</span><strong>{character.name}</strong><small>{character.role}</small><Icon name="arrow"/></SmartLink>)}</div></section>
+    <section className="neo-game-cast"><header data-reveal><small>{c.work.gameCast}</small><h2>Ikarius. Joel.<br/>Aphride. Merius.</h2></header><div>{item.characters.map((character,index)=><div className="neo-game-cast__person" key={character.slug} data-reveal><span>{String(index+1).padStart(2,'0')}</span><strong>{character.name}</strong><small>{character.role}</small></div>)}</div></section>
     <section className="neo-game-world"><header data-reveal><small>{c.work.gameWorld}</small><h2>{c.work.worldCountsTitle}</h2></header><div>{item.worlds.map((place,index)=><article key={place.name} data-reveal><img src={place.image} alt="" loading="lazy"/><div><span>0{index+1}</span><h3>{place.name}</h3><p>{place.text}</p></div></article>)}</div></section>
   </main>;
 }
@@ -1615,7 +1635,7 @@ function NotFoundPage() {
 
 function Footer() {
   const { d } = useSite();
-  return <footer className="site-footer"><div><span className="brand-logo-surface footer-logo"><img src="./media/logo.webp" alt=""/></span><div><strong>Two Eyes On You</strong><small>{d.footer.location}</small></div></div><nav><SmartLink href="#/arcanian">{d.nav.projects}</SmartLink><SmartLink href="#/news">{d.nav.news}</SmartLink><SmartLink href="#/wiki">{d.nav.wiki}</SmartLink><SmartLink href="#/about">{d.nav.studio}</SmartLink><SmartLink href="#/documentation">{d.nav.documents}</SmartLink><SmartLink href="#/contact">{d.nav.contact}</SmartLink></nav><span>{d.footer.rights}</span></footer>;
+  return <footer className="site-footer"><div><span className="brand-logo-surface footer-logo"><img src="./media/logo.webp" alt=""/></span><div><strong>Two Eyes On You</strong><small>{d.footer.location}</small></div></div><nav><SmartLink href="#/arcanian">{d.nav.projects}</SmartLink><SmartLink href="#/news">{d.nav.news}</SmartLink><SmartLink href="#/about">{d.nav.studio}</SmartLink><SmartLink href="#/documentation">{d.nav.documents}</SmartLink><SmartLink href="#/contact">{d.nav.contact}</SmartLink></nav><span>{d.footer.rights}</span></footer>;
 }
 
 const defaultA11y = { highContrast:false, reduceMotion:false, underlineLinks:false, enhancedFocus:true, customCursor:true };
@@ -1718,11 +1738,7 @@ const theme = 'night';
       const category = categoryFromRoute(route);
       return category ? <FormatCategoryPage category={category}/> : <ProjectsPage/>;
     }
-    if (route === '/wiki') return <WikiPage/>;
-    if (route.startsWith('/wiki/')) {
-      const entry = allWikiEntries.find((item) => item.slug === route.split('/')[2]);
-      return entry ? <WikiEntryPage entry={entry}/> : <WikiPage/>;
-    }
+    if (route === '/wiki' || route.startsWith('/wiki/')) return <ProjectsPage/>;
     if (route === '/timeline') return <TimelinePage/>;
     if (route === '/news') return <NewsPage/>;
     if (route === '/media') return <MediaPage/>;

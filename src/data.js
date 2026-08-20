@@ -226,14 +226,6 @@ export const news = [
     href: '#/purchase'
   },
   {
-    date: '04 AGO 2026',
-    category: 'ARCANIAN',
-    title: 'A investigação precisa continuar',
-    text: 'A Wiki Arcanian passa a reunir obras, cronologia, personagens, lugares e conceitos do universo.',
-    image: './media/banner.webp',
-    href: '#/wiki'
-  },
-  {
     date: 'EM DESENVOLVIMENTO',
     category: 'JOGO',
     title: 'Primeiro os personagens. Depois, a cena.',
